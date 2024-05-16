@@ -1,4 +1,6 @@
 import 'package:clinic_test_app/screens/appointments/appointments.dart';
+import 'package:clinic_test_app/screens/favorite_screen.dart';
+import 'package:clinic_test_app/screens/notifications_screen.dart';
 import 'package:clinic_test_app/screens/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -20,17 +22,16 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     const ProfileScreen(),
-    const Text('الاشعارات'),
+    const NotificationsScreen(),
     const AppointmentsScreen(),
     const Text('المحادثة'),
-    const Text('المفضلة'),
+    const FavoriteScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //appBar: AppBar(),
-      backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(child: _screens[_selectedScreen]),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectScreen,

@@ -32,7 +32,7 @@ class AppointmentCard extends StatelessWidget {
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
         height: 190,
         child: Stack(
           alignment: Alignment.bottomCenter,
@@ -41,7 +41,7 @@ class AppointmentCard extends StatelessWidget {
               height: 165,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.secondary,
                 boxShadow: const [
                   BoxShadow(
                     offset: Offset(0, 15),

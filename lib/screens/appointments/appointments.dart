@@ -1,6 +1,7 @@
 import 'package:clinic_test_app/provider/theme_provider.dart';
 import 'package:clinic_test_app/screens/appointments/coming_appointments.dart';
 import 'package:clinic_test_app/screens/appointments/completed_appointments.dart';
+import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,15 +14,14 @@ class AppointmentsScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: AppBar(
           title: const Text('المواعيد'),
-          bottom: const TabBar(
-            labelColor: Colors.amberAccent,
-            indicatorColor: Colors.amberAccent,
-            unselectedLabelColor: Colors.white,
+          bottom: TabBar(
+            labelColor: Theme.of(context).colorScheme.inversePrimary,
+            indicatorColor: Theme.of(context).colorScheme.inversePrimary,
+            unselectedLabelColor: Theme.of(context).colorScheme.secondary,
             indicatorSize: TabBarIndicatorSize.tab,
-            tabs: [
+            tabs: const [
               Tab(
                 text: 'المواعيد القادمة',
               ),
@@ -40,11 +40,13 @@ class AppointmentsScreen extends StatelessWidget {
             )
           ],
         ),
-        body: const TabBarView(
-          children: [
-            ComingAppointments(),
-            CompletedAppointments(),
-          ],
+        body: const BackGroundContainer(
+          child: TabBarView(
+            children: [
+              ComingAppointments(),
+              CompletedAppointments(),
+            ],
+          ),
         ),
         floatingActionButton: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -74,8 +76,8 @@ class AppointmentsScreen extends StatelessWidget {
                   ),
                 );
               },
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.secondary,
               heroTag: null,
               child: const Icon(Icons.chair),
             ),
@@ -105,8 +107,8 @@ class AppointmentsScreen extends StatelessWidget {
                   ),
                 );
               },
-              backgroundColor: Colors.blue,
-              foregroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.secondary,
               heroTag: null,
               child: const Icon(Icons.person_add),
             ),

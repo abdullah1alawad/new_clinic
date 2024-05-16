@@ -15,7 +15,7 @@ class ThemeConfig {
 
   static ThemeData lightTheme = ThemeData(
     primaryColor: lightPrimary,
-    scaffoldBackgroundColor: lightBG,
+    scaffoldBackgroundColor: lightPrimary,
     appBarTheme: AppBarTheme(
       backgroundColor: lightPrimary,
       //elevation: 0,
