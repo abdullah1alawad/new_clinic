@@ -18,7 +18,7 @@ class NotificationsScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    'تمت تعليم الكل ك مقروء',
+                    'تم تعليم الكل ك مقروء',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

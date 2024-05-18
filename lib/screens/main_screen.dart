@@ -1,5 +1,5 @@
 import 'package:clinic_test_app/screens/appointments/appointments.dart';
-import 'package:clinic_test_app/screens/favorite_screen.dart';
+import 'package:clinic_test_app/screens/marks_screen.dart';
 import 'package:clinic_test_app/screens/notifications_screen.dart';
 import 'package:clinic_test_app/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
     const NotificationsScreen(),
     const AppointmentsScreen(),
     const Text('المحادثة'),
-    const FavoriteScreen(),
+    const MarksScreen(),
   ];
 
   @override
@@ -64,16 +64,16 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat,
+              Icons.email,
             ),
             label: 'المحادثة',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.star_outlined,
-              //size: 25,
+              Icons.my_library_books,
+              size: 25,
             ),
-            label: 'المفضلة',
+            label: 'العلامات',
           ),
         ],
       ),
