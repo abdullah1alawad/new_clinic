@@ -20,7 +20,7 @@ class Medicine extends Model
     ];
 
     protected $casts=[
-        'patient_id'=>'unsignedBigInteger',
+        'patient_id'=>'integer',
         'name'=>'string',
     ];
 

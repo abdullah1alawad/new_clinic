@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,6 +12,7 @@ return new class extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('national_id')->unique();
             $table->boolean('gender');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('job');
             $table->string('phone')->unique();
-            $table->bigInteger('questions');
+            $table->string('questions');
             $table->date('last_medical_scan_date')->nullable();
             $table->string('personal_doctor_name')->nullable();
             $table->string('currently_disease')->nullable();
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('skin_tooth_disease')->nullable();
             $table->string('reason_to_came')->nullable();
             $table->string('signature');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

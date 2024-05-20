@@ -40,14 +40,14 @@ class Patient extends Model
     protected $casts = [
         'name' => 'string',
         'gender' => 'boolean',
-        'national_id' => 'unsignedBigInteger',
+        'national_id' => 'string',
         'birth_date' => 'date',
         'height' => 'float',
         'weight' => 'float',
         'address' => 'string',
         'job' => 'string',
         'phone' => 'string',
-        'questions' => 'bigInteger',
+        'questions' => 'string',
         'last_medical_scan_date' => 'date',
         'personal_doctor_name' => 'string',
         'currently_disease' => 'string',
@@ -96,19 +96,29 @@ class Patient extends Model
         $this->attributes['gender'] = strtolower($val) == 'female' ? 1 : 0;
     }
 
-    public function getQuestionsAttribute($val)
-    {
-        $ret = array();
-        while ($val != 0) {
-            if ($val & 1)
-                $ret[] = 'YES';
-            else
-                $ret[] = 'NO';
-
-            $val = (int)$val / 2;
-        }
-
-        return $ret;
-    }
+//    public function getQuestionsAttribute($val)
+//    {
+//        $ret = array();
+//        while ($val != 0) {
+//            if ($val & 1)
+//                $ret[] = 'YES';
+//            else
+//                $ret[] = 'NO';
+//
+//            $val = (int)$val / 2;
+//        }
+//
+//        return $ret;
+//    }
+//
+//        public function setQuestionsAttribute($val){
+//        $ans = pow(2,51);
+//
+//        for($i = 1;$i <= 50;$i++){
+//            $ans += pow(2,$i) * $val[$i];
+//        }
+//
+//        $this->attributes['questions'] = $ans;
+//    }
 
 }

@@ -49,4 +49,13 @@ trait GeneralTrait
         return [true, 'No error'];
     }
 
+    function saveImage($photo, $folder)
+    {
+        $photoName = $photo;
+        $fileName = time() . '.' . $photoName->getClientOriginalExtension();
+        $photoName->move(public_path($folder), $fileName);
+
+        return $fileName;
+    }
+
 }
