@@ -5,6 +5,7 @@ import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
 class AppointmentsScreen extends StatelessWidget {
   const AppointmentsScreen({super.key});
@@ -48,73 +49,119 @@ class AppointmentsScreen extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        floatingActionButton: ExpandableFab(
+          type: ExpandableFabType.up,
+          distance: 70,
           children: [
-            FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => CustomContainer(
-                    data: const [
-                      Column(
-                        children: [
-                          Text(
-                            'قريبا...',
-                            style: TextStyle(fontSize: 50),
-                          )
+            Row(
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
+                      useSafeArea: true,
+                      context: context,
+                      builder: (context) => CustomContainer(
+                        data: const [
+                          Column(
+                            children: [
+                              Text(
+                                'قريبا...',
+                                style: TextStyle(fontSize: 50),
+                              )
+                            ],
+                          ),
                         ],
+                        icon: Icons.chair,
+                        onPressButton: () {
+                          Navigator.of(context).pop();
+                        },
+                        buttonText: "حجز موعد",
+                        height: 700,
                       ),
-                    ],
-                    icon: Icons.chair,
-                    onPressButton: () {
-                      Navigator.of(context).pop();
-                    },
-                    buttonText: "حجز موعد",
-                    height: 700,
+                    );
+                  },
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.secondary,
+                  heroTag: null,
+                  child: const Icon(Icons.chair),
+                ),
+                SizedBox(
+                  width: 110,
+                  height: 35,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Center(
+                      child: Text(
+                        'حجز موعد',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              },
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.secondary,
-              heroTag: null,
-              child: const Icon(Icons.chair),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
-            FloatingActionButton(
-              onPressed: () {
-                showDialog(
-                  useSafeArea: true,
-                  context: context,
-                  builder: (context) => CustomContainer(
-                    data: const [
-                      Column(
-                        children: [
-                          Text(
-                            'قريبا...',
-                            style: TextStyle(fontSize: 50),
+            Row(
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    showDialog(
+                      useSafeArea: true,
+                      context: context,
+                      builder: (context) => CustomContainer(
+                        data: const [
+                          Column(
+                            children: [
+                              Text(
+                                'قريبا...',
+                                style: TextStyle(fontSize: 50),
+                              )
+                            ],
                           )
                         ],
-                      )
-                    ],
-                    icon: Icons.person_add,
-                    onPressButton: () {
-                      Navigator.of(context).pop();
-                    },
-                    buttonText: "اضافة مريض",
-                    height: 700,
+                        icon: Icons.person_add,
+                        onPressButton: () {
+                          Navigator.of(context).pop();
+                        },
+                        buttonText: "اضافة مريض",
+                        height: 700,
+                      ),
+                    );
+                  },
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.secondary,
+                  heroTag: null,
+                  child: const Icon(Icons.person_add),
+                ),
+                SizedBox(
+                  width: 110,
+                  height: 35,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    color: Theme.of(context).colorScheme.primary,
+                    child: Center(
+                      child: Text(
+                        'إضافة مريض',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              },
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.secondary,
-              heroTag: null,
-              child: const Icon(Icons.person_add),
+                ),
+              ],
             ),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButtonLocation: ExpandableFab.location,
       ),
     );
   }

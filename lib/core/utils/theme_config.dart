@@ -50,6 +50,12 @@ class ThemeConfig {
             fontFamily: 'ElMessiri',
             fontWeight: FontWeight.bold,
           ),
+          titleMedium: const TextStyle(
+            color: Colors.blue,
+            fontSize: 22,
+            fontFamily: 'ElMessiri',
+            fontWeight: FontWeight.bold,
+          ),
           titleLarge: const TextStyle(
             color: Colors.blue,
             fontSize: 26,

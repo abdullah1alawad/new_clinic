@@ -12,33 +12,14 @@ class MarksScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('العلامات'),
         bottom: const CustomBottonAppBar(),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'تمت إزالة جميع المفضلات',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                  backgroundColor: Colors.green.shade400,
-                  behavior: SnackBarBehavior.floating,
-                  width: 210,
-                  duration: Duration(milliseconds: 1000),
-                  //showCloseIcon: true,
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.highlight_remove,
-              color: Colors.white,
-              size: 30,
-            ),
+        leading: IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.filter_list,
+            color: Colors.white,
+            size: 35,
           ),
-        ],
+        ),
       ),
       body: BackGroundContainer(
         child: ListView.builder(

@@ -39,6 +39,7 @@ class AppointmentCard extends StatelessWidget {
           children: [
             Container(
               height: 165,
+              width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
                 color: Theme.of(context).colorScheme.secondary,
@@ -50,105 +51,57 @@ class AppointmentCard extends StatelessWidget {
                   )
                 ],
               ),
+              child: const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'قلع وتخدير',
+                      style: TextStyle(
+                        fontFamily: 'ElMessiri',
+                        fontSize: 22,
+                      ),
+                    ),
+                    Text(
+                      'اشراف الدكتورة: سمر الحلبي',
+                      style: TextStyle(
+                        fontFamily: 'ElMessiri',
+                        fontSize: 20,
+                      ),
+                    ),
+                    Text(
+                      'المريض: فلان الفلاني',
+                      style: TextStyle(
+                        fontFamily: 'ElMessiri',
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      'الكرسي رقم: 10',
+                      style: TextStyle(
+                        fontFamily: 'ElMessiri',
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      'تاريخ الموعد:   9:30   2024/7/1',
+                      style: TextStyle(
+                        fontFamily: 'ElMessiri',
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Positioned(
+            const Positioned(
               top: 12,
               left: 0,
-              child: InkWell(
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'تمت الاضافة للمفضلة',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
-                      backgroundColor: Colors.green.shade400,
-                      behavior: SnackBarBehavior.floating,
-                      width: 176,
-                      duration: Duration(milliseconds: 900),
-                      //showCloseIcon: true,
-                    ),
-                  );
-                },
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.blue.shade300,
-                  child: const Icon(
-                    Icons.star_outlined,
-                    size: 30,
-                  ),
-                ),
-              ),
-            ),
-            const Positioned(
-              top: 40,
-              child: Text(
-                'قلع وتخدير',
-                style: TextStyle(
-                  fontFamily: 'ElMessiri',
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const Positioned(
-              top: 75,
-              child: Text(
-                'اشراف الدكتورة: سمر الحلبي',
-                style: TextStyle(
-                  fontFamily: 'ElMessiri',
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            const Positioned(
-              top: 105,
-              child: Text(
-                'المريض : راضي شقيفة',
-                style: TextStyle(
-                  fontFamily: 'ElMessiri',
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            const Positioned(
-              top: 135,
-              child: Text(
-                'الكرسي رقم : 10',
-                style: TextStyle(
-                  fontFamily: 'ElMessiri',
-                  fontSize: 18,
-                ),
-              ),
-            ),
-            const Positioned(
-              bottom: 10,
-              right: 10,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    'مقبول',
-                    style: TextStyle(fontFamily: 'ElMessiri', fontSize: 17),
-                  ),
-                ],
-              ),
-            ),
-            const Positioned(
-              bottom: 10,
-              left: 10,
-              child: Text(
-                '9:30 24/7/1',
-                style: TextStyle(
-                  fontFamily: 'ElMessiri',
-                  fontSize: 18,
-                ),
+              child: Icon(
+                Icons.check_circle,
+                color: Colors.green,
+                size: 40,
               ),
             ),
           ],

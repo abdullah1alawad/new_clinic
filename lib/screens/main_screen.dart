@@ -40,10 +40,12 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedScreen,
         showUnselectedLabels: false,
         showSelectedLabels: false,
-        //selectedFontSize: 15,
+        selectedFontSize: 0,
+        unselectedFontSize: 0,
         selectedItemColor: Colors.amberAccent,
         unselectedItemColor: Colors.white,
-        items: const [
+        iconSize: 30,
+        items: [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person,
@@ -51,8 +53,32 @@ class _MainScreenState extends State<MainScreen> {
             label: 'الملف الشخصي',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications,
+            icon: Stack(
+              children: <Widget>[
+                Icon(Icons.notifications),
+                Positioned(
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '7',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
             ),
             label: 'الاشعارات',
           ),
@@ -63,15 +89,39 @@ class _MainScreenState extends State<MainScreen> {
             label: 'المواعيد',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.email,
+            icon: Stack(
+              children: <Widget>[
+                Icon(Icons.email),
+                Positioned(
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: Text(
+                      '5',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              ],
             ),
             label: 'المحادثة',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.my_library_books,
-              size: 25,
+              //size: 25,
             ),
             label: 'العلامات',
           ),

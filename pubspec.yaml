@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.2.3
   image_picker: ^1.1.1
   flutter_custom_clippers: ^2.1.0
+  flutter_expandable_fab: ^2.0.0
+  flutter_heatmap_calendar: ^1.0.5
 
 dev_dependencies:
   flutter_test:
