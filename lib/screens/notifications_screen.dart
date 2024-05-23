@@ -1,6 +1,7 @@
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
-import 'package:clinic_test_app/widgets/notifications_card.dart';
+import 'package:clinic_test_app/widgets/cards/notifications_card.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class NotificationsScreen extends StatelessWidget {
               );
             },
             icon: const Icon(
-              Icons.check_circle,
+              EvaIcons.doneAll,
               color: Colors.white,
               size: 30,
             ),

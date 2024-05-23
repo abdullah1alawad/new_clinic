@@ -1,6 +1,8 @@
-import 'package:clinic_test_app/widgets/activity_graph.dart';
+import 'package:clinic_test_app/widgets/charts/activity_graph.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
+import 'package:clinic_test_app/widgets/charts/pie_chart.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -21,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.edit),
+            icon: const Icon(EvaIcons.edit2Outline),
             color: Colors.white,
           )
         ],
@@ -68,14 +70,29 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 const ActivityGraph(),
+                SizedBox(height: 30),
                 const SizedBox(
                   width: 300,
-                  height: 100,
+                  height: 40,
                   child: Divider(
                     color: Colors.blue,
                   ),
                 ),
-                const SizedBox(height: 500),
+                const SizedBox(height: 20),
+                const Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'المواد التي تم العمل عليها  :',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontFamily: 'ElMessiri',
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const MyPieChart(),
+                SizedBox(height: 50),
               ],
             ),
           ),

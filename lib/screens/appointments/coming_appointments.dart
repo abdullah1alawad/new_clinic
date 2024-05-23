@@ -1,4 +1,4 @@
-import 'package:clinic_test_app/widgets/appointment_card.dart';
+import 'package:clinic_test_app/widgets/cards/appointment_card.dart';
 import 'package:flutter/material.dart';
 
 class ComingAppointments extends StatelessWidget {

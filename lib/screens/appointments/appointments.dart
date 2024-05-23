@@ -3,7 +3,9 @@ import 'package:clinic_test_app/screens/appointments/coming_appointments.dart';
 import 'package:clinic_test_app/screens/appointments/completed_appointments.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
+import 'package:clinic_test_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 
@@ -60,23 +62,38 @@ class AppointmentsScreen extends StatelessWidget {
                     showDialog(
                       useSafeArea: true,
                       context: context,
-                      builder: (context) => CustomContainer(
-                        data: const [
-                          Column(
-                            children: [
-                              Text(
-                                'قريبا...',
-                                style: TextStyle(fontSize: 50),
-                              )
-                            ],
-                          ),
-                        ],
-                        icon: Icons.chair,
-                        onPressButton: () {
-                          Navigator.of(context).pop();
-                        },
-                        buttonText: "حجز موعد",
-                        height: 700,
+                      builder: (context) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        alignment: Alignment.center,
+                        insetPadding: EdgeInsets.zero,
+                        child: CustomContainer(
+                          data: const [
+                            Column(
+                              children: [
+                                CustomTextField(
+                                  label: 'اسم المستخدم',
+                                  icon: Icons.person,
+                                ),
+                                CustomTextField(
+                                  label: "كلمة السر",
+                                  icon: Icons.lock,
+                                ),
+                                CustomTextField(
+                                  label: "كلمة السر",
+                                  icon: Icons.lock,
+                                ),
+                              ],
+                            ),
+                          ],
+                          icon: Icons.chair,
+                          onPressButton: () {
+                            Navigator.of(context).pop();
+                          },
+                          buttonText: "حجز موعد",
+                          height: 500,
+                          cancel: true,
+                        ),
                       ),
                     );
                   },
@@ -113,23 +130,38 @@ class AppointmentsScreen extends StatelessWidget {
                     showDialog(
                       useSafeArea: true,
                       context: context,
-                      builder: (context) => CustomContainer(
-                        data: const [
-                          Column(
-                            children: [
-                              Text(
-                                'قريبا...',
-                                style: TextStyle(fontSize: 50),
-                              )
-                            ],
-                          )
-                        ],
-                        icon: Icons.person_add,
-                        onPressButton: () {
-                          Navigator.of(context).pop();
-                        },
-                        buttonText: "اضافة مريض",
-                        height: 700,
+                      builder: (context) => Dialog(
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        alignment: Alignment.center,
+                        insetPadding: EdgeInsets.zero,
+                        child: CustomContainer(
+                          data: const [
+                            Column(
+                              children: [
+                                CustomTextField(
+                                  label: 'اسم المستخدم',
+                                  icon: Icons.person,
+                                ),
+                                CustomTextField(
+                                  label: "كلمة السر",
+                                  icon: Icons.lock,
+                                ),
+                                CustomTextField(
+                                  label: "كلمة السر",
+                                  icon: Icons.lock,
+                                ),
+                              ],
+                            ),
+                          ],
+                          icon: Icons.person,
+                          onPressButton: () {
+                            Navigator.of(context).pop();
+                          },
+                          buttonText: "إضافة مريض",
+                          height: 500,
+                          cancel: true,
+                        ),
                       ),
                     );
                   },

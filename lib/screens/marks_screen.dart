@@ -1,6 +1,6 @@
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
-import 'package:clinic_test_app/widgets/mark_card.dart';
+import 'package:clinic_test_app/widgets/cards/mark_card.dart';
 import 'package:flutter/material.dart';
 
 class MarksScreen extends StatelessWidget {

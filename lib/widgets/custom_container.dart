@@ -7,6 +7,7 @@ class CustomContainer extends StatefulWidget {
   final IconData icon;
   final VoidCallback onPressButton;
   final String buttonText;
+  final bool cancel;
 
   const CustomContainer({
     super.key,
@@ -15,6 +16,7 @@ class CustomContainer extends StatefulWidget {
     required this.onPressButton,
     required this.buttonText,
     required this.height,
+    required this.cancel,
   });
 
   @override
@@ -100,15 +102,32 @@ class _CustomContainerState extends State<CustomContainer> {
             height: widget.height + 20,
             child: Align(
               alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40.0)),
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                ),
-                onPressed: widget.onPressButton,
-                child: Text(widget.buttonText,
-                    style: Theme.of(context).textTheme.titleSmall),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (widget.cancel)
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40.0)),
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text('إلغاء',
+                          style: Theme.of(context).textTheme.titleSmall),
+                    ),
+                  if (widget.cancel) const SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0)),
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                    ),
+                    onPressed: widget.onPressButton,
+                    child: Text(widget.buttonText,
+                        style: Theme.of(context).textTheme.titleSmall),
+                  ),
+                ],
               ),
             ),
           ),

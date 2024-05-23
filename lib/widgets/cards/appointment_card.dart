@@ -1,5 +1,6 @@
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:flutter/material.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class AppointmentCard extends StatelessWidget {
   const AppointmentCard({super.key});
@@ -28,6 +29,7 @@ class AppointmentCard extends StatelessWidget {
             },
             buttonText: "تم",
             height: 700,
+            cancel: true,
           ),
         );
       },
@@ -99,8 +101,12 @@ class AppointmentCard extends StatelessWidget {
               top: 12,
               left: 0,
               child: Icon(
-                Icons.check_circle,
+                EvaIcons.checkmarkCircle2,
+                //EvaIcons.alertCircle,
+                // EvaIcons.closeCircle,
                 color: Colors.green,
+                //color: Colors.orangeAccent,
+                // color: Colors.redAccent,
                 size: 40,
               ),
             ),

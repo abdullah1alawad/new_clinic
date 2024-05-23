@@ -1,4 +1,5 @@
 import 'package:clinic_test_app/widgets/custom_container.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -28,6 +29,7 @@ class NotificationCard extends StatelessWidget {
             },
             buttonText: "تم",
             height: 700,
+            cancel: true,
           ),
         );
       },
@@ -67,7 +69,7 @@ class NotificationCard extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    Icons.check_circle,
+                    EvaIcons.doneAll,
                     color: Colors.green,
                   ),
                   SizedBox(width: 5),

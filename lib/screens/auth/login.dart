@@ -68,6 +68,7 @@ class LoginScreen extends StatelessWidget {
               );
             },
             buttonText: "تسجيل الدخول",
+            cancel: false,
           ),
           const SizedBox(
             height: 20,
