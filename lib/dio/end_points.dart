@@ -1,7 +1,5 @@
 class EndPoint {
-  static String signup = 'user/signup';
-  static String login = 'user/signin';
-  static String getUserDataEndPoint(id) {
-    return "user/get-user/$id";
-  }
+  static const String baseUrl = 'http://10.0.2.2:8000/api/';
+  static const String login = 'login';
+
 }

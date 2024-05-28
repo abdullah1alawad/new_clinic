@@ -24,4 +24,11 @@ class Validations {
     }
     return null;
   }
+
+  static String? validateUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter a valid UserName.';
+    }
+    return null;
+  }
 }

@@ -30,6 +30,7 @@ class AppointmentCard extends StatelessWidget {
             buttonText: "تم",
             height: 700,
             cancel: true,
+            loading: false,
           ),
         );
       },

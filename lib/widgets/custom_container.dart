@@ -7,7 +7,7 @@ class CustomContainer extends StatefulWidget {
   final IconData icon;
   final VoidCallback onPressButton;
   final String buttonText;
-  final bool cancel;
+  final bool cancel, loading;
 
   const CustomContainer({
     super.key,
@@ -17,6 +17,7 @@ class CustomContainer extends StatefulWidget {
     required this.buttonText,
     required this.height,
     required this.cancel,
+    required this.loading,
   });
 
   @override
@@ -124,8 +125,14 @@ class _CustomContainerState extends State<CustomContainer> {
                       backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
                     onPressed: widget.onPressButton,
-                    child: Text(widget.buttonText,
-                        style: Theme.of(context).textTheme.titleSmall),
+                    child: widget.loading == true
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ))
+                        : Text(widget.buttonText,
+                            style: Theme.of(context).textTheme.titleSmall),
                   ),
                 ],
               ),

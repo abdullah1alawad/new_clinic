@@ -71,18 +71,19 @@ class AppointmentsScreen extends StatelessWidget {
                           data: const [
                             Column(
                               children: [
-                                CustomTextField(
-                                  label: 'اسم المستخدم',
-                                  icon: Icons.person,
-                                ),
-                                CustomTextField(
-                                  label: "كلمة السر",
-                                  icon: Icons.lock,
-                                ),
-                                CustomTextField(
-                                  label: "كلمة السر",
-                                  icon: Icons.lock,
-                                ),
+                                Text('hello'),
+                                // CustomTextField(
+                                //   label: 'اسم المستخدم',
+                                //   icon: Icons.person,
+                                // ),
+                                // CustomTextField(
+                                //   label: "كلمة السر",
+                                //   icon: Icons.lock,
+                                // ),
+                                // CustomTextField(
+                                //   label: "كلمة السر",
+                                //   icon: Icons.lock,
+                                // ),
                               ],
                             ),
                           ],
@@ -93,6 +94,7 @@ class AppointmentsScreen extends StatelessWidget {
                           buttonText: "حجز موعد",
                           height: 500,
                           cancel: true,
+                          loading: false,
                         ),
                       ),
                     );
@@ -139,18 +141,19 @@ class AppointmentsScreen extends StatelessWidget {
                           data: const [
                             Column(
                               children: [
-                                CustomTextField(
-                                  label: 'اسم المستخدم',
-                                  icon: Icons.person,
-                                ),
-                                CustomTextField(
-                                  label: "كلمة السر",
-                                  icon: Icons.lock,
-                                ),
-                                CustomTextField(
-                                  label: "كلمة السر",
-                                  icon: Icons.lock,
-                                ),
+                                Text('hello'),
+                                // CustomTextField(
+                                //   label: 'اسم المستخدم',
+                                //   icon: Icons.person,
+                                // ),
+                                // CustomTextField(
+                                //   label: "كلمة السر",
+                                //   icon: Icons.lock,
+                                // ),
+                                // CustomTextField(
+                                //   label: "كلمة السر",
+                                //   icon: Icons.lock,
+                                // ),
                               ],
                             ),
                           ],
@@ -161,6 +164,7 @@ class AppointmentsScreen extends StatelessWidget {
                           buttonText: "إضافة مريض",
                           height: 500,
                           cancel: true,
+                          loading: false,
                         ),
                       ),
                     );
