@@ -17,6 +17,9 @@ class ThemeConfig {
     primaryColor: lightPrimary,
     scaffoldBackgroundColor: lightPrimary,
     appBarTheme: AppBarTheme(
+      iconTheme: const IconThemeData(
+        color: Colors.white, //change your color here
+      ),
       backgroundColor: lightPrimary,
       //elevation: 0,
       toolbarTextStyle: TextTheme(

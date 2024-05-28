@@ -1,5 +1,8 @@
+import 'package:clinic_test_app/provider/edite_profile_provider.dart';
 import 'package:clinic_test_app/provider/login_provider.dart';
+import 'package:clinic_test_app/provider/reset_password_provider.dart';
 import 'package:clinic_test_app/provider/theme_provider.dart';
+import 'package:clinic_test_app/screens/edite_profile.dart';
 import 'package:clinic_test_app/screens/main_screen.dart';
 
 import '/screens/auth/login.dart';
@@ -15,6 +18,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => EditeProfileProvider()),
+        ChangeNotifierProvider(create: (context) => ResetPasswordProvider()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: const MyApp(),

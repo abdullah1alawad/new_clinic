@@ -1,15 +1,14 @@
-import '/cache/cache_helper.dart';
 import 'package:dio/dio.dart';
-import '/core/utils/app_constants.dart';
 import '/dio/end_points.dart';
 
 class DioHelper {
   static Dio dio = Dio(
     BaseOptions(
       baseUrl: EndPoint.baseUrl,
-      headers: {
-        "token": CacheHelper().getData(key: kTOKEN),
-      },
+      // headers: {
+      //   //"token": CacheHelper().getData(key: kTOKEN),
+      //   'Authorization': 'Bearer ${CacheHelper().getData(key: kTOKEN)}',
+      // },
     ),
   );
 
@@ -19,6 +18,20 @@ class DioHelper {
 
   static Future<Response> logIn(Map<String, dynamic> data) async {
     return await dio.post(EndPoint.login, data: FormData.fromMap(data));
+  }
+
+  static Future<Response> editeProfile(
+      Map<String, dynamic> data, String token) async {
+    return await dio.post(EndPoint.editeProfile,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: FormData.fromMap(data));
+  }
+
+  static Future<Response> resetPassword(
+      Map<String, dynamic> data, String token) async {
+    return await dio.put(EndPoint.resetPassword,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: data);
   }
 
   // static Future<Response> getUserInfo() async {

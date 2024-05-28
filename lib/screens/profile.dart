@@ -1,3 +1,4 @@
+import 'package:clinic_test_app/screens/edite_profile.dart';
 import 'package:clinic_test_app/widgets/charts/activity_graph.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/charts/pie_chart.dart';
@@ -22,7 +23,13 @@ class ProfileScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const EditeProfileScreen(),
+                ),
+              );
+            },
             icon: const Icon(EvaIcons.edit2Outline),
             color: Colors.white,
           )

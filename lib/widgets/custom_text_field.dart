@@ -4,14 +4,14 @@ class CustomTextField extends StatelessWidget {
   final String label;
   final IconData icon;
   final TextEditingController controller;
-  final String? Function(String?) validator;
+  //final String? Function(String?) validator;
 
   const CustomTextField({
     super.key,
     required this.label,
     required this.icon,
     required this.controller,
-    required this.validator,
+    //required this.validator,
   });
 
   @override
@@ -29,7 +29,8 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
           controller: controller,
-          validator: validator,
+          
+          //validator: validator,
         ),
         Container(
           padding: const EdgeInsets.only(bottom: 10.0),

@@ -7,8 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class LoginProvider extends ChangeNotifier {
-  TextEditingController usernameControler = TextEditingController();
-  TextEditingController passwordControler = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   UserModel? userInfo;
   ConnectionEnum? connecion;
   String? errorMessage;
@@ -18,8 +18,8 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
 
     Map<String, dynamic> data = {
-      kUSERNAME: usernameControler.text,
-      kPASSWORD: passwordControler.text
+      kUSERNAME: usernameController.text,
+      kPASSWORD: passwordController.text
     };
 
     try {
