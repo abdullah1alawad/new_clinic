@@ -30,16 +30,16 @@ class Process extends Model
 
 
     protected $casts = [
-        'student_id' => 'unsignedBigInteger',
-        'doctor_id' => 'unsignedBigInteger',
-        'patient_id' => 'unsignedBigInteger',
-        'assistant_id' => 'unsignedBigInteger',
-        'chair_id' => 'unsignedBigInteger',
-        'subject_id' => 'unsignedBigInteger',
-        'date' => 'date',
+        'student_id' => 'integer',
+        'doctor_id' => 'integer',
+        'patient_id' => 'integer',
+        'assistant_id' => 'integer',
+        'chair_id' => 'integer',
+        'subject_id' => 'integer',
+        'date' => 'datetime',
         'photo' => 'string',
-        'status' => 'boolean',
-        'mark' => 'unsignedBigInteger',
+        'status' => 'integer',
+        'mark' => 'integer',
     ];
 
     public function student()
@@ -76,4 +76,5 @@ class Process extends Model
     {
         return $this->hasMany(Subprocess_mark::class);
     }
+
 }

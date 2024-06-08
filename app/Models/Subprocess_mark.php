@@ -26,9 +26,9 @@ class Subprocess_mark extends Model
     ];
 
     protected $casts=[
-        'process_id'=>'unsignedBigInteger',
+        'process_id'=>'integer',
         'name'=>'string',
-        'mark'=>'unsignedBigInteger',
+        'mark'=>'integer',
     ];
 
     public function process(){

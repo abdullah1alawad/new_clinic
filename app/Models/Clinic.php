@@ -22,7 +22,7 @@ class Clinic extends Model
     ];
 
     protected $casts = [
-        'id' => 'unsignedBigInteger',
+        'id' => 'integer',
         'name' => 'string',
     ];
 

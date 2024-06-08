@@ -16,25 +16,27 @@ class Student_mark extends Model
         'student_id',
         'subject_id',
         'mark',
-        'created_at','updated_at',
+        'created_at', 'updated_at',
     ];
 
 
     protected $hidden = [
-        'created_at','updated_at',
+        'created_at', 'updated_at',
     ];
 
-    protected $casts=[
-        'student_id'=>'unsignedBigInteger',
-        'subject_id'=>'unsignedBigInteger',
-        'mark'=>'unsignedBigInteger',
+    protected $casts = [
+        'student_id' => 'integer',
+        'subject_id' => 'integer',
+        'mark' => 'integer',
     ];
 
-    public function student(){
-        return $this->belongsTo(User::class,'student_id','id');
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'student_id', 'id');
     }
 
-    public function subject(){
+    public function subject()
+    {
         return $this->belongsTo(Subject::class);
     }
 }

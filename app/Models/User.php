@@ -35,7 +35,7 @@ class User extends Authenticatable
         'gender' => 'boolean',
         'phone' => 'string',
         'photo' => 'string',
-        'national_id' => 'unsignedBigInteger',
+        'national_id' => 'integer',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];

@@ -20,8 +20,8 @@ class Chair extends Model
     ];
 
     protected $casts = [
-        'clinic_id' => 'unsignedBigInteger',
-        'chair_number' => 'unsignedBigInteger',
+        'clinic_id' => 'integer',
+        'chair_number' => 'integer',
     ];
 
     public function clinic()

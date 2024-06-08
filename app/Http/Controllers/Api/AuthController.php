@@ -1,13 +1,23 @@
 <?php
 
+
+//$upcomingAppointments = $user->studentProcesses()
+//    ->where('date', '>=', $current_time)
+//    ->where('status', 1)
+//    ->with(['relatedModel1', 'relatedModel2']) // Adjust related models as needed
+//    ->select(['id', 'date', 'status', 'related_column1', 'related_column2'])
+//    ->get();
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\StudentResource;
 use App\Http\Resources\UserResource;
 use App\traits\GeneralTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -22,13 +32,20 @@ class AuthController extends Controller
             $user = User::where('username', $data['username'])->first();
 
             if (!Hash::check($data['password'], $user->password)) {
-                return $this->apiResponse(null,false,'wrong password',401);
+                return $this->apiResponse(null, false, 'wrong password', 401);
             }
 
             $user->tokens()->delete();
             $user->token = $user->createToken('clinic')->plainTextToken;
 
-            $user = UserResource::make($user);
+            $current_time = Carbon::now();
+            $upcomingAppointments = $user->studentProcesses()->where('date', '>=', $current_time)->get();
+
+            $completedAppointments = $user->studentProcesses()->where('date', '<', $current_time)->paginate(7);
+
+            $studentMarks = $user->studentMarks()->paginate(7);
+
+            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks );
 
             return $this->apiResponse($user, true, 'The user is logged in successfully.');
 

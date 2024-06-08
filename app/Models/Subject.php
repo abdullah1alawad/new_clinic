@@ -24,7 +24,7 @@ class Subject extends Model
     ];
 
     protected $casts = [
-        'id'=>'unsignedBigInteger',
+        'id'=>'integer',
         'name'=>'string',
     ];
 
