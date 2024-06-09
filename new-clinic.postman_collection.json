@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "3f944ad4-3b58-4095-baf3-42d46d760fcc",
+		"name": "new-clinic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27922267"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "abdullah_alawad_",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patient",
+			"item": [
+				{
+					"name": "add-patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "radi",
+									"type": "text"
+								},
+								{
+									"key": "national_id",
+									"value": "050500600",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "2001/6/29",
+									"type": "text"
+								},
+								{
+									"key": "height",
+									"value": "186",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "90",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "hama",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "09572758",
+									"type": "text"
+								},
+								{
+									"key": "job",
+									"value": "programer",
+									"type": "text"
+								},
+								{
+									"key": "last_medical_scan_date",
+									"value": "2024/5/18",
+									"type": "text"
+								},
+								{
+									"key": "other_diseases[0]",
+									"value": "hih",
+									"type": "text"
+								},
+								{
+									"key": "other_diseases[1]",
+									"value": "hoho",
+									"type": "text"
+								},
+								{
+									"key": "signature",
+									"type": "file",
+									"src": "/C:/Users/SAWA/Pictures/photo_2024-05-09_17-29-12.jpg"
+								},
+								{
+									"key": "questions",
+									"value": "01011010110101101011010110101101011010110101101011",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}patient/store",
+							"host": [
+								"{{local}}patient"
+							],
+							"path": [
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-patient-info",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}patient/show/2",
+							"host": [
+								"{{local}}patient"
+							],
+							"path": [
+								"show",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "update-user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|WCexusL3o0V6glfc7HcDJcE5441UEQBwXvfSzfFQc32187f0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "abdullah",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "abdullah",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "abdullahalawad23@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "national_id",
+									"value": "05020005658",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0957275976",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/C:/Users/SAWA/Pictures/photo_2024-05-09_17-29-12.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}user/update",
+							"host": [
+								"{{local}}user"
+							],
+							"path": [
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|WlOVm4A1DgEFZXMCWHU44uzOxTj8hMmd7LbNPChi5e8f48fe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "oldPassword",
+									"value": "abd123456",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "abd12345",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "abd12345",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}user/reset-password",
+							"host": [
+								"{{local}}user"
+							],
+							"path": [
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "http://127.0.0.1:8000",
+			"value": "local"
+		}
+	]
+}
