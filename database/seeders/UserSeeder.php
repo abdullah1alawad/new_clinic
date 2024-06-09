@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'national_id' => '1234567',
             'gender' => 0,
             'phone' => '0957275976',
-            'photo'=>'asdfas dsffa saf',
+            'photo'=>'1716055673.jpg',
             'password' => Hash::make('12345678'),
         ]);
     }

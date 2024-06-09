@@ -38,6 +38,18 @@ class AuthController extends Controller
             $user->tokens()->delete();
             $user->token = $user->createToken('clinic')->plainTextToken;
 
+            return $this->apiResponse(['id' => $user->id, 'token' => $user->token], true, 'The user is logged in successfully.');
+
+        } catch (\Exception $ex) {
+            return $this->internalServer($ex->getMessage());
+        }
+    }
+
+    public function configuration()
+    {
+        try {
+            $user = auth('sanctum')->user();
+
             $current_time = Carbon::now();
             $upcomingAppointments = $user->studentProcesses()->where('date', '>=', $current_time)->get();
 
@@ -45,9 +57,9 @@ class AuthController extends Controller
 
             $studentMarks = $user->studentMarks()->paginate(7);
 
-            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks );
+            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks);
 
-            return $this->apiResponse($user, true, 'The user is logged in successfully.');
+            return $this->apiResponse($user, true, 'configuration data.');
 
         } catch (\Exception $ex) {
             return $this->internalServer($ex->getMessage());

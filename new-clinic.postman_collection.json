@@ -284,6 +284,37 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "configuration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "69|3ejt9jMzQx8zTytVKRGD7Usvw5b35pQGRZzf2h9N2e5e42cc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}configuration",
+					"host": [
+						"{{local}}configuration"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"variable": [

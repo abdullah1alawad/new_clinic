@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\StudentController;
-use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 //--------------------------------auth -------------------------------------
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/configuration', [AuthController::class, 'configuration']);
 
 //----------------------------------------------------------------------------------
 
