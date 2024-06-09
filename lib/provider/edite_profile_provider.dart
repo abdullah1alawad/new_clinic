@@ -30,7 +30,7 @@ class EditeProfileProvider extends ChangeNotifier {
       kNATIONALID: nationalIdController.text,
       kGENDER: gender,
       kPHONE: phoneController.text,
-      kPHOTO: await uploadImageToAPI(photo!),
+      kPHOTO: photo != null ? await uploadImageToAPI(photo!) : null,
     };
 
     try {

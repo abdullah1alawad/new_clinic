@@ -13,22 +13,20 @@ class AppointmentCard extends StatelessWidget {
           useSafeArea: true,
           context: context,
           builder: (context) => CustomContainer(
-            data: const [
-              Column(
-                children: [
-                  Text(
-                    'قريبا...',
-                    style: TextStyle(fontSize: 50),
-                  )
-                ],
-              )
-            ],
+            data: const Column(
+              children: [
+                Text(
+                  'قريبا...',
+                  style: TextStyle(fontSize: 50),
+                )
+              ],
+            ),
             icon: Icons.menu_book_sharp,
             onPressButton: () {
               Navigator.of(context).pop();
             },
             buttonText: "تم",
-            height: 700,
+            //height: 700,
             cancel: true,
             loading: false,
           ),

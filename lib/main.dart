@@ -4,6 +4,7 @@ import 'package:clinic_test_app/provider/reset_password_provider.dart';
 import 'package:clinic_test_app/provider/theme_provider.dart';
 import 'package:clinic_test_app/screens/edite_profile.dart';
 import 'package:clinic_test_app/screens/main_screen.dart';
+import 'package:clinic_test_app/test.dart';
 
 import '/screens/auth/login.dart';
 import 'package:flutter/material.dart';

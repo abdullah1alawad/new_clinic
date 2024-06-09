@@ -67,31 +67,30 @@ class AppointmentsScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         insetPadding: EdgeInsets.zero,
                         child: CustomContainer(
-                          data: const [
-                            Column(
-                              children: [
-                                Text('hello'),
-                                // CustomTextField(
-                                //   label: 'اسم المستخدم',
-                                //   icon: Icons.person,
-                                // ),
-                                // CustomTextField(
-                                //   label: "كلمة السر",
-                                //   icon: Icons.lock,
-                                // ),
-                                // CustomTextField(
-                                //   label: "كلمة السر",
-                                //   icon: Icons.lock,
-                                // ),
-                              ],
-                            ),
-                          ],
+                          data: const Column(
+                            children: [
+                              Text('hello'),
+                              // CustomTextField(
+                              //   label: 'اسم المستخدم',
+                              //   icon: Icons.person,
+                              // ),
+                              // CustomTextField(
+                              //   label: "كلمة السر",
+                              //   icon: Icons.lock,
+                              // ),
+                              // CustomTextField(
+                              //   label: "كلمة السر",
+                              //   icon: Icons.lock,
+                              // ),
+                            ],
+                          ),
+
                           icon: Icons.chair,
                           onPressButton: () {
                             Navigator.of(context).pop();
                           },
                           buttonText: "حجز موعد",
-                          height: 500,
+                          //height: 500,
                           cancel: true,
                           loading: false,
                         ),
@@ -137,31 +136,30 @@ class AppointmentsScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         insetPadding: EdgeInsets.zero,
                         child: CustomContainer(
-                          data: const [
-                            Column(
-                              children: [
-                                Text('hello'),
-                                // CustomTextField(
-                                //   label: 'اسم المستخدم',
-                                //   icon: Icons.person,
-                                // ),
-                                // CustomTextField(
-                                //   label: "كلمة السر",
-                                //   icon: Icons.lock,
-                                // ),
-                                // CustomTextField(
-                                //   label: "كلمة السر",
-                                //   icon: Icons.lock,
-                                // ),
-                              ],
-                            ),
-                          ],
+                          data: const Column(
+                            children: [
+                              Text('hello'),
+                              // CustomTextField(
+                              //   label: 'اسم المستخدم',
+                              //   icon: Icons.person,
+                              // ),
+                              // CustomTextField(
+                              //   label: "كلمة السر",
+                              //   icon: Icons.lock,
+                              // ),
+                              // CustomTextField(
+                              //   label: "كلمة السر",
+                              //   icon: Icons.lock,
+                              // ),
+                            ],
+                          ),
+
                           icon: Icons.person,
                           onPressButton: () {
                             Navigator.of(context).pop();
                           },
                           buttonText: "إضافة مريض",
-                          height: 500,
+                          //height: 500,
                           cancel: true,
                           loading: false,
                         ),
