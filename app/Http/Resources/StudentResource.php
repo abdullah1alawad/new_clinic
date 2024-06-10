@@ -42,9 +42,7 @@ class StudentResource extends JsonResource
                 'UpcomingAppointments' => UpcomingAppointmentsResource::collection($this->upcomingAppointments),
                 'CompletedAppointments' => CompletedAppointmentsResource::collection($this->completedAppointments),
             ],
-            'marks'=>[
-                'studentMarks'=>StudentMarkResource::collection($this->studentMarks),
-            ],
+            'marks' => StudentMarkResource::collection($this->studentMarks),
             'notification' => [],
             'chat' => [],
         ];
