@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Patient;
 use Illuminate\Http\Request;
+use App\traits\GeneralTrait;
 
 class ProcessController extends Controller
 {
+    use GeneralTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $patients=Patient::paginate(7);
+
+        return $this->apiResponse($patients,true,'all patients');
     }
 
     /**

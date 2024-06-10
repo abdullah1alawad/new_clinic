@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\ProcessController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -39,7 +40,6 @@ Route::group(['prefix' => 'patient'], function () {
 Route::group(['prefix' => 'student'], function () {
 
 });
-
 //----------------------------------------------------------------------------
 
 
@@ -50,4 +50,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//----------------------------------process---------------------------------
 
+Route::get('process/get-info',[ProcessController::class,'index']);
+
+//--------------------------------------------------------------------------
+
+
+// send clinics
+// he will send the clinic id
+// will send questions and subjects and doctors
+//send the doctor who choose
+//see the doctor empty and chairs
+
+
+
+
+
+
+
+// subject will have doctor and clinic will have subjects
