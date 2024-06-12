@@ -29,7 +29,7 @@ class StudentMarkResource extends JsonResource
             ->where('subject_id', $subjectId)
             ->where('date', '<', $current_time)
             ->where('status', '>', 0)
-            ->get();
+            ->paginate(7);
 
         return [
             'subject_name' => $this->subject->name,
