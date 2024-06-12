@@ -34,6 +34,11 @@ class DioHelper {
         data: data);
   }
 
+  static Future<Response> getFiveScreen(String token) async {
+    return await dio.get(EndPoint.getFiveScreen,
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+  }
+
   // static Future<Response> getUserInfo() async {
   //   return await dio.get(EndPoint.getUserDataEndPoint(
   //       CacheHelper().getData(key: AppStrings.id)));

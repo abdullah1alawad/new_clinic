@@ -3,7 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({super.key});
+  final String subjectName, doctorName, patientName,date;
+  final int chairNumber, status;
+
+  const AppointmentCard({
+    super.key,
+    required this.subjectName,
+    required this.doctorName,
+    required this.patientName,
+    required this.chairNumber,
+    required this.status,
+    required this.date,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,42 +63,42 @@ class AppointmentCard extends StatelessWidget {
                   )
                 ],
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(10.0),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'قلع وتخدير',
-                      style: TextStyle(
+                      subjectName,
+                      style:const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 22,
                       ),
                     ),
                     Text(
-                      'اشراف الدكتورة: سمر الحلبي',
-                      style: TextStyle(
+                      'اشراف الدكتورة: $doctorName',
+                      style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      'المريض: فلان الفلاني',
-                      style: TextStyle(
+                      'المريض:  $patientName',
+                      style:const  TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      'الكرسي رقم: 10',
-                      style: TextStyle(
+                      'الكرسي رقم: $chairNumber',
+                      style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      'تاريخ الموعد:   9:30   2024/7/1',
-                      style: TextStyle(
+                      'تاريخ الموعد:   :   $date',
+                      style:const  TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 20,
                       ),

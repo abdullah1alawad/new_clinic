@@ -1,9 +1,9 @@
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/provider/theme_provider.dart';
 import 'package:clinic_test_app/screens/appointments/coming_appointments.dart';
 import 'package:clinic_test_app/screens/appointments/completed_appointments.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
-import 'package:clinic_test_app/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
@@ -35,8 +35,9 @@ class AppointmentsScreen extends StatelessWidget {
           actions: [
             ElevatedButton(
               onPressed: () {
-                Provider.of<ThemeProvider>(context, listen: false)
-                    .toggleTheme();
+                // Provider.of<ThemeProvider>(context, listen: false)
+                //     .toggleTheme();
+                Provider.of<FiveScreenProvider>(context, listen: false).fun();
               },
               child: Icon(Icons.light_mode),
             )

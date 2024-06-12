@@ -1,5 +1,6 @@
 import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/validations.dart';
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/provider/login_provider.dart';
 import 'package:clinic_test_app/screens/main_screen.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';

@@ -2,14 +2,14 @@ import 'package:clinic_test_app/cache/cache_helper.dart';
 import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/dio/dio_helpers.dart';
-import 'package:clinic_test_app/model/user_model.dart';
+import 'package:clinic_test_app/model/login_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class LoginProvider extends ChangeNotifier {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  UserModel? userInfo;
+  LoginModel? loginInfo;
   ConnectionEnum? connecion;
   String? errorMessage;
 
@@ -24,9 +24,9 @@ class LoginProvider extends ChangeNotifier {
 
     try {
       var response = await DioHelper.logIn(data);
-      userInfo = UserModel.fromJson(response.data[kDATA]);
-      CacheHelper().saveData(key: kTOKEN, value: userInfo!.token);
-      CacheHelper().saveData(key: kID, value: userInfo!.id);
+      loginInfo = LoginModel.fromJson(response.data[kDATA]);
+      CacheHelper().saveData(key: kTOKEN, value: loginInfo!.token);
+      CacheHelper().saveData(key: kID, value: loginInfo!.id);
 
       connecion = ConnectionEnum.connected;
       notifyListeners();

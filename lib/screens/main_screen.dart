@@ -1,8 +1,10 @@
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/screens/appointments/appointments.dart';
 import 'package:clinic_test_app/screens/marks_screen.dart';
 import 'package:clinic_test_app/screens/notifications_screen.dart';
 import 'package:clinic_test_app/screens/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,12 +14,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  void _selectScreen(int index) {
-    setState(() {
-      _selectedScreen = index;
-    });
-  }
-
   int _selectedScreen = 2;
 
   final List<Widget> _screens = [
@@ -27,6 +23,20 @@ class _MainScreenState extends State<MainScreen> {
     const Text('المحادثة'),
     const MarksScreen(),
   ];
+
+  void _selectScreen(int index) {
+    setState(() {
+      _selectedScreen = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<FiveScreenProvider>(context, listen: false).getFiveScreen();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

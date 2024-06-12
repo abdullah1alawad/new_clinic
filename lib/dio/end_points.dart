@@ -3,4 +3,5 @@ class EndPoint {
   static const String login = 'login';
   static const String editeProfile = 'user/update';
   static const String resetPassword = 'user/reset-password';
+  static const String getFiveScreen = 'configuration';
 }
