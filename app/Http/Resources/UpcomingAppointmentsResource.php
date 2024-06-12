@@ -24,13 +24,15 @@ class UpcomingAppointmentsResource extends JsonResource
             'patient_name' => $this->patient->name,
             'assistant_name' => $this->assistant->name,
             'subject_name' => $this->subject->name,
-            'appointment_date' => $date_from_database->format('Y-m-d'),
+            'appointment_date' => $date_from_database->format('Y-m-d H:m'),
+            'time'=>'',
             'time_difference' => $time_difference,
             'clinic_name' => $this->chair->clinic->name,
             'chair_number' => $this->chair->chair_number,
             'photo' => $this->photo,
             'status' => $this->status,
             'mark' => null,
+            'subprocesses'=>SubProcess_markResource::collection($this->marks),
         ];
     }
 }

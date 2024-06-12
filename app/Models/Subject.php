@@ -28,6 +28,16 @@ class Subject extends Model
         'name'=>'string',
     ];
 
+    public function doctor()
+    {
+        return $this->belongsTo(User::class,'doctor_id','id');
+    }
+
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class);
+    }
+
     public function studentMarks()
     {
         return $this->hasMany(Student_mark::class);

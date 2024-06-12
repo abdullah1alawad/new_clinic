@@ -14,10 +14,10 @@ class Process extends Model
     protected $fillable = [
         'student_id',
         'doctor_id',
-        'patient_id',
         'assistant_id',
         'chair_id',
         'subject_id',
+        'questions',
         'date',
         'photo',
         'created_at', 'updated_at',
@@ -32,10 +32,10 @@ class Process extends Model
     protected $casts = [
         'student_id' => 'integer',
         'doctor_id' => 'integer',
-        'patient_id' => 'integer',
         'assistant_id' => 'integer',
         'chair_id' => 'integer',
         'subject_id' => 'integer',
+        'questions' => 'longtext',
         'date' => 'datetime',
         'photo' => 'string',
         'status' => 'integer',

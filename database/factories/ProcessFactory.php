@@ -36,13 +36,13 @@ class ProcessFactory extends Factory
             'student_id' => $student,
             'doctor_id' => $doctor,
             'assistant_id' => $assistant,
-            'patient_id' => Patient::all()->random()->id,
             'chair_id' => Chair::all()->random()->id,
             'subject_id' => Subject::all()->random()->id,
+            'questions' => $this->faker->realText(),
             'date' => $this->faker->dateTime,
             'photo' => $this->faker->url,
-            'status' => $this->faker->numberBetween(1,5),
-            'mark' => $this->faker->numberBetween(0,10),
+            'status' => $this->faker->numberBetween(1, 5),
+            'mark' => $this->faker->numberBetween(0, 10),
         ];
     }
 }

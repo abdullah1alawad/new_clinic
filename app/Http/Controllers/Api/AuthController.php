@@ -51,12 +51,18 @@ class AuthController extends Controller
             $user = auth('sanctum')->user();
 
             $current_time = Carbon::now();
-            $upcomingAppointments = $user->studentProcesses()->where('date', '>=', $current_time)->get();
 
-            $completedAppointments = $user->studentProcesses()->where('date', '<', $current_time)->paginate(7);
+            $upcomingAppointments = $user->studentProcesses()
+                ->where('date', '>=', $current_time)
+                ->get();
+
+            $completedAppointments = $user->studentProcesses()
+                ->where('date', '<', $current_time)
+                ->paginate(7);
 
             $studentMarks = $user->studentMarks()->paginate(7);
 
+//return $studentMarks;
             $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks);
 
             return $this->apiResponse($user, true, 'configuration data.');

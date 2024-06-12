@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use  HasFactory,HasApiTokens;
+    use  HasFactory, HasApiTokens;
 
     protected $fillable = [
         'email', 'name', 'gender',
@@ -79,6 +79,11 @@ class User extends Authenticatable
     public function schedules()
     {
         return $this->hasMany(User_schedule::class);
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class, 'doctor_id', 'id');
     }
 
     public function getGenderAttribute($val)

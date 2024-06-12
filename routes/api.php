@@ -52,7 +52,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //----------------------------------process---------------------------------
 
-Route::get('process/get-info',[ProcessController::class,'index']);
+Route::group(['prefix' => 'process'], function () {
+    Route::get('process/get-clinics', [ProcessController::class, 'index']);
+    Route::get('process/get-info/{id}', [ProcessController::class, 'get_info']);
+    Route::get('process/get-chairs/{id}', [ProcessController::class, 'get_chairs']);
+
+});
+
 
 //--------------------------------------------------------------------------
 
@@ -62,11 +68,6 @@ Route::get('process/get-info',[ProcessController::class,'index']);
 // will send questions and subjects and doctors
 //send the doctor who choose
 //see the doctor empty and chairs
-
-
-
-
-
 
 
 // subject will have doctor and clinic will have subjects

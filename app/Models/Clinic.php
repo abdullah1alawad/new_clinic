@@ -30,4 +30,14 @@ class Clinic extends Model
     {
         return $this->hasMany(Chair::class);
     }
+
+    public function question()
+    {
+        return $this->hasMany(Patient_question::class);
+    }
+
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
+    }
 }
