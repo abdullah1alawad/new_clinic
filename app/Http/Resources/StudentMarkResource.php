@@ -19,25 +19,15 @@ class StudentMarkResource extends JsonResource
         $current_time = Carbon::now();
         $subjectId = $this->subject_id;
 
-        $upcomingAppointmentsForSubjects = $user->studentProcesses()
+        $appointmentsForSubjects = $user->studentProcesses()
             ->where('subject_id', $subjectId)
-            ->where('date', '>=', $current_time)
-            ->where('status', '>', 0)
-            ->get();
-
-        $completedAppointmentsForSubjects = $user->studentProcesses()
-            ->where('subject_id', $subjectId)
-            ->where('date', '<', $current_time)
             ->where('status', '>', 0)
             ->paginate(7);
 
         return [
             'subject_name' => $this->subject->name,
             'mark' => $this->mark,
-            'appointments' => [
-                'upcomingAppointmentsForSubjects' => UpcomingAppointmentsResource::collection($upcomingAppointmentsForSubjects),
-                'completedAppointmentsForSubjects' => CompletedAppointmentsResource::collection($completedAppointmentsForSubjects),
-            ],
+            'appointments' => CompletedAppointmentsResource::collection($appointmentsForSubjects),
         ];
     }
 }
