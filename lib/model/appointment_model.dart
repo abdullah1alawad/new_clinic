@@ -1,7 +1,7 @@
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/model/subprocess_model.dart';
 
-class CompletedAppointmentModel {
+class AppointmentModel {
   final String doctorName,
       assistenName,
       patientName,
@@ -10,10 +10,11 @@ class CompletedAppointmentModel {
       photo,
       date,
       timeDifference;
-  final int chairNumber, status, mark, id;
+  final int chairNumber, status, id;
+  final int? mark;
   final List<SubprocessModel> subprocesses;
 
-  CompletedAppointmentModel({
+  AppointmentModel({
     required this.doctorName,
     required this.assistenName,
     required this.patientName,
@@ -29,8 +30,8 @@ class CompletedAppointmentModel {
     required this.subprocesses,
   });
 
-  factory CompletedAppointmentModel.fromJson(Map<String, dynamic> jsonData) {
-    return CompletedAppointmentModel(
+  factory AppointmentModel.fromJson(Map<String, dynamic> jsonData) {
+    return AppointmentModel(
       doctorName: jsonData[kDOCTORNAME],
       assistenName: jsonData[kASSISTENTNAME],
       patientName: jsonData[kPATINENTNAME],
