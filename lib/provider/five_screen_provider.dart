@@ -37,9 +37,9 @@ class FiveScreenProvider extends ChangeNotifier {
                   AppointmentModel.fromJson(completedAppointment))
               .toList();
 
-      // marks = (response.data[kDATA][kMARKS] as List)
-      //     .map((mark) => MarkModel.fromjson(mark))
-      //     .toList();
+      marks = (response.data[kDATA][kMARKS] as List)
+          .map((mark) => MarkModel.fromjson(mark))
+          .toList();
 
       connection = ConnectionEnum.connected;
       notifyListeners();

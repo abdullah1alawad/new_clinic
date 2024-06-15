@@ -17,23 +17,7 @@ class CompletedAppointments extends StatelessWidget {
             itemBuilder: (context, index) {
               if (index != provider.completedAppointments!.length) {
                 return AppointmentCard(
-                  subjectName:
-                      provider.completedAppointments![index].subjectName,
-                  doctorName: provider.completedAppointments![index].doctorName,
-                  patientName:
-                      provider.completedAppointments![index].patientName,
-                  chairNumber:
-                      provider.completedAppointments![index].chairNumber,
-                  status: provider.completedAppointments![index].status,
-                  date: provider.completedAppointments![index].date,
-                  assistentName:
-                      provider.completedAppointments![index].assistenName,
-                  clinicName: provider.completedAppointments![index].clinicName,
-                  id: provider.completedAppointments![index].id,
-                  photo: provider.completedAppointments![index].photo,
-                  mark: provider.completedAppointments![index].mark,
-                  subprocess:
-                      provider.completedAppointments![index].subprocesses,
+                  appointment: provider.completedAppointments![index],
                 );
               } else {
                 return const SizedBox(height: 50);

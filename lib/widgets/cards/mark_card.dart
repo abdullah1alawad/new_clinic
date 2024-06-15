@@ -1,11 +1,21 @@
+import 'package:clinic_test_app/model/appointment_model.dart';
+import 'package:clinic_test_app/widgets/cards/appointment_details_card.dart';
 import 'package:flutter/material.dart';
 
 class MarkCard extends StatelessWidget {
-  const MarkCard({super.key});
+  final String subjectName;
+  final int mark;
+  final List<AppointmentModel> appointments;
+
+  const MarkCard({
+    super.key,
+    required this.subjectName,
+    required this.mark,
+    required this.appointments,
+  });
 
   @override
   Widget build(BuildContext context) {
-    int total = 0;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       decoration: BoxDecoration(
@@ -23,9 +33,9 @@ class MarkCard extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            const Text(
-              'قلع وتخدير',
-              style: TextStyle(
+            Text(
+              subjectName,
+              style: const TextStyle(
                 fontFamily: 'ElMessiri',
                 fontSize: 20,
               ),
@@ -76,15 +86,14 @@ class MarkCard extends StatelessWidget {
                   ],
                 ),
                 ...List.generate(
-                  3,
+                  appointments.length,
                   (index) {
-                    total += (index * 2 + 1);
                     return TableRow(
                       children: [
                         TableCell(
                           child: Center(
                             child: Text(
-                              '$index',
+                              '${index + 1}',
                               style: const TextStyle(
                                 fontFamily: 'ElMessiri',
                                 fontSize: 18,
@@ -95,7 +104,7 @@ class MarkCard extends StatelessWidget {
                         TableCell(
                           child: Center(
                             child: Text(
-                              '${index * 2 + 1}',
+                              '${appointments[index].mark}',
                               style: const TextStyle(
                                 fontFamily: 'ElMessiri',
                                 fontSize: 18,
@@ -105,7 +114,15 @@ class MarkCard extends StatelessWidget {
                         ),
                         TableCell(
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                useSafeArea: true,
+                                context: context,
+                                builder: (context) => AppointmentDetailsCard(
+                                  appointment: appointments[index],
+                                ),
+                              );
+                            },
                             icon: const Icon(
                               Icons.read_more,
                               textDirection: TextDirection.ltr,
@@ -138,7 +155,7 @@ class MarkCard extends StatelessWidget {
                     TableCell(
                       child: Center(
                         child: Text(
-                          '$total',
+                          '$mark',
                           style: const TextStyle(
                               fontFamily: 'ElMessiri',
                               fontSize: 20,

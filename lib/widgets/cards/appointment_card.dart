@@ -1,34 +1,14 @@
-import 'package:clinic_test_app/model/subprocess_model.dart';
+import 'package:clinic_test_app/model/appointment_model.dart';
 import 'package:clinic_test_app/widgets/cards/appointment_details_card.dart';
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class AppointmentCard extends StatelessWidget {
-  final String subjectName,
-      doctorName,
-      patientName,
-      assistentName,
-      clinicName,
-      date,
-      photo;
-  final int id, chairNumber, status;
-  final int? mark;
-  final List<SubprocessModel> subprocess;
+  final AppointmentModel appointment;
 
   const AppointmentCard({
     super.key,
-    required this.subjectName,
-    required this.doctorName,
-    required this.patientName,
-    required this.assistentName,
-    required this.clinicName,
-    required this.date,
-    required this.photo,
-    required this.id,
-    required this.chairNumber,
-    required this.status,
-    this.mark,
-    required this.subprocess,
+    required this.appointment,
   });
 
   @override
@@ -39,18 +19,7 @@ class AppointmentCard extends StatelessWidget {
           useSafeArea: true,
           context: context,
           builder: (context) => AppointmentDetailsCard(
-            subjectName: subjectName,
-            doctorName: doctorName,
-            patientName: patientName,
-            assistentName: assistentName,
-            clinicName: clinicName,
-            date: date,
-            photo: photo,
-            id: id,
-            chairNumber: chairNumber,
-            status: status,
-            subprocess: subprocess,
-            mark: mark,
+            appointment: appointment,
           ),
         );
       },
@@ -80,35 +49,35 @@ class AppointmentCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      subjectName,
+                      appointment.subjectName,
                       style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 22,
                       ),
                     ),
                     Text(
-                      'اشراف الدكتورة: $doctorName',
+                      'اشراف الدكتور: ${appointment.doctorName}',
                       style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 20,
                       ),
                     ),
                     Text(
-                      'المريض:  $patientName',
+                      'المريض:  ${appointment.patientName}',
                       style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      'الكرسي رقم: $chairNumber',
+                      'الكرسي رقم: ${appointment.chairNumber}',
                       style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 18,
                       ),
                     ),
                     Text(
-                      'تاريخ الموعد:   :   $date',
+                      'تاريخ الموعد:   :   ${appointment.date}',
                       style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 20,
@@ -123,22 +92,22 @@ class AppointmentCard extends StatelessWidget {
               top: 12,
               left: 0,
               child: Icon(
-                status == 0
+                appointment.status == 0
                     ? EvaIcons.closeCircle
-                    : status == 1
+                    : appointment.status == 1
                         ? EvaIcons.checkmarkCircle2
-                        : status == 2
+                        : appointment.status == 2
                             ? EvaIcons.alertCircle
-                            : status == 3
+                            : appointment.status == 3
                                 ? Icons.run_circle_rounded
                                 : Icons.download_done,
-                color: status == 0
+                color: appointment.status == 0
                     ? Colors.redAccent
-                    : status == 1
+                    : appointment.status == 1
                         ? Colors.green
-                        : status == 2
+                        : appointment.status == 2
                             ? Colors.orangeAccent
-                            : status == 3
+                            : appointment.status == 3
                                 ? Colors.blue
                                 : Colors.grey,
                 size: 40,

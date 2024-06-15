@@ -3,7 +3,7 @@ import 'package:clinic_test_app/model/subprocess_model.dart';
 
 class AppointmentModel {
   final String doctorName,
-      assistenName,
+      assistentName,
       patientName,
       subjectName,
       clinicName,
@@ -16,7 +16,7 @@ class AppointmentModel {
 
   AppointmentModel({
     required this.doctorName,
-    required this.assistenName,
+    required this.assistentName,
     required this.patientName,
     required this.subjectName,
     required this.clinicName,
@@ -33,7 +33,7 @@ class AppointmentModel {
   factory AppointmentModel.fromJson(Map<String, dynamic> jsonData) {
     return AppointmentModel(
       doctorName: jsonData[kDOCTORNAME],
-      assistenName: jsonData[kASSISTENTNAME],
+      assistentName: jsonData[kASSISTENTNAME],
       patientName: jsonData[kPATINENTNAME],
       subjectName: jsonData[kSUBJECTNAME],
       clinicName: jsonData[kCLINICNAME],

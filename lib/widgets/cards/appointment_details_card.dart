@@ -1,33 +1,13 @@
-import 'package:clinic_test_app/model/subprocess_model.dart';
+import 'package:clinic_test_app/model/appointment_model.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentDetailsCard extends StatelessWidget {
-  final String subjectName,
-      doctorName,
-      patientName,
-      assistentName,
-      clinicName,
-      date,
-      photo;
-  final int id, chairNumber, status;
-  final int? mark;
-  final List<SubprocessModel> subprocess;
+  final AppointmentModel appointment;
 
   const AppointmentDetailsCard({
     super.key,
-    required this.subjectName,
-    required this.doctorName,
-    required this.patientName,
-    required this.assistentName,
-    required this.clinicName,
-    required this.date,
-    required this.photo,
-    required this.id,
-    required this.chairNumber,
-    required this.status,
-    this.mark,
-    required this.subprocess,
+    required this.appointment,
   });
 
   @override
@@ -38,7 +18,7 @@ class AppointmentDetailsCard extends StatelessWidget {
           data: Column(
             children: [
               Text(
-                subjectName,
+                appointment.subjectName,
                 style: const TextStyle(
                   fontFamily: 'ElMessiri',
                   fontSize: 22,
@@ -105,55 +85,55 @@ class AppointmentDetailsCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        doctorName,
+                        appointment.doctorName,
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        assistentName,
+                        appointment.assistentName,
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        patientName,
+                        appointment.patientName,
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        clinicName,
+                        appointment.clinicName,
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        '$chairNumber',
+                        '${appointment.chairNumber}',
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        date,
+                        appointment.date,
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
                         ),
                       ),
                       Text(
-                        status == 0
+                        appointment.status == 0
                             ? 'مرفوضة'
-                            : status == 1
+                            : appointment.status == 1
                                 ? 'مقبولة'
-                                : status == 2
+                                : appointment.status == 2
                                     ? 'قيد الانتظار'
-                                    : status == 3
+                                    : appointment.status == 3
                                         ? 'جارية'
                                         : 'منتهية',
                         style: const TextStyle(
@@ -207,14 +187,14 @@ class AppointmentDetailsCard extends StatelessWidget {
                     ],
                   ),
                   ...List.generate(
-                    subprocess.length,
+                    appointment.subprocesses.length,
                     (index) {
                       return TableRow(
                         children: [
                           TableCell(
                             child: Center(
                               child: Text(
-                                subprocess[index].name,
+                                appointment.subprocesses[index].name,
                                 style: const TextStyle(
                                   fontFamily: 'ElMessiri',
                                   fontSize: 18,
@@ -225,7 +205,7 @@ class AppointmentDetailsCard extends StatelessWidget {
                           TableCell(
                             child: Center(
                               child: Text(
-                                '${subprocess[index].mark}',
+                                '${appointment.subprocesses[index].mark}',
                                 style: const TextStyle(
                                   fontFamily: 'ElMessiri',
                                   fontSize: 18,
@@ -259,7 +239,7 @@ class AppointmentDetailsCard extends StatelessWidget {
                       TableCell(
                         child: Center(
                           child: Text(
-                            '$mark',
+                            '${appointment.mark}',
                             style: const TextStyle(
                                 fontFamily: 'ElMessiri',
                                 fontSize: 20,

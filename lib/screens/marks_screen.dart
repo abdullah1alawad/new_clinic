@@ -1,7 +1,10 @@
+import 'package:clinic_test_app/core/enum/connection_enum.dart';
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
 import 'package:clinic_test_app/widgets/cards/mark_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MarksScreen extends StatelessWidget {
   const MarksScreen({super.key});
@@ -22,18 +25,36 @@ class MarksScreen extends StatelessWidget {
         ),
       ),
       body: BackGroundContainer(
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 10.0),
-                child: MarkCard(),
+        child: Consumer<FiveScreenProvider>(
+          builder: (context, provider, child) {
+            if (provider.connection == ConnectionEnum.connected) {
+              return ListView.builder(
+                itemCount: provider.marks!.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: MarkCard(
+                        subjectName: provider.marks![index].subjectName,
+                        mark: provider.marks![index].mark,
+                        appointments: provider.marks![index].appointments,
+                      ),
+                    );
+                  } else if (index != provider.marks!.length) {
+                    return MarkCard(
+                      subjectName: provider.marks![index].subjectName,
+                      mark: provider.marks![index].mark,
+                      appointments: provider.marks![index].appointments,
+                    );
+                  } else {
+                    return const SizedBox(height: 50);
+                  }
+                },
               );
-            } else if (index == 4) {
-              return const SizedBox(height: 50);
+            } else if (provider.connection == ConnectionEnum.failed) {
+              return Center(child: Text(provider.errorMessage ?? 'Error'));
             } else {
-              return const MarkCard();
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
