@@ -23,6 +23,12 @@ class ComingAppointments extends StatelessWidget {
                   chairNumber: provider.comingAppointments![index].chairNumber,
                   status: provider.comingAppointments![index].status,
                   date: provider.comingAppointments![index].date,
+                  assistentName: provider.comingAppointments![index].assistenName,
+                  clinicName:provider.comingAppointments![index].clinicName,
+                  id: provider.comingAppointments![index].id,
+                  photo: provider.comingAppointments![index].photo,
+                  mark: provider.comingAppointments![index].mark,
+                  subprocess: provider.comingAppointments![index].subprocesses,
                 );
               } else {
                 return const SizedBox(height: 50);

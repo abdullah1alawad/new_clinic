@@ -13,16 +13,27 @@ class CompletedAppointments extends StatelessWidget {
       builder: (context, provider, child) {
         if (provider.connection == ConnectionEnum.connected) {
           return ListView.builder(
-            itemCount: provider.comingAppointments!.length + 1,
+            itemCount: provider.completedAppointments!.length + 1,
             itemBuilder: (context, index) {
-              if (index != provider.comingAppointments!.length) {
+              if (index != provider.completedAppointments!.length) {
                 return AppointmentCard(
-                  subjectName: provider.comingAppointments![index].subjectName,
-                  doctorName: provider.comingAppointments![index].doctorName,
-                  patientName: provider.comingAppointments![index].patientName,
-                  chairNumber: provider.comingAppointments![index].chairNumber,
-                  status: provider.comingAppointments![index].status,
-                  date: provider.comingAppointments![index].date,
+                  subjectName:
+                      provider.completedAppointments![index].subjectName,
+                  doctorName: provider.completedAppointments![index].doctorName,
+                  patientName:
+                      provider.completedAppointments![index].patientName,
+                  chairNumber:
+                      provider.completedAppointments![index].chairNumber,
+                  status: provider.completedAppointments![index].status,
+                  date: provider.completedAppointments![index].date,
+                  assistentName:
+                      provider.completedAppointments![index].assistenName,
+                  clinicName: provider.completedAppointments![index].clinicName,
+                  id: provider.completedAppointments![index].id,
+                  photo: provider.completedAppointments![index].photo,
+                  mark: provider.completedAppointments![index].mark,
+                  subprocess:
+                      provider.completedAppointments![index].subprocesses,
                 );
               } else {
                 return const SizedBox(height: 50);

@@ -1,19 +1,34 @@
-import 'package:clinic_test_app/widgets/custom_container.dart';
+import 'package:clinic_test_app/model/subprocess_model.dart';
+import 'package:clinic_test_app/widgets/cards/appointment_details_card.dart';
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class AppointmentCard extends StatelessWidget {
-  final String subjectName, doctorName, patientName,date;
-  final int chairNumber, status;
+  final String subjectName,
+      doctorName,
+      patientName,
+      assistentName,
+      clinicName,
+      date,
+      photo;
+  final int id, chairNumber, status;
+  final int? mark;
+  final List<SubprocessModel> subprocess;
 
   const AppointmentCard({
     super.key,
     required this.subjectName,
     required this.doctorName,
     required this.patientName,
+    required this.assistentName,
+    required this.clinicName,
+    required this.date,
+    required this.photo,
+    required this.id,
     required this.chairNumber,
     required this.status,
-    required this.date,
+    this.mark,
+    required this.subprocess,
   });
 
   @override
@@ -23,23 +38,19 @@ class AppointmentCard extends StatelessWidget {
         showDialog(
           useSafeArea: true,
           context: context,
-          builder: (context) => CustomContainer(
-            data: const Column(
-              children: [
-                Text(
-                  'قريبا...',
-                  style: TextStyle(fontSize: 50),
-                )
-              ],
-            ),
-            icon: Icons.menu_book_sharp,
-            onPressButton: () {
-              Navigator.of(context).pop();
-            },
-            buttonText: "تم",
-            //height: 700,
-            cancel: true,
-            loading: false,
+          builder: (context) => AppointmentDetailsCard(
+            subjectName: subjectName,
+            doctorName: doctorName,
+            patientName: patientName,
+            assistentName: assistentName,
+            clinicName: clinicName,
+            date: date,
+            photo: photo,
+            id: id,
+            chairNumber: chairNumber,
+            status: status,
+            subprocess: subprocess,
+            mark: mark,
           ),
         );
       },
@@ -70,7 +81,7 @@ class AppointmentCard extends StatelessWidget {
                   children: [
                     Text(
                       subjectName,
-                      style:const TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 22,
                       ),
@@ -84,7 +95,7 @@ class AppointmentCard extends StatelessWidget {
                     ),
                     Text(
                       'المريض:  $patientName',
-                      style:const  TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 18,
                       ),
@@ -98,25 +109,38 @@ class AppointmentCard extends StatelessWidget {
                     ),
                     Text(
                       'تاريخ الموعد:   :   $date',
-                      style:const  TextStyle(
+                      style: const TextStyle(
                         fontFamily: 'ElMessiri',
                         fontSize: 20,
                       ),
                     ),
+                    //Text('$mark'),
                   ],
                 ),
               ),
             ),
-            const Positioned(
+            Positioned(
               top: 12,
               left: 0,
               child: Icon(
-                EvaIcons.checkmarkCircle2,
-                //EvaIcons.alertCircle,
-                // EvaIcons.closeCircle,
-                color: Colors.green,
-                //color: Colors.orangeAccent,
-                // color: Colors.redAccent,
+                status == 0
+                    ? EvaIcons.closeCircle
+                    : status == 1
+                        ? EvaIcons.checkmarkCircle2
+                        : status == 2
+                            ? EvaIcons.alertCircle
+                            : status == 3
+                                ? Icons.run_circle_rounded
+                                : Icons.download_done,
+                color: status == 0
+                    ? Colors.redAccent
+                    : status == 1
+                        ? Colors.green
+                        : status == 2
+                            ? Colors.orangeAccent
+                            : status == 3
+                                ? Colors.blue
+                                : Colors.grey,
                 size: 40,
               ),
             ),

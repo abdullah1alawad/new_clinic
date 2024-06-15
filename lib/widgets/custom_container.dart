@@ -7,6 +7,7 @@ class CustomContainer extends StatelessWidget {
   final VoidCallback onPressButton;
   final String buttonText;
   final bool cancel, loading;
+  final double? height;
 
   const CustomContainer({
     super.key,
@@ -16,6 +17,7 @@ class CustomContainer extends StatelessWidget {
     required this.buttonText,
     required this.cancel,
     required this.loading,
+    this.height,
   });
 
   @override
@@ -29,12 +31,13 @@ class CustomContainer extends StatelessWidget {
               ClipPath(
                 clipper: RoundedDiagonalPathClipper(),
                 child: Container(
+                  height: height,
                   padding: const EdgeInsets.fromLTRB(30.0, 100, 30, 50),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(40.0)),
                     color: Theme.of(context).colorScheme.secondary,
                   ),
-                  child: data,
+                  child: SingleChildScrollView(child: data),
                 ),
               ),
               const SizedBox(height: 25),
@@ -57,7 +60,6 @@ class CustomContainer extends StatelessWidget {
             bottom: 0,
             left: 0,
             right: 0,
-            
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
