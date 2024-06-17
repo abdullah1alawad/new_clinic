@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
+use App\Models\User_schedule;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProcessSeeder::class);
         $this->call(Subprocess_markSeeder::class);
         $this->call(Student_markSeeder::class);
+        $this->call(User_scheduleSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

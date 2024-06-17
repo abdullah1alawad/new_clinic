@@ -22,8 +22,8 @@ class User_schedule extends Model
     ];
 
     protected $casts = [
-        'id' => 'unsignedBigInteger',
-        'user_id' => 'unsignedBigInteger',
+        'id' => 'integer',
+        'user_id' => 'integer',
         'time_of_work' => 'array',
     ];
 

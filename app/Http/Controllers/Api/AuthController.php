@@ -62,7 +62,6 @@ class AuthController extends Controller
 
             $studentMarks = $user->studentMarks()->paginate(7);
 
-//return $studentMarks;
             $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks);
 
             return $this->apiResponse($user, true, 'configuration data.');

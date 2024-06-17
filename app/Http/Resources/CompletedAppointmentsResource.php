@@ -21,7 +21,6 @@ class CompletedAppointmentsResource extends JsonResource
         return [
             'id' => $this->id,
             'doctor_name' => $this->doctor->name,
-            'patient_name' => $this->patient->name,
             'assistant_name' => $this->assistant->name,
             'subject_name' => $this->subject->name,
             'appointment_date' => $date_from_database->format('Y-m-d h:m A'),

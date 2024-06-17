@@ -53,9 +53,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //----------------------------------process---------------------------------
 
 Route::group(['prefix' => 'process'], function () {
-    Route::get('process/get-clinics', [ProcessController::class, 'index']);
-    Route::get('process/get-info/{id}', [ProcessController::class, 'get_info']);
-    Route::get('process/get-chairs/{id}', [ProcessController::class, 'get_chairs']);
+    Route::get('get-clinics', [ProcessController::class, 'index']);
+    Route::get('get-info/{clinic_id}', [ProcessController::class, 'get_info']);
+    Route::get('get-chairs/{doctor_id}/{clinic_id}', [ProcessController::class, 'get_chairs']);
 
 });
 

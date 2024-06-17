@@ -35,7 +35,7 @@ class Process extends Model
         'assistant_id' => 'integer',
         'chair_id' => 'integer',
         'subject_id' => 'integer',
-        'questions' => 'longtext',
+        'questions' => 'array',
         'date' => 'datetime',
         'photo' => 'string',
         'status' => 'integer',

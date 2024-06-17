@@ -3,6 +3,7 @@
 namespace App\traits;
 
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Psy\Util\Str;
 
@@ -49,7 +50,7 @@ trait GeneralTrait
         return [true, 'No error'];
     }
 
-    function saveImage($photo, $folder)
+    public function saveImage($photo, $folder)
     {
         $photoName = $photo;
         $fileName = time() . '.' . $photoName->getClientOriginalExtension();
@@ -57,5 +58,37 @@ trait GeneralTrait
 
         return $fileName;
     }
+
+    public function getDayByNumber($day)
+    {
+        switch ($day) {
+            case 1:
+                return 'Saturday';
+            case 2:
+                return 'Sunday';
+            case 3:
+                return 'Monday';
+            case 4:
+                return 'Tuesday';
+            case 5:
+                return 'Wednesday';
+            case 6:
+                return 'Thursday';
+            default:
+                return 'Invalid day number';
+        }
+    }
+
+    public function getDayByDate($date)
+    {
+        // Create a Carbon instance from the given date
+        $carbonDate = Carbon::parse($date);
+
+        // Get the day of the week
+        $dayOfWeek = $carbonDate->format('l'); // 'l' will return the full textual representation of the day
+
+        return $dayOfWeek;
+    }
+
 
 }
