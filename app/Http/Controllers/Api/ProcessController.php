@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Chair;
 use App\Models\Clinic;
-use App\Models\Patient;
 use App\Models\Patient_question;
 use App\Models\Process;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\User_schedule;
-use DateTime;
 use Illuminate\Http\Request;
 use App\traits\GeneralTrait;
 use Illuminate\Support\Carbon;
@@ -137,8 +135,10 @@ class ProcessController extends Controller
                     $scheduleForMonth[$appointmentDate][$appointmentTime] = 0;
 
             }
-            return [$doctor_schedule, $scheduleForMonth];
 
+            //chairs still not done
+            // may be doctor can take many operation at the same time
+            return $this->apiResponse($scheduleForMonth, true, 'appointments.');
 
         } catch (\Exception $ex) {
             return $this->internalServer($ex->getMessage());
