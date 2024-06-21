@@ -56,6 +56,7 @@ Route::group(['prefix' => 'process'], function () {
     Route::get('get-clinics', [ProcessController::class, 'index']);
     Route::get('get-info/{clinic_id}', [ProcessController::class, 'get_info']);
     Route::get('get-chairs/{doctor_id}/{clinic_id}', [ProcessController::class, 'get_chairs']);
+    Route::post('book-chair', [ProcessController::class, 'book_chair']);
 
 });
 

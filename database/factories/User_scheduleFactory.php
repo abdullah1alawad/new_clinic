@@ -32,7 +32,7 @@ class User_scheduleFactory extends Factory
 
         return [
             'user_id' => $doctor,
-            'time_of_work' => $arr
+            'time_of_work' => $arr,
         ];
     }
     protected function getUniqueDoctorId()

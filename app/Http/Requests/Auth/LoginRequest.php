@@ -41,11 +41,11 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'The username field is required.',
-            'username.exists' => 'The provided username does not exist in our records.',
-            'username.max' => 'The username may not be greater than 20 characters.',
-            'password.required' => 'The password field is required.',
-            'password.max' => 'The password may not be greater than 20 characters.',
+            'username.required' => 'حقل اسم المستخدم مطلوب.',
+            'username.exists' => 'اسم المستخدم المقدم غير موجود في سجلاتنا.',
+            'username.max' => 'لا يجوز أن يزيد اسم المستخدم عن 20 حرفًا.',
+            'password.required' => 'حقل كلمة المرور مطلوب.',
+            'password.max' => 'لا يجوز أن تزيد كلمة المرور عن 20 حرفًا.',
         ];
     }
 

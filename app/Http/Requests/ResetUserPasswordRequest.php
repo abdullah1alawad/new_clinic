@@ -42,12 +42,12 @@ class ResetUserPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'newPassword.required' => 'The new password field is required',
-            'newPassword.regex' => 'The new password must have a letters and numbers and must contain at least one letter and one number.',
-            'newPassword.min' => 'The new password should contain at least 8 characters.',
-            'newPassword.max' => 'The new password can only have 20 characters.',
-            'newPassword.different' => 'The new password must be different from the old password.',
-            'confirmPassword.same' => 'The password confirmation does not match.',
+            'newPassword.required' => 'حقل كلمة المرور الجديدة مطلوب',
+            'newPassword.regex' => 'يجب أن تحتوي كلمة المرور الجديدة على حروف وأرقام ويجب أن تحتوي على حرف واحد ورقم واحد على الأقل.',
+            'newPassword.min' => 'يجب أن تحتوي كلمة المرور الجديدة على 8 أحرف على الأقل.',
+            'newPassword.max' => 'يمكن أن تحتوي كلمة المرور الجديدة على 20 حرفًا فقط.',
+            'newPassword.different' => 'يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور القديمة.',
+            'confirmPassword.same' => 'تأكيد كلمة المرور غير متطابق.',
         ];
     }
 

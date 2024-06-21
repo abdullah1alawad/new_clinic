@@ -10,9 +10,12 @@ use App\Models\Process;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\User_schedule;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\traits\GeneralTrait;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProcessController extends Controller
 {
@@ -57,6 +60,18 @@ class ProcessController extends Controller
     public function get_chairs($doctor_id, $clinic_id)
     {
         try {
+
+            $doctorExists = User::where('id', $doctor_id)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'doctor');
+                })->exists();
+            if (!$doctorExists)
+                return $this->notFoundMessage('the doctor');
+
+            $clinicExists = Clinic::where('id', $clinic_id)->exists();
+            if (!$clinicExists)
+                return $this->notFoundMessage('the clinic');
+
             $current_time = Carbon::now();
 
             $doctor_schedule = User_schedule::where('user_id', $doctor_id)->first();
@@ -83,8 +98,12 @@ class ProcessController extends Controller
             for ($i = 0; $i < 30; $i++) {
                 $date = $current_time->copy()->addDays($i)->toDateString();
 
-                for ($j = 1; $j <= 4; $j++)
-                    $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 1;
+                for ($j = 1; $j <= 4; $j++) {
+                    if ($current_time <= $t[$j])
+                        $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 1;
+                    else
+                        $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 0;
+                }
             }
 
             if (isset($doctor_schedule)) {
@@ -93,7 +112,10 @@ class ProcessController extends Controller
                     foreach ($scheduleForMonth as $date => &$times) {
                         $dayFromMonthSchedule = $this->getDayByDate($date);
 
-                        if ($dayFromDoctorSchedule == $dayFromMonthSchedule) {
+                        if ($dayFromMonthSchedule == 'Friday') {
+                            foreach ($times as &$time)
+                                $time = 0;
+                        } else if ($dayFromDoctorSchedule == $dayFromMonthSchedule) {
 
                             if (empty($value)) {
                                 foreach ($times as &$time)
@@ -134,6 +156,76 @@ class ProcessController extends Controller
         } catch (\Exception $ex) {
             return $this->internalServer($ex->getMessage());
         }
+    }
+
+    public function book_chair(Request $request) // validation -- questions --
+    {
+        DB::beginTransaction();
+        try {
+
+            $validatedData = $request->validate([
+                'clinic_id' => 'required|integer|exists:clinics,id',
+                'date' => 'required|date',
+                'doctor_id' => 'required|integer',
+                'subject_id' => 'required|integer',
+                'questions' => 'required|array',
+                'questions.*.id' => 'required|integer|exists:patient_questions,id',
+                'questions.*.answer' => 'required|string',
+            ]);
+
+            $subjectIds = Subject::where('clinic_id', $request->clinic_id)->pluck('id');
+
+            $allSameTimeAppointmentsChairs = Process::whereIn('subject_id', $subjectIds)
+                ->where('date', $request->date)
+                ->where('status', '>', 0)
+                ->pluck('chair_id')
+                ->toArray();
+
+            $chairIds = Chair::where('clinic_id', $request->clinic_id)->pluck('id');
+
+//            $availableChairs = $chairIds->filter(function ($chairId) use ($allSameTimeAppointmentsChairs) {
+//                return !in_array($chairId, $allSameTimeAppointmentsChairs);
+//            })->values();
+
+            $firstAvailableChair = $chairIds->first(function ($chairId) use ($allSameTimeAppointmentsChairs) {
+                return !in_array($chairId, $allSameTimeAppointmentsChairs);
+            });
+
+            if (is_null($firstAvailableChair))
+                return $this->notFoundMessage('no chairs available.');
+
+            $photoPath = null;
+            if ($request->hasFile('photo'))
+                $photoPath = $this->saveImage($request->file('photo'), 'images');
+
+            $process = new Process;
+            $process->student_id = auth('sanctum')->user()->id;
+            $process->doctor_id = $request->doctor_id;
+            $process->chair_id = $firstAvailableChair;
+            $process->subject_id = $request->subject_id;
+            $process->questions = $request->questions;
+            $process->date = $request->date;
+            $process->photo = $photoPath;
+            $process->status = 1;
+            $process->save();
+
+            DB::commit();
+            return $this->apiResponse(null, true, 'The process has been stored successfully.');
+
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            if (isset($photoPath)) {
+                $photoFullPath = public_path($photoPath);
+
+                if (file_exists($photoFullPath))
+                    unlink($photoFullPath);
+            }
+
+            Log::error('Error storing process: ' . $ex->getMessage());
+            return $this->internalServer($ex->getMessage());
+        }
+
     }
 
     /**

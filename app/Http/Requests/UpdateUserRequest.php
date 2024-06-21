@@ -41,20 +41,20 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'The username field is required.',
-            'username.regex' => 'The username like instagram.',
-            'name.required' => 'The name field is required.',
-            'name.regex' => 'The name can have only letters.',
-            'name.max' => 'The name must be less than or equal to 40 characters.',
-            'national_id.required' => 'The national id field is required.',
-            'national_id.regex' => 'The national id can only have numbers.',
-            'national_id.max' => 'The national id must be less than or equal to 30 digits.',
-            'gender.required' => 'The gender is required.',
-            'phone.required' => 'The phone field is required.',
-            'phone.regex' => 'The phone can only have a digits.',
-            'phone.max' => 'The phone can only have 10 digits .',
-            'photo.image' => 'you must choose a valid image like png , jpg etc ....',
-            'photo.max' => 'choose an image size less than or equal to 2048KB.',
+            'username.required' => 'حقل اسم المستخدم مطلوب.',
+            'username.regex' => 'اسم المستخدم مثل الانستقرام',
+            'name.required' => 'حقل الاسم مطلوب.',
+            'name.regex' => 'يمكن أن يحتوي الاسم على أحرف فقط.',
+            'name.max' => 'يجب أن يكون الاسم أقل من أو يساوي 40 حرفًا.',
+            'national_id.required' => 'حقل الهوية الوطنية مطلوب.',
+            'national_id.regex' => 'يمكن أن تحتوي الهوية الوطنية على أرقام فقط.',
+            'national_id.max' => 'يجب أن يكون رقم الهوية الوطنية أقل من أو يساوي 30 رقمًا.',
+            'gender.required' => 'الجنس مطلوب .',
+            'phone.required' => 'حقل الهاتف مطلوب.',
+            'phone.regex' => 'يمكن أن يحتوي الهاتف على أرقام فقط.',
+            'phone.max' => 'يمكن أن يحتوي الهاتف على 10 أرقام فقط.',
+            'photo.image' => 'يجب عليك اختيار صورة صالحة مثل png، jpg الخ ....',
+            'photo.max' => 'اختر حجم صورة أقل من أو يساوي 2048 كيلو بايت.',
         ];
     }
 

@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Subprocess_markSeeder::class);
         $this->call(Student_markSeeder::class);
         $this->call(User_scheduleSeeder::class);
+        $this->call(Patient_questionSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

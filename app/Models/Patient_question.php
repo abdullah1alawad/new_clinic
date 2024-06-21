@@ -13,6 +13,7 @@ class Patient_question extends Model
         'clinic_id',
         'question',
         'validation',
+        'is_null',
         'created_at', 'updated_at'
     ];
 
@@ -23,7 +24,8 @@ class Patient_question extends Model
     protected $casts = [
         'clinic_id' => 'integer',
         'question' => 'string',
-        'validation' => 'integer',
+        'validation' => 'string',
+        'is_null' => 'boolean',
     ];
 
     public function clinic()
