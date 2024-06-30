@@ -1,5 +1,7 @@
+import 'package:clinic_test_app/provider/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/provider/theme_provider.dart';
+import 'package:clinic_test_app/screens/appointments/appointment_booking/appointment_booking.dart';
 import 'package:clinic_test_app/screens/appointments/coming_appointments.dart';
 import 'package:clinic_test_app/screens/appointments/completed_appointments.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
@@ -13,6 +15,8 @@ class AppointmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appointmentBookingScreenProvider =
+        Provider.of<AppointmentBookingScreensProvider>(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -67,36 +71,12 @@ class AppointmentsScreen extends StatelessWidget {
                         elevation: 0,
                         alignment: Alignment.center,
                         insetPadding: EdgeInsets.zero,
-                        child: CustomContainer(
-                          data: const Column(
-                            children: [
-                              Text('hello'),
-                              // CustomTextField(
-                              //   label: 'اسم المستخدم',
-                              //   icon: Icons.person,
-                              // ),
-                              // CustomTextField(
-                              //   label: "كلمة السر",
-                              //   icon: Icons.lock,
-                              // ),
-                              // CustomTextField(
-                              //   label: "كلمة السر",
-                              //   icon: Icons.lock,
-                              // ),
-                            ],
-                          ),
-
-                          icon: Icons.chair,
-                          onPressButton: () {
-                            Navigator.of(context).pop();
-                          },
-                          buttonText: "حجز موعد",
-                          //height: 500,
-                          cancel: true,
-                          loading: false,
-                        ),
+                        child: SingleChildScrollView(
+                            child: AppointmentBookingScreen()),
                       ),
-                    );
+                    ).then((value) {
+                      appointmentBookingScreenProvider.reSet();
+                    });
                   },
                   backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Theme.of(context).colorScheme.secondary,
@@ -154,14 +134,11 @@ class AppointmentsScreen extends StatelessWidget {
                               // ),
                             ],
                           ),
-
                           icon: Icons.person,
                           onPressButton: () {
                             Navigator.of(context).pop();
                           },
                           buttonText: "إضافة مريض",
-                          //height: 500,
-                          cancel: true,
                           loading: false,
                         ),
                       ),

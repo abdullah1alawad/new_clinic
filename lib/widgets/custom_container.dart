@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 class CustomContainer extends StatelessWidget {
-  final Column data;
+  final Widget data;
   final IconData icon;
   final VoidCallback onPressButton;
+  final VoidCallback? secondOnPreesButton;
   final String buttonText;
-  final bool cancel, loading;
+  final String? secondButtonText;
+  final bool loading;
   final double? height;
 
   const CustomContainer({
@@ -15,9 +17,10 @@ class CustomContainer extends StatelessWidget {
     required this.icon,
     required this.onPressButton,
     required this.buttonText,
-    required this.cancel,
     required this.loading,
     this.height,
+    this.secondOnPreesButton,
+    this.secondButtonText,
   });
 
   @override
@@ -32,12 +35,13 @@ class CustomContainer extends StatelessWidget {
                 clipper: RoundedDiagonalPathClipper(),
                 child: Container(
                   height: height,
+                  width: double.infinity,
                   padding: const EdgeInsets.fromLTRB(30.0, 100, 30, 50),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(40.0)),
                     color: Theme.of(context).colorScheme.secondary,
                   ),
-                  child: SingleChildScrollView(child: data),
+                  child: data,
                 ),
               ),
               const SizedBox(height: 25),
@@ -63,18 +67,18 @@ class CustomContainer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (cancel)
+                if (secondButtonText!=null)
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(40.0)),
                       backgroundColor: Theme.of(context).colorScheme.primary,
                     ),
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('إلغاء',
+                    onPressed: secondOnPreesButton,
+                    child: Text(secondButtonText!,
                         style: Theme.of(context).textTheme.titleSmall),
                   ),
-                if (cancel) const SizedBox(width: 10),
+                if (secondButtonText!=null) const SizedBox(width: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

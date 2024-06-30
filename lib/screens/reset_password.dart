@@ -73,7 +73,8 @@ class ResetPassword extends StatelessWidget {
             },
             buttonText: "تغيير كلمة السر",
             //height: 450,
-            cancel: true,
+            secondOnPreesButton: () => Navigator.of(context).pop(),
+            secondButtonText: 'إلغاء',
             loading:
                 resetPasswordProvider.connection == ConnectionEnum.cunnecting,
           ),

@@ -94,7 +94,6 @@ class LoginScreen extends StatelessWidget {
                 }
               },
               buttonText: "تسجيل الدخول",
-              cancel: false,
               loading: loginProvider.connecion == ConnectionEnum.cunnecting,
             ),
           ),
