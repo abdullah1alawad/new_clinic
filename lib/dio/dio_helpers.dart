@@ -39,6 +39,18 @@ class DioHelper {
         options: Options(headers: {'Authorization': 'Bearer $token'}));
   }
 
+  static Future<Response> getClinics() async {
+    return await dio.get(EndPoint.getClinics);
+  }
+
+  static Future<Response> getClinicInfo(int clinicId) async {
+    return await dio.get("${EndPoint.getClinicInfo}$clinicId");
+  }
+
+  static Future<Response> getChairs(int clinicId, int doctorId) async {
+    return await dio.get("${EndPoint.getChairs}$doctorId/$clinicId");
+  }
+
   // static Future<Response> getUserInfo() async {
   //   return await dio.get(EndPoint.getUserDataEndPoint(
   //       CacheHelper().getData(key: AppStrings.id)));

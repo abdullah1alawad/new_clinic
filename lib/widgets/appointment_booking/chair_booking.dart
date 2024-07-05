@@ -1,23 +1,18 @@
+import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
+import 'package:clinic_test_app/provider/appointment_booking/chairs_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ChairBooking extends StatefulWidget {
-  const ChairBooking({super.key});
+  final Map<String, Map<String, int>> data;
+  const ChairBooking({super.key, required this.data});
 
   @override
   State<ChairBooking> createState() => _ChairBookingState();
 }
 
 class _ChairBookingState extends State<ChairBooking> {
-  Map<String, Map<String, int>> data = {
-    "2024-07-01": {"09:00 AM": 1, "10:30 AM": 1, "12:00 PM": 1, "01:30 PM": 1},
-    "2024-07-02": {"09:00 AM": 1, "10:30 AM": 1, "12:00 PM": 1, "01:30 PM": 1},
-    "2024-07-03": {"09:00 AM": 1, "10:30 AM": 1, "12:00 PM": 1, "01:30 PM": 1},
-    "2024-07-04": {"09:00 AM": 1, "10:30 AM": 1, "12:00 PM": 1, "01:30 PM": 1},
-    "2024-07-05": {"09:00 AM": 1, "10:30 AM": 0, "12:00 PM": 0, "01:30 PM": 0},
-    // Add more data as needed
-  };
-
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   List<String> _availableTimes = [];
@@ -32,9 +27,8 @@ class _ChairBookingState extends State<ChairBooking> {
 
   void _updateAvailableTimes() {
     setState(() {
-      String selectedDate = _selectedDay!.toIso8601String().split('T').first;
-      _availableTimes = data[selectedDate]
-              ?.entries
+      String selectedDate = stringDay(_selectedDay);
+      _availableTimes = widget.data[selectedDate]?.entries
               .where((entry) => entry.value == 1)
               .map((entry) => entry.key)
               .toList() ??
@@ -42,8 +36,14 @@ class _ChairBookingState extends State<ChairBooking> {
     });
   }
 
+  String stringDay(DateTime? selectedDay) {
+    return selectedDay!.toIso8601String().split('T').first;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenProvider =
+        Provider.of<AppointmentBookingScreensProvider>(context);
     return Column(
       children: [
         TableCalendar(
@@ -72,7 +72,7 @@ class _ChairBookingState extends State<ChairBooking> {
               shape: BoxShape.circle,
             ),
             todayDecoration: BoxDecoration(
-              color: Colors.orange,
+              color: Colors.amberAccent,
               shape: BoxShape.circle,
             ),
           ),
@@ -85,19 +85,23 @@ class _ChairBookingState extends State<ChairBooking> {
               title: Text(_availableTimes[index]),
               trailing: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
-                  //fixedSize: WidgetStateProperty.all<Size>(const Size(250, 50)),
+                  backgroundColor:
+                      screenProvider.time == _availableTimes[index] &&
+                              screenProvider.day == stringDay(_selectedDay)
+                          ? WidgetStateProperty.all<Color>(Colors.white70)
+                          : WidgetStateProperty.all<Color>(Colors.blue),
                 ),
                 onPressed: () {
-                  // Handle booking logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Booked ${_availableTimes[index]}')),
-                  );
+                  screenProvider.time = _availableTimes[index];
+                  screenProvider.day = stringDay(_selectedDay);
                 },
-                child: const Text(
+                child: Text(
                   'اختيار',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: screenProvider.time == _availableTimes[index] &&
+                            screenProvider.day == stringDay(_selectedDay)
+                        ? Colors.blue
+                        : Colors.white,
                     fontFamily: 'ElMessiri',
                     fontWeight: FontWeight.bold,
                   ),

@@ -45,46 +45,49 @@ class AppointmentCard extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      appointment.subjectName,
-                      style: const TextStyle(
-                        fontFamily: 'ElMessiri',
-                        fontSize: 22,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        appointment.subjectName,
+                        style: const TextStyle(
+                          fontFamily: 'ElMessiri',
+                          fontSize: 22,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'اشراف الدكتور: ${appointment.doctorName}',
-                      style: const TextStyle(
-                        fontFamily: 'ElMessiri',
-                        fontSize: 20,
+                      Text(
+                        'اشراف الدكتور: ${appointment.doctorName}',
+                        style: const TextStyle(
+                          fontFamily: 'ElMessiri',
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'المريض:  ${appointment.patientName}',
-                      style: const TextStyle(
-                        fontFamily: 'ElMessiri',
-                        fontSize: 18,
+                      Text(
+                        'المريض:  ${appointment.patientName}',
+                        style: const TextStyle(
+                          fontFamily: 'ElMessiri',
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'الكرسي رقم: ${appointment.chairNumber}',
-                      style: const TextStyle(
-                        fontFamily: 'ElMessiri',
-                        fontSize: 18,
+                      Text(
+                        'الكرسي رقم: ${appointment.chairNumber}',
+                        style: const TextStyle(
+                          fontFamily: 'ElMessiri',
+                          fontSize: 18,
+                        ),
                       ),
-                    ),
-                    Text(
-                      'تاريخ الموعد:   :   ${appointment.date}',
-                      style: const TextStyle(
-                        fontFamily: 'ElMessiri',
-                        fontSize: 20,
+                      Text(
+                        'تاريخ الموعد:   :   ${appointment.date}',
+                        style: const TextStyle(
+                          fontFamily: 'ElMessiri',
+                          fontSize: 20,
+                        ),
                       ),
-                    ),
-                    //Text('$mark'),
-                  ],
+                      //Text('$mark'),
+                    ],
+                  ),
                 ),
               ),
             ),

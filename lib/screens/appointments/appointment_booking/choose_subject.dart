@@ -3,8 +3,8 @@ import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provide
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChooseDoctor extends StatelessWidget {
-  const ChooseDoctor({super.key});
+class ChooseSubject extends StatelessWidget {
+  const ChooseSubject({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,30 +16,30 @@ class ChooseDoctor extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'الرجاء اختيار الدكتور المشرف',
+            'الرجاء اختيار المادة',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 20),
-          ...List.generate(clinicInfoProvider.doctors!.length, (index) {
+          ...List.generate(clinicInfoProvider.subjects!.length, (index) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: ElevatedButton(
                 onPressed: () {
-                  screenProvider.doctorId =
-                      clinicInfoProvider.doctors![index].id;
+                  screenProvider.subjectId =
+                      clinicInfoProvider.subjects![index].id;
                 },
                 style: ButtonStyle(
-                  backgroundColor: clinicInfoProvider.doctors![index].id !=
-                          screenProvider.doctorId
+                  backgroundColor: clinicInfoProvider.subjects![index].id !=
+                          screenProvider.subjectId
                       ? WidgetStateProperty.all<Color>(Colors.blue)
                       : WidgetStateProperty.all<Color>(Colors.white70),
                   fixedSize: WidgetStateProperty.all<Size>(const Size(250, 50)),
                 ),
                 child: Text(
-                  clinicInfoProvider.doctors![index].name,
+                  clinicInfoProvider.subjects![index].name,
                   style: TextStyle(
-                    color: clinicInfoProvider.doctors![index].id !=
-                            screenProvider.doctorId
+                    color: clinicInfoProvider.subjects![index].id !=
+                            screenProvider.subjectId
                         ? Colors.white
                         : Colors.blue,
                     fontSize: 20,

@@ -1,9 +1,13 @@
-import 'package:clinic_test_app/provider/appointment_booking_screens_provider.dart';
+import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
+import 'package:clinic_test_app/provider/appointment_booking/chairs_provider.dart';
+import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_clinic.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_doctor.dart';
+import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_subject.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_time.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/patient_info.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
+import 'package:clinic_test_app/widgets/show_messages/show_error_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +16,9 @@ class AppointmentBookingScreen extends StatelessWidget {
 
   final List<Widget> _screens = [
     const ChooseClinic(),
-    const PatientInfo(),
+    const ChooseSubject(),
     const ChooseDoctor(),
+    const PatientInfo(),
     const ChooseTime(),
   ];
 
@@ -21,10 +26,12 @@ class AppointmentBookingScreen extends StatelessWidget {
     "التالي",
     "التالي",
     "التالي",
+    "التالي",
     "حجز الموعد",
   ];
   final List<String> _secButtonText = [
     'إلغاء',
+    'السابق',
     'السابق',
     'السابق',
     'السابق',
@@ -36,10 +43,29 @@ class AppointmentBookingScreen extends StatelessWidget {
         Provider.of<AppointmentBookingScreensProvider>(context);
     final List<VoidCallback> onPress = [
       () {
-        screenProvider.nextScreen();
+        if (screenProvider.clinicId == -1) {
+          ShowErrorMessage.showMessage(context, "لم يتم اختيار العيادة");
+        } else {
+          Provider.of<ClinicInfoProvider>(context, listen: false)
+              .getClinicInfo(screenProvider.clinicId);
+          screenProvider.nextScreen();
+        }
       },
       () {
-        screenProvider.nextScreen();
+        if (screenProvider.subjectId == -1) {
+          ShowErrorMessage.showMessage(context, "لم يتم اختيار المادة");
+        } else {
+          screenProvider.nextScreen();
+        }
+      },
+      () {
+        if (screenProvider.doctorId == -1) {
+          ShowErrorMessage.showMessage(context, "لم يتم اختيار الدكتور");
+        } else {
+          Provider.of<ChairsProvider>(context, listen: false)
+              .getChairs(screenProvider.doctorId, screenProvider.clinicId);
+          screenProvider.nextScreen();
+        }
       },
       () {
         screenProvider.nextScreen();
@@ -51,6 +77,9 @@ class AppointmentBookingScreen extends StatelessWidget {
     final List<VoidCallback> secOnPress = [
       () {
         Navigator.of(context).pop();
+      },
+      () {
+        screenProvider.previousScreen();
       },
       () {
         screenProvider.previousScreen();

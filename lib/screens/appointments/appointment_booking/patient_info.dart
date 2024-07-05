@@ -1,5 +1,6 @@
-import 'package:clinic_test_app/widgets/patient_question_text_field.dart';
+import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PatientInfo extends StatefulWidget {
   const PatientInfo({super.key});
@@ -15,141 +16,7 @@ class _PatientInfoState extends State<PatientInfo> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController tem = TextEditingController();
-    List<Column> question = [
-      Column(
-        children: [
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-        ],
-      ),
-      Column(
-        children: [
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-        ],
-      ),
-      Column(
-        children: [
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-          PatientQuestionTextField(
-            label:
-                'هل تعاني من تقلبات عاطفية ومزاجية ومالية وحياتية مثل مطورين هذا التطبيق؟',
-            icon: Icons.question_mark,
-            controller: tem,
-            validator: (val) {
-              return null;
-            },
-            obscureText: false,
-          ),
-        ],
-      ),
-    ];
+    final clinicInfoProvider = Provider.of<ClinicInfoProvider>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -166,21 +33,23 @@ class _PatientInfoState extends State<PatientInfo> {
                 _activePage = page;
               });
             },
-            itemCount: question.length,
+            itemCount: clinicInfoProvider.processedQuestions.length,
             itemBuilder: (BuildContext context, int index) {
-              return SingleChildScrollView(child: question[index]);
+              return SingleChildScrollView(
+                  child: clinicInfoProvider.processedQuestions[index]);
             },
           ),
         ),
-        if (question.length > 1) const SizedBox(height: 5),
-        if (question.length > 1)
+        if (clinicInfoProvider.processedQuestions.length > 1)
+          const SizedBox(height: 5),
+        if (clinicInfoProvider.processedQuestions.length > 1)
           SizedBox(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                    question.length,
+                    clinicInfoProvider.processedQuestions.length,
                     (index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: InkWell(

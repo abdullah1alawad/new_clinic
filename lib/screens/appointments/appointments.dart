@@ -1,4 +1,5 @@
-import 'package:clinic_test_app/provider/appointment_booking_screens_provider.dart';
+import 'package:clinic_test_app/provider/appointment_booking/clinics_provider.dart';
+import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/provider/theme_provider.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/appointment_booking.dart';
@@ -63,6 +64,8 @@ class AppointmentsScreen extends StatelessWidget {
               children: [
                 FloatingActionButton(
                   onPressed: () {
+                    Provider.of<ClinicsProvider>(context,listen: false)
+                        .getClinics();
                     showDialog(
                       useSafeArea: true,
                       context: context,
