@@ -15,13 +15,14 @@ class CompletedAppointmentsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         $current_time = Carbon::now();
         $date_from_database = Carbon::parse($this->date);
         $time_difference = $date_from_database->diffForHumans($current_time);
         return [
             'id' => $this->id,
             'doctor_name' => $this->doctor->name,
-            'assistant_name' => $this->assistant->name,
+            'assistant_name' => isset($this->assistant->name) ? $this->assistant->name : '',
             'subject_name' => $this->subject->name,
             'appointment_date' => $date_from_database->format('Y-m-d h:m A'),
             'time_difference' => $time_difference,
@@ -30,7 +31,8 @@ class CompletedAppointmentsResource extends JsonResource
             'photo' => $this->photo,
             'status' => $this->status,
             'mark' => $this->mark,
-            'subprocesses'=>SubProcess_markResource::collection($this->marks)
+            'patient_information' => $this->questions,
+            'subprocesses' => SubProcess_markResource::collection($this->marks)
         ];
     }
 }

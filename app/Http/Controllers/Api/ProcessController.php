@@ -165,7 +165,7 @@ class ProcessController extends Controller
 
             $validatedData = $request->validate([
                 'clinic_id' => 'required|integer|exists:clinics,id',
-                'date' => ['required' | 'date' | 'after_or_equal:' . \Carbon\Carbon::now()->subYears(100)->format('Y-m-d')],
+                'date' => 'required | date ',//'after_or_equal:' . Carbon::now()->subYears(100)->format('Y-m-d'),
                 'doctor_id' => 'required|integer',
                 'subject_id' => 'required|integer',
 //                'questions' => 'required|array',
@@ -182,21 +182,32 @@ class ProcessController extends Controller
 
                     if ($questionQuery->is_null == false && !$question['answer'])
                         $requiredQuestions[] = $question['id'];
-                    if(!is_int($question['answer'])&&$questionQuery->validation=='string')
 
+                    if (!is_string($question['answer']) && $questionQuery->validation == 'string')
+                        $validationQuestions[] = [$question['id'], 'هذا الحقل يجب ان يكون سلسلة نصية'];
+                    if (!is_numeric($question['answer']) && $questionQuery->validation == 'numeric')
+                        $validationQuestions[] = [$question['id'], 'هذا الحقل يجب ان يكون رقم'];
+                    if (!is_bool($question['answer']) && $questionQuery->validation == 'boolean')
+                        $validationQuestions[] = [$question['id'], 'هذا الحقل يجب ان يكون اما صفر او واحد'];
+                    //                    if (!$this->is_date($question['answer']) && $questionQuery->validation == 'date')
+                    //                        $validationQuestions[] = [$question['id'], 'هذا الحقل يجب ان يكون تاريخ'];
 
+//                    if(!is_array($question['answer']) && $question){
+//
+//                    }
 
-
-
-
-
-
-
+//                    if (is_string($question['answer']) && $this->is_base64($question['answer'])) {
+//                        // Handle base64 encoded image
+//                        $imageData = $this->decode_base64_image($question['answer']);
+//                        if (!$imageData) {
+//                            $validationQuestions[] = [$question['id'], 'هذا الحقل يجب ان يكون صورة صالحة.'];
+//                        }
+//                }
 
 
                 }
                 if ($requiredQuestions)
-                    return $this->apiResponse($requiredQuestions, false, 'this question is required.', 422);
+                    return $this->apiResponse([$requiredQuestions, $validationQuestions], false, 'this question is required.', 422);
             }
 
 
@@ -282,8 +293,33 @@ class ProcessController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($process_id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $process = Process::find($process_id);
+
+            if (!$process) {
+                return $this->notFoundMessage('process');
+            }
+
+            $photoPath = $process->photo;
+            $process->delete();
+
+            if ($photoPath) {
+                $photoFullPath = public_path($photoPath);
+
+                if (file_exists($photoFullPath)) {
+                    unlink($photoFullPath);
+                }
+            }
+
+            DB::commit();
+            return $this->apiResponse(null, true, 'The process has been deleted successfully.');
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            Log::error('Error deleting process: ' . $ex->getMessage());
+            return $this->internalServer($ex->getMessage());
+        }
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\ProcessController;
 use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //--------------------------------auth -------------------------------------
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/configuration', [AuthController::class, 'configuration']);
+
 
 //----------------------------------------------------------------------------------
 
@@ -38,9 +39,15 @@ Route::group(['prefix' => 'patient'], function () {
 
 //------------------------------------student---------------------------------
 Route::group(['prefix' => 'student'], function () {
-
+    Route::get('/configuration', [StudentController::class, 'configuration']);
 });
 //----------------------------------------------------------------------------
+
+//--------------------------------------doctor-----------------------------------
+
+Route::group(['prefix' => 'doctor'], function () {
+    Route::get('/configuration', [DoctorController::class, 'configuration']);
+});
 
 
 Route::post('user/update', [UserController::class, 'update'])->name('user.update');
@@ -57,6 +64,7 @@ Route::group(['prefix' => 'process'], function () {
     Route::get('get-info/{clinic_id}', [ProcessController::class, 'get_info']);
     Route::get('get-chairs/{doctor_id}/{clinic_id}', [ProcessController::class, 'get_chairs']);
     Route::post('book-chair', [ProcessController::class, 'book_chair']);
+    Route::delete('delete-process/{process_id}',[ProcessController::class,'destroy']);
 
 });
 

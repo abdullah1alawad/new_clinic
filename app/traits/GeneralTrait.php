@@ -2,6 +2,7 @@
 
 namespace App\traits;
 
+use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -89,6 +90,17 @@ trait GeneralTrait
 
         return $dayOfWeek;
     }
+
+    public function is_date($value) {
+        if (!$value) return false;
+        try {
+            new DateTime($value);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
 
 
 }

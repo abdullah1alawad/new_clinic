@@ -45,32 +45,6 @@ class AuthController extends Controller
         }
     }
 
-    public function configuration()
-    {
-        try {
-            $user = auth('sanctum')->user();
-
-            $current_time = Carbon::now();
-
-            $upcomingAppointments = $user->studentProcesses()
-                ->where('date', '>=', $current_time)
-                ->get();
-
-            $completedAppointments = $user->studentProcesses()
-                ->where('date', '<', $current_time)
-                ->paginate(7);
-
-            $studentMarks = $user->studentMarks()->paginate(7);
-
-            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks);
-
-            return $this->apiResponse($user, true, 'configuration data.');
-
-        } catch (\Exception $ex) {
-            return $this->internalServer($ex->getMessage());
-        }
-    }
-
     public function logout(Request $request)
     {
         auth('sanctum')->user()->tokens()->delete();

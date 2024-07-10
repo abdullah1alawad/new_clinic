@@ -11,7 +11,7 @@ class StudentResource extends JsonResource
 
     private $upcomingAppointments, $completedAppointments, $studentMarks;
 
-    public function __construct($resource, $upcomingAppointments, $completedAppointments, $studentMarks)
+    public function __construct($resource, $upcomingAppointments, $completedAppointments, $studentMarks = null)
     {
         parent::__construct($resource);
         $this->upcomingAppointments = $upcomingAppointments;
@@ -29,6 +29,7 @@ class StudentResource extends JsonResource
         return [
             'token' => $this->token,
             'id' => $this->id,
+            'role' => $this->roles, // check it
             'profile' => [
                 'email' => $this->email,
                 'username' => $this->username,
@@ -42,7 +43,7 @@ class StudentResource extends JsonResource
                 'UpcomingAppointments' => UpcomingAppointmentsResource::collection($this->upcomingAppointments),
                 'CompletedAppointments' => CompletedAppointmentsResource::collection($this->completedAppointments),
             ],
-            'marks' => StudentMarkResource::collection($this->studentMarks),
+            'marks' => isset($this->studentMarks) ? StudentMarkResource::collection($this->studentMarks) : '',
             'notification' => [],
             'chat' => [],
         ];
