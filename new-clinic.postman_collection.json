@@ -411,6 +411,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "book-chair",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|AtWWuC6jSL5G5DUC5XHzDE3kpocuIDVghHDQLhKK468759da",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-06-20 12:00:00 AM\",\r\n    \"doctor_id\": 1,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"30\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"Blue\"\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}process/book-chair",
+							"host": [
+								"{{local}}process"
+							],
+							"path": [
+								"book-chair"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

@@ -158,20 +158,47 @@ class ProcessController extends Controller
         }
     }
 
-    public function book_chair(Request $request) // validation -- questions --
+    public function book_chair(Request $request) // validation -- questions -- check the time before
     {
         DB::beginTransaction();
         try {
 
             $validatedData = $request->validate([
                 'clinic_id' => 'required|integer|exists:clinics,id',
-                'date' => 'required|date',
+                'date' => ['required' | 'date' | 'after_or_equal:' . \Carbon\Carbon::now()->subYears(100)->format('Y-m-d')],
                 'doctor_id' => 'required|integer',
                 'subject_id' => 'required|integer',
-                'questions' => 'required|array',
-                'questions.*.id' => 'required|integer|exists:patient_questions,id',
-                'questions.*.answer' => 'required|string',
+//                'questions' => 'required|array',
+//                'questions.*.id' => 'required|integer|exists:patient_questions,id',
+//                'questions.*.answer' => 'required|string',
             ]);
+
+            $requiredQuestions = [];
+            $validationQuestions = [];
+            $questions = $request->input('questions');
+            if ($questions) {
+                foreach ($questions as $question) {
+                    $questionQuery = Patient_question::find($question['id']);
+
+                    if ($questionQuery->is_null == false && !$question['answer'])
+                        $requiredQuestions[] = $question['id'];
+                    if(!is_int($question['answer'])&&$questionQuery->validation=='string')
+
+
+
+
+
+
+
+
+
+
+
+                }
+                if ($requiredQuestions)
+                    return $this->apiResponse($requiredQuestions, false, 'this question is required.', 422);
+            }
+
 
             $subjectIds = Subject::where('clinic_id', $request->clinic_id)->pluck('id');
 
