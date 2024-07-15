@@ -68,6 +68,7 @@ class ProcessController extends Controller
             if (!$doctorExists)
                 return $this->notFoundMessage('the doctor');
 
+
             $clinicExists = Clinic::where('id', $clinic_id)->exists();
             if (!$clinicExists)
                 return $this->notFoundMessage('the clinic');
@@ -75,6 +76,7 @@ class ProcessController extends Controller
             $current_time = Carbon::now();
 
             $doctor_schedule = User_schedule::where('user_id', $doctor_id)->first();
+
 
             $subjectIds = Subject::where('clinic_id', $clinic_id)->pluck('id');
 
@@ -85,6 +87,7 @@ class ProcessController extends Controller
                 ->where('status', '>', 0)
                 ->select('date', 'chair_id')
                 ->get();
+
 
             $chairs = Chair::where('clinic_id', $clinic_id)->select('id', 'chair_number')->get();
 
@@ -99,12 +102,13 @@ class ProcessController extends Controller
                 $date = $current_time->copy()->addDays($i)->toDateString();
 
                 for ($j = 1; $j <= 4; $j++) {
-                    if ($current_time <= $t[$j])
-                        $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 1;
-                    else
+                    if ($i == 0 && $current_time > $t[$j])
                         $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 0;
+                    else
+                        $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 1;
                 }
             }
+
 
             if (isset($doctor_schedule)) {
                 foreach ($doctor_schedule->time_of_work as $key1 => $value) {
@@ -219,6 +223,7 @@ class ProcessController extends Controller
                 ->pluck('chair_id')
                 ->toArray();
 
+
             $chairIds = Chair::where('clinic_id', $request->clinic_id)->pluck('id');
 
 //            $availableChairs = $chairIds->filter(function ($chairId) use ($allSameTimeAppointmentsChairs) {
@@ -263,6 +268,29 @@ class ProcessController extends Controller
             Log::error('Error storing process: ' . $ex->getMessage());
             return $this->internalServer($ex->getMessage());
         }
+
+    }
+
+    public function patient_info_search(Request $request)
+    {
+
+//        $request->validate([
+//            'name' => 'required_without:national_id|string|max:255',
+//            'national_id' => 'required_without:name|string|max:255',
+//        ]);
+//        return 0;
+
+        $name = $request->input('name');
+
+        $national_id = (string)$request->input('national_id');
+        
+
+        $process = Process::whereRaw("JSON_CONTAINS(questions, '{\"id\": 1, \"answer\": \"$name\"}')")
+            ->orWhereRaw("JSON_CONTAINS(questions, '{\"id\": 2, \"answer\": \"$national_id\"}')")
+            ->get();
+
+
+        return $process;
 
     }
 

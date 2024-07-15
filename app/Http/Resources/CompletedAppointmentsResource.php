@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Patient_question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
@@ -19,6 +20,19 @@ class CompletedAppointmentsResource extends JsonResource
         $current_time = Carbon::now();
         $date_from_database = Carbon::parse($this->date);
         $time_difference = $date_from_database->diffForHumans($current_time);
+
+        $questions = [];
+        if (is_array($this->questions)) { // temporary until data entry done
+            foreach ($this->questions as $question) {
+                $queryQuestion = Patient_question::find($question['id']);
+                $questions[] = [
+                    'id' => $queryQuestion->id,
+                    'question' => $queryQuestion->question,
+                    'answer' => $question['answer'],
+                ];
+            }
+        }
+
         return [
             'id' => $this->id,
             'doctor_name' => $this->doctor->name,
@@ -31,7 +45,7 @@ class CompletedAppointmentsResource extends JsonResource
             'photo' => $this->photo,
             'status' => $this->status,
             'mark' => $this->mark,
-            'patient_information' => $this->questions,
+            'patient_information' => $questions,
             'subprocesses' => SubProcess_markResource::collection($this->marks)
         ];
     }

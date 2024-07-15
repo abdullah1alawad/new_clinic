@@ -27,9 +27,9 @@ class StudentResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'token' => $this->token,
+//            'token' => $this->token,
             'id' => $this->id,
-            'role' => $this->roles, // check it
+            'role' => RoleResource::collection($this->roles), // check it
             'profile' => [
                 'email' => $this->email,
                 'username' => $this->username,
