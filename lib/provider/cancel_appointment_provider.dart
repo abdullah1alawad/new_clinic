@@ -4,21 +4,16 @@ import 'package:clinic_test_app/dio/dio_helpers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class ChairsProvider extends ChangeNotifier {
-  Map<String, Map<String, int>> data = {};
+class CancelAppointmentProvider extends ChangeNotifier {
   ConnectionEnum? connection;
   String? errorMessage;
 
-  Future<void> getChairs(int doctorId, int clinicId) async {
+  Future<void> cancelAppointment(int appointmentId) async {
     connection = ConnectionEnum.cunnecting;
     notifyListeners();
 
     try {
-      var response = await DioHelper.getChairs(clinicId, doctorId);
-
-      response.data[kDATA].forEach((key, value) {
-      data[key] = Map<String, int>.from(value);
-    });
+      var response = await DioHelper.cancelAppoinment(appointmentId);
 
       connection = ConnectionEnum.connected;
       notifyListeners();

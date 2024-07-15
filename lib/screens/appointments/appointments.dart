@@ -64,7 +64,7 @@ class AppointmentsScreen extends StatelessWidget {
               children: [
                 FloatingActionButton(
                   onPressed: () {
-                    Provider.of<ClinicsProvider>(context,listen: false)
+                    Provider.of<ClinicsProvider>(context, listen: false)
                         .getClinics();
                     showDialog(
                       useSafeArea: true,
@@ -100,6 +100,7 @@ class AppointmentsScreen extends StatelessWidget {
                           color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
+                          fontFamily: "ElMessiri",
                         ),
                       ),
                     ),
@@ -153,7 +154,7 @@ class AppointmentsScreen extends StatelessWidget {
                   child: const Icon(Icons.person_add),
                 ),
                 SizedBox(
-                  width: 110,
+                  width: 120,
                   height: 35,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -166,6 +167,7 @@ class AppointmentsScreen extends StatelessWidget {
                           color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
+                          fontFamily: "ElMessiri",
                         ),
                       ),
                     ),

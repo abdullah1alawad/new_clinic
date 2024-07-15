@@ -16,7 +16,7 @@ class _ChairBookingState extends State<ChairBooking> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   List<String> _availableTimes = [];
-  CalendarFormat _calendarFormat = CalendarFormat.month;
+  final CalendarFormat _calendarFormat = CalendarFormat.twoWeeks;
 
   @override
   void initState() {
@@ -61,11 +61,11 @@ class _ChairBookingState extends State<ChairBooking> {
               _updateAvailableTimes();
             });
           },
-          onFormatChanged: (format) {
-            setState(() {
-              _calendarFormat = format;
-            });
-          },
+          // onFormatChanged: (format) {
+          //   setState(() {
+          //     _calendarFormat = format;
+          //   });
+          // },
           calendarStyle: const CalendarStyle(
             selectedDecoration: BoxDecoration(
               color: Colors.blue,

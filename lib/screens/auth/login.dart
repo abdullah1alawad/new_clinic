@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
           //   child: const Icon(Icons.light_mode),
           // ),
           const SizedBox(
-            height: 30.0,
+            height: 50.0,
           ),
           SizedBox(
             height: 250,
@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
             child: Image.asset('assets/images/logo.png'),
           ),
           const SizedBox(
-            height: 70.0,
+            height: 100.0,
           ),
           Form(
             key: formState,

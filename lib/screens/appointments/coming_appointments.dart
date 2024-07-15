@@ -12,17 +12,30 @@ class ComingAppointments extends StatelessWidget {
     return Consumer<FiveScreenProvider>(
       builder: (context, provider, child) {
         if (provider.connection == ConnectionEnum.connected) {
-          return ListView.builder(
-            itemCount: provider.comingAppointments!.length + 1,
-            itemBuilder: (context, index) {
-              if (index != provider.comingAppointments!.length) {
-                return AppointmentCard(
-                  appointment: provider.comingAppointments![index],
-                );
-              } else {
-                return const SizedBox(height: 50);
-              }
-            },
+          if (provider.comingAppointments!.isNotEmpty) {
+            return ListView.builder(
+              itemCount: provider.comingAppointments!.length + 1,
+              itemBuilder: (context, index) {
+                if (index != provider.comingAppointments!.length) {
+                  return AppointmentCard(
+                    appointment: provider.comingAppointments![index],
+                    cancelAppointment: true,
+                  );
+                } else {
+                  return const SizedBox(height: 50);
+                }
+              },
+            );
+          }
+
+          return const Center(
+            child: Text(
+              "لاتوجد مواعيد حتى الان",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'ElMessiri',
+                  fontWeight: FontWeight.bold),
+            ),
           );
         } else if (provider.connection == ConnectionEnum.failed) {
           return Center(child: Text(provider.errorMessage ?? 'Error'));

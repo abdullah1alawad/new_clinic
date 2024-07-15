@@ -51,6 +51,17 @@ class DioHelper {
     return await dio.get("${EndPoint.getChairs}$doctorId/$clinicId");
   }
 
+  static Future<Response> bookAppointment(
+      Map<String, dynamic> data, String token) async {
+    return await dio.post(EndPoint.bookApointment,
+        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        data: data);
+  }
+
+  static Future<Response> cancelAppoinment(int appointmentId) async {
+    return await dio.delete("${EndPoint.cancelAppointment}$appointmentId");
+  }
+
   // static Future<Response> getUserInfo() async {
   //   return await dio.get(EndPoint.getUserDataEndPoint(
   //       CacheHelper().getData(key: AppStrings.id)));

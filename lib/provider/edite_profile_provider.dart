@@ -3,6 +3,7 @@ import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/core/utils/app_services.dart';
 import 'package:clinic_test_app/dio/dio_helpers.dart';
+import 'package:clinic_test_app/model/profile_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -36,10 +37,12 @@ class EditeProfileProvider extends ChangeNotifier {
     try {
       var response = await DioHelper.editeProfile(
           data, CacheHelper().getData(key: kTOKEN));
+
       connecion = ConnectionEnum.connected;
       notifyListeners();
     } on DioException catch (e) {
       connecion = ConnectionEnum.failed;
+      //print(e.response);
       errorMessage = e.response!.data[kMESSAGE][0];
       notifyListeners();
     }
@@ -53,5 +56,14 @@ class EditeProfileProvider extends ChangeNotifier {
   toggleGender(value) {
     gender = value;
     notifyListeners();
+  }
+
+  initInfo(ProfileModel profileInfo) {
+    nameController.text = profileInfo.name;
+    emailController.text = profileInfo.email;
+    usernameController.text = profileInfo.username;
+    phoneController.text = profileInfo.phone;
+    nationalIdController.text = profileInfo.nationalId;
+    gender = profileInfo.gender.length == 4 ? 0 : 1;
   }
 }

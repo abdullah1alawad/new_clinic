@@ -1,3 +1,7 @@
+import 'package:clinic_test_app/core/enum/connection_enum.dart';
+import 'package:clinic_test_app/core/utils/app_constants.dart';
+import 'package:clinic_test_app/model/question_model.dart';
+import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/chairs_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
@@ -8,6 +12,7 @@ import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_
 import 'package:clinic_test_app/screens/appointments/appointment_booking/patient_info.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:clinic_test_app/widgets/show_messages/show_error_message.dart';
+import 'package:clinic_test_app/widgets/show_messages/show_success_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +46,10 @@ class AppointmentBookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenProvider =
         Provider.of<AppointmentBookingScreensProvider>(context);
+    final bookAppointmentProvider =
+        Provider.of<AppointmentBookingProvider>(context);
+    final clinicInfoProvider = Provider.of<ClinicInfoProvider>(context);
+
     final List<VoidCallback> onPress = [
       () {
         if (screenProvider.clinicId == -1) {
@@ -68,10 +77,40 @@ class AppointmentBookingScreen extends StatelessWidget {
         }
       },
       () {
-        screenProvider.nextScreen();
+        if (validate(clinicInfoProvider.questions!)) {
+          screenProvider.nextScreen();
+        } else {
+          ShowErrorMessage.showMessage(
+              context, "الرجاء الاجابة على كل الاسئلة");
+        }
       },
-      () {
-        Navigator.of(context).pop();
+      () async {
+        if (screenProvider.time.isEmpty) {
+          ShowErrorMessage.showMessage(context, "لم يتم اختيار الوقت");
+        } else {
+          await bookAppointmentProvider.bookAppointment(
+            screenProvider.clinicId,
+            screenProvider.doctorId,
+            screenProvider.subjectId,
+            '${screenProvider.day} ${screenProvider.time}',
+            clinicInfoProvider.questions == null
+                ? [{}]
+                : getAnswer(clinicInfoProvider.questions!),
+          );
+
+          if (bookAppointmentProvider.connecion == ConnectionEnum.connected) {
+            if (context.mounted) {
+              Navigator.of(context).pop();
+              ShowSuccessMessage.showMessage(context, "تم حجز الموعد بنجاح");
+            }
+          } else if (bookAppointmentProvider.connecion ==
+              ConnectionEnum.failed) {
+            if (context.mounted) {
+              ShowErrorMessage.showMessage(
+                  context, bookAppointmentProvider.errorMessage!);
+            }
+          }
+        }
       }
     ];
     final List<VoidCallback> secOnPress = [
@@ -92,6 +131,8 @@ class AppointmentBookingScreen extends StatelessWidget {
       },
     ];
 
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Column(
       children: [
         CustomContainer(
@@ -101,10 +142,35 @@ class AppointmentBookingScreen extends StatelessWidget {
           buttonText: _buttonText[screenProvider.screenNumber],
           secondOnPreesButton: secOnPress[screenProvider.screenNumber],
           secondButtonText: _secButtonText[screenProvider.screenNumber],
-          height: 750,
-          loading: false,
+          height: screenHeight * 0.87,
+          loading: screenProvider.screenNumber != 4
+              ? false
+              : bookAppointmentProvider.connecion == ConnectionEnum.cunnecting,
         ),
       ],
     );
+  }
+
+  List<Map<String, dynamic>> getAnswer(List<QuestionsModel> question) {
+    List<Map<String, dynamic>> ret = [];
+
+    for (int i = 0; i < question.length; i++) {
+      ret.add({
+        kID: question[i].id,
+        kANSWER: question[i].answer.text,
+      });
+    }
+
+    return ret;
+  }
+
+  bool validate(List<QuestionsModel> question) {
+    for (int i = 0; i < question.length; i++) {
+      if (question[i].answer.text.isEmpty) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

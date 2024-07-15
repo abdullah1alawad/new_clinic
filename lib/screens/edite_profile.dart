@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/validations.dart';
 import 'package:clinic_test_app/provider/edite_profile_provider.dart';
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/screens/reset_password.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
@@ -19,13 +20,15 @@ class EditeProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final editeProfileProvider = Provider.of<EditeProfileProvider>(context);
+    final profileProvider = Provider.of<FiveScreenProvider>(context);
+    editeProfileProvider.initInfo(profileProvider.profileModel!);
     GlobalKey<FormState> formState = GlobalKey();
 
-    ImageProvider<Object> val;
+    ImageProvider<Object> backgroundImage;
     if (editeProfileProvider.photo == null) {
-      val = const AssetImage('assets/images/avatar.png');
+      backgroundImage = const AssetImage('assets/images/avatar.png');
     } else {
-      val = FileImage(File(editeProfileProvider.photo!.path));
+      backgroundImage = FileImage(File(editeProfileProvider.photo!.path));
     }
 
     return Scaffold(
@@ -45,8 +48,8 @@ class EditeProfileScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   CircleAvatar(
                     radius: 70,
-                    backgroundColor: Theme.of(context).colorScheme.background,
-                    backgroundImage: val,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    backgroundImage: backgroundImage,
                     child: Stack(
                       children: [
                         Positioned(
@@ -90,7 +93,7 @@ class EditeProfileScreen extends StatelessWidget {
                     label: "الاسم",
                     icon: Icons.person,
                     controller: editeProfileProvider.nameController,
-                    validator:Validations.validateName,
+                    validator: Validations.validateName,
                     obscureText: false,
                   ),
                   CustomTextField(
@@ -175,21 +178,19 @@ class EditeProfileScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () async {
                       if (formState.currentState!.validate()) {
-                        if (formState.currentState!.validate()) {
-                          await editeProfileProvider.editeProfile();
+                        await editeProfileProvider.editeProfile();
 
-                          if (editeProfileProvider.connecion ==
-                              ConnectionEnum.connected) {
-                            if (context.mounted) {
-                              ShowSuccessMessage.showMessage(
-                                  context, "تم تعديل المعلومات بنجاح");
-                            }
-                          } else if (editeProfileProvider.connecion ==
-                              ConnectionEnum.failed) {
-                            if (context.mounted) {
-                              ShowErrorMessage.showMessage(
-                                  context, editeProfileProvider.errorMessage!);
-                            }
+                        if (editeProfileProvider.connecion ==
+                            ConnectionEnum.connected) {
+                          if (context.mounted) {
+                            ShowSuccessMessage.showMessage(
+                                context, "تم تعديل المعلومات بنجاح");
+                          }
+                        } else if (editeProfileProvider.connecion ==
+                            ConnectionEnum.failed) {
+                          if (context.mounted) {
+                            ShowErrorMessage.showMessage(
+                                context, editeProfileProvider.errorMessage!);
                           }
                         }
                       }

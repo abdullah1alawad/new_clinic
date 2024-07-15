@@ -1,3 +1,4 @@
+import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,9 @@ class _PatientInfoState extends State<PatientInfo> {
   @override
   Widget build(BuildContext context) {
     final clinicInfoProvider = Provider.of<ClinicInfoProvider>(context);
+    final screenProvider =
+        Provider.of<AppointmentBookingScreensProvider>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -24,20 +28,23 @@ class _PatientInfoState extends State<PatientInfo> {
           'الرجاء تعبئة معلومات المريض',
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        SizedBox(
-          height: 545,
-          child: PageView.builder(
-            controller: _pageController,
-            onPageChanged: (int page) {
-              setState(() {
-                _activePage = page;
-              });
-            },
-            itemCount: clinicInfoProvider.processedQuestions.length,
-            itemBuilder: (BuildContext context, int index) {
-              return SingleChildScrollView(
-                  child: clinicInfoProvider.processedQuestions[index]);
-            },
+        Form(
+          key: screenProvider.formState,
+          child: SizedBox(
+            height: 400, //545
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (int page) {
+                setState(() {
+                  _activePage = page;
+                });
+              },
+              itemCount: clinicInfoProvider.processedQuestions.length,
+              itemBuilder: (BuildContext context, int index) {
+                return SingleChildScrollView(
+                    child: clinicInfoProvider.processedQuestions[index]);
+              },
+            ),
           ),
         ),
         if (clinicInfoProvider.processedQuestions.length > 1)

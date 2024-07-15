@@ -4,6 +4,7 @@ class AppointmentBookingScreensProvider extends ChangeNotifier {
   int _screenNumber = 0, _clinicId = -1, _doctorId = -1, _subjectId = -1;
   String day = "", _time = "";
   final int _maxScreenNumber = 5;
+  GlobalKey<FormState> formState = GlobalKey();
 
   int get screenNumber => _screenNumber;
   int get clinicId => _clinicId;
@@ -19,6 +20,7 @@ class AppointmentBookingScreensProvider extends ChangeNotifier {
   }
 
   set clinicId(int clinicId) {
+    reSet();
     _clinicId = clinicId;
     notifyListeners();
   }

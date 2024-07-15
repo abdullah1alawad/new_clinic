@@ -5,10 +5,12 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
 class AppointmentCard extends StatelessWidget {
   final AppointmentModel appointment;
+  final bool? cancelAppointment;
 
   const AppointmentCard({
     super.key,
     required this.appointment,
+    this.cancelAppointment,
   });
 
   @override
@@ -20,6 +22,7 @@ class AppointmentCard extends StatelessWidget {
           context: context,
           builder: (context) => AppointmentDetailsCard(
             appointment: appointment,
+            cancelAppointment: cancelAppointment,
           ),
         );
       },
@@ -64,13 +67,13 @@ class AppointmentCard extends StatelessWidget {
                           fontSize: 20,
                         ),
                       ),
-                      Text(
-                        'المريض:  ${appointment.patientName}',
-                        style: const TextStyle(
-                          fontFamily: 'ElMessiri',
-                          fontSize: 18,
-                        ),
-                      ),
+                      // Text(
+                      //   'المريض:  ${appointment.patientName}',
+                      //   style: const TextStyle(
+                      //     fontFamily: 'ElMessiri',
+                      //     fontSize: 18,
+                      //   ),
+                      // ),
                       Text(
                         'الكرسي رقم: ${appointment.chairNumber}',
                         style: const TextStyle(

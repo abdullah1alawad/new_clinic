@@ -45,9 +45,14 @@ class FiveScreenProvider extends ChangeNotifier {
       notifyListeners();
     } on DioException catch (e) {
       connection = ConnectionEnum.failed;
-      errorMessage = e.response!.data[kMESSAGE][0];
+      errorMessage = e.response!.data[kMESSAGE];
       notifyListeners();
     }
+  }
+
+  void cancelAppointment(int appointmentId) {
+    comingAppointments?.removeWhere((appointment) => appointment.id == appointmentId);
+    notifyListeners();
   }
 
   void fun() {

@@ -4,7 +4,6 @@ import 'package:clinic_test_app/model/subprocess_model.dart';
 class AppointmentModel {
   final String doctorName,
       assistentName,
-      patientName,
       subjectName,
       clinicName,
       photo,
@@ -17,7 +16,6 @@ class AppointmentModel {
   AppointmentModel({
     required this.doctorName,
     required this.assistentName,
-    required this.patientName,
     required this.subjectName,
     required this.clinicName,
     required this.photo,
@@ -34,7 +32,6 @@ class AppointmentModel {
     return AppointmentModel(
       doctorName: jsonData[kDOCTORNAME],
       assistentName: jsonData[kASSISTENTNAME],
-      patientName: jsonData[kPATINENTNAME],
       subjectName: jsonData[kSUBJECTNAME],
       clinicName: jsonData[kCLINICNAME],
       photo: jsonData[kPHOTO],

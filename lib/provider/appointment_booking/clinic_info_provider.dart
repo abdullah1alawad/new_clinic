@@ -47,6 +47,7 @@ class ClinicInfoProvider extends ChangeNotifier {
 
   void processQuestion() {
     int size = questions!.length;
+    processedQuestions = [];
 
     for (int i = 0; i < size; i += 5) {
       List<PatientQuestionTextField> temp = [];
@@ -56,7 +57,10 @@ class ClinicInfoProvider extends ChangeNotifier {
             label: questions![j].question,
             icon: Icons.question_mark,
             controller: questions![j].answer,
-            validator: (val) {
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'الرجاء الاجابة عن السؤال';
+              }
               return null;
             },
             obscureText: false,

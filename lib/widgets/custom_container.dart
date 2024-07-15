@@ -25,8 +25,10 @@ class CustomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData screenInfo = MediaQuery.of(context);
     return Container(
-      padding: const EdgeInsets.all(20.0),
+      padding: EdgeInsets.symmetric(
+          vertical: 20, horizontal: screenInfo.size.width / 20.571),
       child: Stack(
         children: <Widget>[
           Column(
@@ -36,7 +38,12 @@ class CustomContainer extends StatelessWidget {
                 child: Container(
                   height: height,
                   width: double.infinity,
-                  padding: const EdgeInsets.fromLTRB(30.0, 100, 30, 50),
+                  padding: EdgeInsets.fromLTRB(
+                    screenInfo.size.width / 13.714,
+                    100,
+                    screenInfo.size.width / 13.714,
+                    30,
+                  ),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(40.0)),
                     color: Theme.of(context).colorScheme.secondary,
@@ -67,7 +74,7 @@ class CustomContainer extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (secondButtonText!=null)
+                if (secondButtonText != null)
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
@@ -78,7 +85,7 @@ class CustomContainer extends StatelessWidget {
                     child: Text(secondButtonText!,
                         style: Theme.of(context).textTheme.titleSmall),
                   ),
-                if (secondButtonText!=null) const SizedBox(width: 10),
+                if (secondButtonText != null) const SizedBox(width: 10),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

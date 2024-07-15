@@ -35,6 +35,8 @@ class ChooseClinic extends StatelessWidget {
     final clinicsProvider = Provider.of<ClinicsProvider>(context);
     final screenProvider =
         Provider.of<AppointmentBookingScreensProvider>(context);
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     int size = clinicsProvider.clinics!.length;
     int half = (size ~/ 2);
@@ -54,7 +56,7 @@ class ChooseClinic extends StatelessWidget {
           ),
         ),
       );
-      firstHalf.add(const SizedBox(height: 10));
+      firstHalf.add(SizedBox(height: screenWidth / 37.4018));
     }
 
     for (int i = 0; i < half; i++) {
@@ -70,7 +72,7 @@ class ChooseClinic extends StatelessWidget {
           ),
         ),
       );
-      secondHalf.add(const SizedBox(height: 10));
+      secondHalf.add(SizedBox(height: screenWidth / 37.4018));
     }
 
     return Row(
@@ -79,7 +81,7 @@ class ChooseClinic extends StatelessWidget {
         Column(
           children: firstHalf,
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: screenWidth / 37.4018),
         Column(
           mainAxisSize: MainAxisSize.max,
           children: secondHalf,

@@ -1,7 +1,8 @@
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 
 class ProfileModel {
-  final String email, username, name, gender, phone, photo, nationalId;
+  final String email, username, name, gender, phone, nationalId;
+  final String? photo;
 
   ProfileModel({
     required this.email,
