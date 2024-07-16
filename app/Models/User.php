@@ -30,6 +30,7 @@ class User extends Authenticatable
 
 
     protected $costs = [
+        'id' => 'integer',
         'email' => 'string',
         'name' => 'string',
         'gender' => 'boolean',

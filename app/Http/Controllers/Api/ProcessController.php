@@ -283,15 +283,24 @@ class ProcessController extends Controller
         $name = $request->input('name');
         $national_id = $request->input('national_id');
 
+        $clinic_id = $request->input('clinic_id');
+        $subjectIds = Subject::where('clinic_id', $clinic_id)->pluck('id');
+
+        $student_id = auth('sanctum')->user()->id;
+
         $query = Process::query();
 
         if ($name) {
-            $query->whereRaw("JSON_CONTAINS(questions, '{\"id\": 1}')")
+            $query->where('student_id', $student_id)
+                ->whereIn('subject_id', $subjectIds)
+                ->whereRaw("JSON_CONTAINS(questions, '{\"id\": 1}')")
                 ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$name%"]);
         }
 
         if ($national_id) {
-            $query->orWhereRaw("JSON_CONTAINS(questions, '{\"id\": 2}')")
+            $query->where('student_id', $student_id)
+                ->whereIn('subject_id', $subjectIds)
+                ->orWhereRaw("JSON_CONTAINS(questions, '{\"id\": 2}')")
                 ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$national_id%"]);
         }
 

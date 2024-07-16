@@ -28,17 +28,7 @@ class ProcessResource extends JsonResource
         }
 
         return [
-            'id' => $this->id,
-            'student_id' => $this->student->name,
-            'doctor_id' => $this->doctor->name,
-            'assistant' => isset($this->assistant->name) ? $this->assistant->name : '',
-            'chair_number' => $this->chair->chair_number,
-            'subject' => $this->subject->name,
             'questions' => $questions,
-            'date' => $this->date,
-            'photo' => $this->photo,
-            'status' => $this->status,
-            'mark' => isset($this->mark) ? $this->mark : '',
         ];
     }
 }
