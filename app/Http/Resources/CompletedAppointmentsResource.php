@@ -45,7 +45,8 @@ class CompletedAppointmentsResource extends JsonResource
             'photo' => $this->photo,
             'status' => $this->status,
             'mark' => $this->mark,
-            'patient_information' => $questions,
+
+            'patient_information' => $questions, //temporary
             'subprocesses' => SubProcess_markResource::collection($this->marks)
         ];
     }

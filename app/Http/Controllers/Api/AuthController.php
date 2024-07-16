@@ -12,6 +12,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\RoleResource;
 use App\Http\Resources\StudentResource;
 use App\Http\Resources\UserResource;
 use App\traits\GeneralTrait;
@@ -38,7 +39,7 @@ class AuthController extends Controller
             $user->tokens()->delete();
             $user->token = $user->createToken('clinic')->plainTextToken;
 
-            return $this->apiResponse(['id' => $user->id, 'token' => $user->token], true, 'The user is logged in successfully.');
+            return $this->apiResponse(['id' => $user->id, 'token' => $user->token, 'user_role' => RoleResource::collection($user->roles)], true, 'The user is logged in successfully.');
 
         } catch (\Exception $ex) {
             return $this->internalServer($ex->getMessage());

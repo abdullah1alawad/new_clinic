@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProcessResource;
 use App\Models\Chair;
 use App\Models\Clinic;
 use App\Models\Patient_question;
@@ -274,24 +275,30 @@ class ProcessController extends Controller
     public function patient_info_search(Request $request)
     {
 
-//        $request->validate([
-//            'name' => 'required_without:national_id|string|max:255',
-//            'national_id' => 'required_without:name|string|max:255',
-//        ]);
-//        return 0;
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'national_id' => 'nullable|string|max:255',
+        ]);
 
         $name = $request->input('name');
+        $national_id = $request->input('national_id');
 
-        $national_id = (string)$request->input('national_id');
-        
+        $query = Process::query();
 
-        $process = Process::whereRaw("JSON_CONTAINS(questions, '{\"id\": 1, \"answer\": \"$name\"}')")
-            ->orWhereRaw("JSON_CONTAINS(questions, '{\"id\": 2, \"answer\": \"$national_id\"}')")
-            ->get();
+        if ($name) {
+            $query->whereRaw("JSON_CONTAINS(questions, '{\"id\": 1}')")
+                ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$name%"]);
+        }
 
+        if ($national_id) {
+            $query->orWhereRaw("JSON_CONTAINS(questions, '{\"id\": 2}')")
+                ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$national_id%"]);
+        }
 
-        return $process;
+        $processes = $query->get();
+        $processes=ProcessResource::collection($processes);
 
+        return response()->json($processes);
     }
 
     /**
