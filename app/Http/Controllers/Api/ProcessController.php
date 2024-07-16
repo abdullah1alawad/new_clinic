@@ -103,7 +103,7 @@ class ProcessController extends Controller
                 $date = $current_time->copy()->addDays($i)->toDateString();
 
                 for ($j = 1; $j <= 4; $j++) {
-                    if ($i == 0 && $current_time > $t[$j])
+                    if ($i == 0 && $current_time > $t[$j] || !$chairs->count())
                         $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 0;
                     else
                         $scheduleForMonth[$date][$t[$j]->format('h:i A')] = 1;
@@ -296,7 +296,7 @@ class ProcessController extends Controller
         }
 
         $processes = $query->get();
-        $processes=ProcessResource::collection($processes);
+        $processes = ProcessResource::collection($processes);
 
         return response()->json($processes);
     }
