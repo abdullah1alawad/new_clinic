@@ -420,7 +420,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "1|AtWWuC6jSL5G5DUC5XHzDE3kpocuIDVghHDQLhKK468759da",
+									"value": "6|96LL6yrvmWpHDCwe20Nyfx4A12eHdeLmdYZSdik1f217ec3a",
 									"type": "string"
 								}
 							]
@@ -429,7 +429,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-06-20 12:00:00 AM\",\r\n    \"doctor_id\": 1,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"33\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"John Doe\"\r\n        }\r\n    ]\r\n}\r\n",
+							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-07-15 12:00:00 AM\",\r\n    \"doctor_id\": 1,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"33\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"John Doe\"\r\n        }\r\n    ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -471,6 +471,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "patient-search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}process/search-patient?name=oh&national_id=",
+							"host": [
+								"{{local}}process"
+							],
+							"path": [
+								"search-patient"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "oh"
+								},
+								{
+									"key": "national_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -485,7 +512,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|2M4ftHVmCrq8vjNc33LeiQHCVeNsr2k8wjTCAinW62afe9a3",
+									"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
 									"type": "string"
 								}
 							]
