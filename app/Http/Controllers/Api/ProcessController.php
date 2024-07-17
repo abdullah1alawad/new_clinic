@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProcessResource;
+use App\Http\Resources\UpcomingAppointmentsResource;
 use App\Models\Chair;
 use App\Models\Clinic;
 use App\Models\Patient_question;
@@ -254,7 +255,9 @@ class ProcessController extends Controller
             $process->save();
 
             DB::commit();
-            return $this->apiResponse(null, true, 'The process has been stored successfully.');
+
+            $process=UpcomingAppointmentsResource::make($process);
+            return $this->apiResponse($process, true, 'The process has been stored successfully.');
 
         } catch (\Exception $ex) {
             DB::rollBack();
@@ -304,10 +307,10 @@ class ProcessController extends Controller
                 ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$national_id%"]);
         }
 
-        $processes = $query->get();
-        $processes = ProcessResource::collection($processes);
+        $process = $query->orderBy('created_at', 'desc')->first();
+        $process = ProcessResource::make($process);
 
-        return response()->json($processes);
+        return $this->apiResponse($process, true, 'patient info');
     }
 
     /**

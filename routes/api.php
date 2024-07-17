@@ -64,6 +64,7 @@ Route::group(['prefix' => 'process'], function () {
     Route::get('get-info/{clinic_id}', [ProcessController::class, 'get_info']);
     Route::get('get-chairs/{doctor_id}/{clinic_id}', [ProcessController::class, 'get_chairs']);
     Route::post('book-chair', [ProcessController::class, 'book_chair']);
+
     Route::delete('delete-process/{process_id}',[ProcessController::class,'destroy']);
     Route::get('search-patient',[ProcessController::class,'patient_info_search']);
 

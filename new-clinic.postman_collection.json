@@ -420,7 +420,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "6|96LL6yrvmWpHDCwe20Nyfx4A12eHdeLmdYZSdik1f217ec3a",
+									"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
 									"type": "string"
 								}
 							]
@@ -475,10 +475,20 @@
 				{
 					"name": "patient-search",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}process/search-patient?name=oh&national_id=",
+							"raw": "{{local}}process/search-patient?name=oh&national_id=&clinic_id=1",
 							"host": [
 								"{{local}}process"
 							],
@@ -493,6 +503,10 @@
 								{
 									"key": "national_id",
 									"value": ""
+								},
+								{
+									"key": "clinic_id",
+									"value": "1"
 								}
 							]
 						}
