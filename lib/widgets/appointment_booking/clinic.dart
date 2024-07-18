@@ -23,7 +23,7 @@ class Clinic extends StatelessWidget {
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(height/10),
+              borderRadius: BorderRadius.circular(height / 10),
               child: Image(
                 image: AssetImage(imageUrl),
                 height: isChosen == true ? height / 1.2 : height,
@@ -38,10 +38,14 @@ class Clinic extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(height / 10)),
-              child: Text(
-                clinicName,
-                style: TextStyle(
-                    fontSize: isChosen == true ? 20 : 25, color: Colors.white),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  double fontSize = constraints.maxWidth * 0.15;
+                  return Text(
+                    clinicName,
+                    style: TextStyle(fontSize: fontSize, color: Colors.white),
+                  );
+                },
               ),
             ),
           ],

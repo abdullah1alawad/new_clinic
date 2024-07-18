@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 class PatientQuestionTextField extends StatelessWidget {
   final String label;
   final IconData icon;
-  final TextEditingController controller;
-  final String? Function(String?) validator;
-  final bool obscureText;
+  final TextEditingController? controller;
+  final bool obscureText,readOnly;
+  final String? hintText;
 
   const PatientQuestionTextField({
     super.key,
     required this.label,
     required this.icon,
     required this.controller,
-    required this.validator,
     required this.obscureText,
+    required this.readOnly,
+    this.hintText,
   });
 
   @override
@@ -44,6 +45,7 @@ class PatientQuestionTextField extends StatelessWidget {
             padding: const EdgeInsets.only(right: 35.0),
             child: TextFormField(
               decoration: InputDecoration(
+                hintText: hintText,
                 border: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Theme.of(context).colorScheme.primary,
@@ -62,8 +64,8 @@ class PatientQuestionTextField extends StatelessWidget {
                 ),
               ),
               controller: controller,
-              validator: validator,
               obscureText: obscureText,
+              readOnly: readOnly,
             ),
           ),
         ],

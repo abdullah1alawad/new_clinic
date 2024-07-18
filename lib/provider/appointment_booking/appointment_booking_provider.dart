@@ -2,10 +2,12 @@ import 'package:clinic_test_app/cache/cache_helper.dart';
 import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/dio/dio_helpers.dart';
+import 'package:clinic_test_app/model/appointment_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentBookingProvider extends ChangeNotifier {
+  AppointmentModel? appointment;
   ConnectionEnum? connecion;
   String? errorMessage;
 
@@ -27,11 +29,11 @@ class AppointmentBookingProvider extends ChangeNotifier {
       kQUESTIONS: question,
     };
 
-    print(data);
-
     try {
       var response = await DioHelper.bookAppointment(
           data, CacheHelper().getData(key: kTOKEN));
+
+      appointment = AppointmentModel.fromJson(response.data[kDATA]);
 
       connecion = ConnectionEnum.connected;
       notifyListeners();

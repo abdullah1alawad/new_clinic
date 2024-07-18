@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/provider/appointment_booking/chairs_provider.dart';
 import 'package:clinic_test_app/widgets/appointment_booking/chair_booking.dart';
@@ -12,9 +13,10 @@ class ChooseTime extends StatelessWidget {
     final chairsProvider = Provider.of<ChairsProvider>(context);
     return Column(
       children: [
-        Text(
+        AutoSizeText(
           'الرجاء اختيار يوم الموعد',
           style: Theme.of(context).textTheme.titleMedium,
+          maxLines: 1,
         ),
         chairsProvider.connection == ConnectionEnum.connected
             ? ChairBooking(data: chairsProvider.data)

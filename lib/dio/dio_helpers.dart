@@ -1,3 +1,4 @@
+import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:dio/dio.dart';
 import '/dio/end_points.dart';
 
@@ -60,6 +61,21 @@ class DioHelper {
 
   static Future<Response> cancelAppoinment(int appointmentId) async {
     return await dio.delete("${EndPoint.cancelAppointment}$appointmentId");
+  }
+
+  static Future<Response> searchForPatient(
+    int clinicId,
+    String? natId,
+    String token,
+  ) async {
+    return await dio.get(
+      EndPoint.searchForPatient,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      queryParameters: {
+        kNATIONALID: natId,
+        kCLINICID: clinicId,
+      },
+    );
   }
 
   // static Future<Response> getUserInfo() async {

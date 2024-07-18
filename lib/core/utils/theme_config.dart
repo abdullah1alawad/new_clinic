@@ -72,6 +72,12 @@ class ThemeConfig {
             //fontWeight: FontWeight.bold,
           ),
         ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all<Color>(lightPrimary),
+        iconColor: WidgetStateProperty.all<Color>(lightAccent),
+      ),
+    ),
     useMaterial3: true,
   );
 

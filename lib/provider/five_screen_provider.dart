@@ -25,6 +25,7 @@ class FiveScreenProvider extends ChangeNotifier {
           await DioHelper.getFiveScreen(CacheHelper().getData(key: kTOKEN));
 
       profileModel = ProfileModel.fromJson(response.data[kDATA][kPROFILE]);
+
       comingAppointments =
           (response.data[kDATA][kAPPOINTMENTS][kCOMINGAPPOINTMENTS] as List)
               .map((comingAppointment) =>
@@ -51,7 +52,13 @@ class FiveScreenProvider extends ChangeNotifier {
   }
 
   void cancelAppointment(int appointmentId) {
-    comingAppointments?.removeWhere((appointment) => appointment.id == appointmentId);
+    comingAppointments
+        ?.removeWhere((appointment) => appointment.id == appointmentId);
+    notifyListeners();
+  }
+
+  void addAppointment(AppointmentModel appointment) {
+    comingAppointments!.add(appointment);
     notifyListeners();
   }
 

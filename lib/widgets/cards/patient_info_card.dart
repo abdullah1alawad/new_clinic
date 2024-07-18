@@ -1,11 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
-import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
+import 'package:clinic_test_app/model/patient_info_model.dart';
+import 'package:clinic_test_app/widgets/patient_question_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class PatientInfo extends StatefulWidget {
-  const PatientInfo({super.key});
+  final List<PatientInfoModel> patientInfo;
+  const PatientInfo({
+    super.key,
+    required this.patientInfo,
+  });
 
   @override
   State<PatientInfo> createState() => _PatientInfoState();
@@ -18,16 +21,14 @@ class _PatientInfoState extends State<PatientInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final clinicInfoProvider = Provider.of<ClinicInfoProvider>(context);
-    final screenProvider =
-        Provider.of<AppointmentBookingScreensProvider>(context);
     final screenHeight = MediaQuery.of(context).size.height;
+    List<Column> patientInfo = processPatientInfo(widget.patientInfo);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         AutoSizeText(
-          'الرجاء تعبئة معلومات المريض',
+          'معلومات المريض',
           style: Theme.of(context).textTheme.titleMedium,
           maxLines: 1,
         ),
@@ -40,23 +41,21 @@ class _PatientInfoState extends State<PatientInfo> {
                 _activePage = page;
               });
             },
-            itemCount: clinicInfoProvider.processedQuestions.length,
+            itemCount: patientInfo.length,
             itemBuilder: (BuildContext context, int index) {
-              return SingleChildScrollView(
-                  child: clinicInfoProvider.processedQuestions[index]);
+              return SingleChildScrollView(child: patientInfo[index]);
             },
           ),
         ),
-        if (clinicInfoProvider.processedQuestions.length > 1)
-          const SizedBox(height: 5),
-        if (clinicInfoProvider.processedQuestions.length > 1)
+        if (patientInfo.length > 1) const SizedBox(height: 5),
+        if (patientInfo.length > 1)
           SizedBox(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                    clinicInfoProvider.processedQuestions.length,
+                    patientInfo.length,
                     (index) => Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: InkWell(
@@ -78,5 +77,29 @@ class _PatientInfoState extends State<PatientInfo> {
           ),
       ],
     );
+  }
+
+  List<Column> processPatientInfo(List<PatientInfoModel> patientInfo) {
+    int size = patientInfo.length;
+    List<Column> processedPatientInfo = [];
+
+    for (int i = 0; i < size; i += 5) {
+      List<PatientQuestionTextField> temp = [];
+      for (int j = i; j < i + 5 && j < size; j++) {
+        temp.add(
+          PatientQuestionTextField(
+            label: patientInfo[j].question,
+            icon: Icons.question_mark,
+            controller: null,
+            obscureText: false,
+            readOnly: true,
+            hintText: patientInfo[j].answer,
+          ),
+        );
+      }
+      processedPatientInfo.add(Column(children: temp));
+    }
+
+    return processedPatientInfo;
   }
 }

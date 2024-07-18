@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
@@ -16,9 +17,10 @@ class ChooseSubject extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Text(
+          AutoSizeText(
             'الرجاء اختيار المادة',
             style: Theme.of(context).textTheme.titleMedium,
+            maxLines: 1,
           ),
           const SizedBox(height: 20),
           clinicInfoProvider.connection == ConnectionEnum.connected

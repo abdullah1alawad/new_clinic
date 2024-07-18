@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,10 @@ class ChooseDoctor extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Text(
+          AutoSizeText(
             'الرجاء اختيار الدكتور المشرف',
             style: Theme.of(context).textTheme.titleMedium,
+            maxLines: 1,
           ),
           const SizedBox(height: 20),
           ...List.generate(clinicInfoProvider.doctors!.length, (index) {

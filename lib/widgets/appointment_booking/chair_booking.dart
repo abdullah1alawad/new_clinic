@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/chairs_provider.dart';
 import 'package:flutter/material.dart';
@@ -113,12 +114,13 @@ class _ChairBookingState extends State<ChairBooking> {
         if (_availableTimes.isEmpty)
           const Padding(
             padding: EdgeInsets.only(top: 10.0),
-            child: Text(
+            child: AutoSizeText(
               "لايوجد اوقات متاحة بهذا اليوم !",
               style: TextStyle(
                   fontSize: 20,
                   fontFamily: 'ElMessiri',
                   fontWeight: FontWeight.bold),
+              maxLines: 1,
             ),
           ),
       ],

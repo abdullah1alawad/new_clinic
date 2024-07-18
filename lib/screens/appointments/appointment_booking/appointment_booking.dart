@@ -5,11 +5,13 @@ import 'package:clinic_test_app/provider/appointment_booking/appointment_booking
 import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/chairs_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/clinic_info_provider.dart';
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_clinic.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_doctor.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_subject.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/choose_time.dart';
 import 'package:clinic_test_app/screens/appointments/appointment_booking/patient_info.dart';
+import 'package:clinic_test_app/screens/appointments/appointment_booking/patient_search.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:clinic_test_app/widgets/show_messages/show_error_message.dart';
 import 'package:clinic_test_app/widgets/show_messages/show_success_message.dart';
@@ -49,6 +51,7 @@ class AppointmentBookingScreen extends StatelessWidget {
     final bookAppointmentProvider =
         Provider.of<AppointmentBookingProvider>(context);
     final clinicInfoProvider = Provider.of<ClinicInfoProvider>(context);
+    final appointmentProvider = Provider.of<FiveScreenProvider>(context);
 
     final List<VoidCallback> onPress = [
       () {
@@ -100,6 +103,8 @@ class AppointmentBookingScreen extends StatelessWidget {
 
           if (bookAppointmentProvider.connecion == ConnectionEnum.connected) {
             if (context.mounted) {
+              appointmentProvider
+                  .addAppointment(bookAppointmentProvider.appointment!);
               Navigator.of(context).pop();
               ShowSuccessMessage.showMessage(context, "تم حجز الموعد بنجاح");
             }
@@ -133,7 +138,7 @@ class AppointmentBookingScreen extends StatelessWidget {
 
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Column(
+    return Stack(
       children: [
         CustomContainer(
           data: _screens[screenProvider.screenNumber],
@@ -147,6 +152,34 @@ class AppointmentBookingScreen extends StatelessWidget {
               ? false
               : bookAppointmentProvider.connecion == ConnectionEnum.cunnecting,
         ),
+        if (screenProvider.screenNumber == 3)
+          Positioned(
+            top: 40,
+            right: 40,
+            child: IconButton(
+              icon: const Icon(Icons.search),
+              color: Theme.of(context).colorScheme.secondary,
+              style: ButtonStyle(
+                backgroundColor: WidgetStateProperty.all<Color>(
+                    Theme.of(context).colorScheme.primary),
+              ),
+              onPressed: () {
+                showDialog(
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => const Dialog(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    alignment: Alignment.center,
+                    insetPadding: EdgeInsets.zero,
+                    child: SingleChildScrollView(
+                      child: PatientSearch(),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
       ],
     );
   }

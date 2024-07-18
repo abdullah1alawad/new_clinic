@@ -2,6 +2,7 @@ import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/dio/dio_helpers.dart';
 import 'package:clinic_test_app/model/doctor_model.dart';
+import 'package:clinic_test_app/model/patient_info_model.dart';
 import 'package:clinic_test_app/model/question_model.dart';
 import 'package:clinic_test_app/model/subject_model.dart';
 import 'package:clinic_test_app/widgets/patient_question_text_field.dart';
@@ -57,17 +58,20 @@ class ClinicInfoProvider extends ChangeNotifier {
             label: questions![j].question,
             icon: Icons.question_mark,
             controller: questions![j].answer,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'الرجاء الاجابة عن السؤال';
-              }
-              return null;
-            },
             obscureText: false,
+            readOnly: false,
           ),
         );
       }
       processedQuestions.add(Column(children: temp));
     }
+  }
+
+  void updateAnswer(List<PatientInfoModel> patientInfo) {
+    for (int i = 0; i < patientInfo.length; i++) {
+      questions![i].answer.text = patientInfo[i].answer;
+    }
+
+    //notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clinic_test_app/provider/appointment_booking/clinics_provider.dart';
 import 'package:clinic_test_app/provider/appointment_booking/appointment_booking_screens_provider.dart';
 import 'package:clinic_test_app/provider/five_screen_provider.dart';
@@ -30,10 +31,18 @@ class AppointmentsScreen extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: const [
               Tab(
-                text: 'المواعيد القادمة',
+                child: AutoSizeText(
+                  'المواعيد القادمة',
+                  style: TextStyle(fontSize: 20),
+                  maxLines: 1,
+                ),
               ),
               Tab(
-                text: 'المواعيد المكتملة',
+                child: AutoSizeText(
+                  'المواعيد المكتملة',
+                  style: TextStyle(fontSize: 20),
+                  maxLines: 1,
+                ),
               )
             ],
           ),

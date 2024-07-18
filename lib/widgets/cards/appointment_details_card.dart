@@ -2,6 +2,7 @@ import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/model/appointment_model.dart';
 import 'package:clinic_test_app/provider/cancel_appointment_provider.dart';
 import 'package:clinic_test_app/provider/five_screen_provider.dart';
+import 'package:clinic_test_app/widgets/cards/patient_info_card.dart';
 import 'package:clinic_test_app/widgets/custom_container.dart';
 import 'package:clinic_test_app/widgets/show_messages/show_error_message.dart';
 import 'package:clinic_test_app/widgets/show_messages/show_success_message.dart';
@@ -40,6 +41,7 @@ class AppointmentDetailsCard extends StatelessWidget {
                 ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,13 +114,47 @@ class AppointmentDetailsCard extends StatelessWidget {
                             fontSize: 20,
                           ),
                         ),
-                        // Text(
-                        //   appointment.patientName,
-                        //   style: const TextStyle(
-                        //     fontFamily: 'ElMessiri',
-                        //     fontSize: 20,
-                        //   ),
-                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              useSafeArea: true,
+                              context: context,
+                              builder: (context) => Dialog(
+                                backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                alignment: Alignment.center,
+                                insetPadding: EdgeInsets.zero,
+                                child: Column(
+                                  children: [
+                                    CustomContainer(
+                                      data: PatientInfo(
+                                          patientInfo: appointment.patientInfo),
+                                      icon: Icons.person,
+                                      onPressButton: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      buttonText: 'تم',
+                                      //height: screenHeight * 0.87,
+                                      loading: false,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'انقر للمزيد',
+                            style: TextStyle(
+                              fontFamily: 'ElMessiri',
+                              fontSize: 20,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          // const Icon(
+                          //   Icons.read_more,
+                          //   textDirection: TextDirection.ltr,
+                          // ),
+                        ),
                         Text(
                           appointment.clinicName,
                           style: const TextStyle(

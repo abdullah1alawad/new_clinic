@@ -41,3 +41,4 @@ const String kISNULL = 'is_null';
 const String kSUBJECTS = 'subjects';
 const String kDOCTORS = 'doctors';
 const String kANSWER = 'answer';
+const String kPATIENTINFO = 'patient_information';

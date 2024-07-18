@@ -1,4 +1,5 @@
 import 'package:clinic_test_app/core/utils/app_constants.dart';
+import 'package:clinic_test_app/model/patient_info_model.dart';
 import 'package:clinic_test_app/model/subprocess_model.dart';
 
 class AppointmentModel {
@@ -6,12 +7,13 @@ class AppointmentModel {
       assistentName,
       subjectName,
       clinicName,
-      photo,
       date,
       timeDifference;
+  String? photo;
   final int chairNumber, status, id;
   final int? mark;
   final List<SubprocessModel> subprocesses;
+  final List<PatientInfoModel> patientInfo;
 
   AppointmentModel({
     required this.doctorName,
@@ -26,6 +28,7 @@ class AppointmentModel {
     required this.id,
     required this.timeDifference,
     required this.subprocesses,
+    required this.patientInfo,
   });
 
   factory AppointmentModel.fromJson(Map<String, dynamic> jsonData) {
@@ -43,6 +46,9 @@ class AppointmentModel {
       timeDifference: jsonData[kTIMEDIFFERENCE],
       subprocesses: (jsonData[kSUBPROCESSES] as List)
           .map((subprocess) => SubprocessModel.fromJson(subprocess))
+          .toList(),
+      patientInfo: (jsonData[kPATIENTINFO] as List)
+          .map((question) => PatientInfoModel.fromJson(question))
           .toList(),
     );
   }
