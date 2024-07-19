@@ -1,14 +1,14 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 
-class Basic extends StatefulWidget {
-  const Basic({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  State<Basic> createState() => _BasicState();
+  State<ChatScreen> createState() => _BasicState();
 }
 
-class _BasicState extends State<Basic> {
+class _BasicState extends State<ChatScreen> {
   ChatUser user = ChatUser(
     id: '1',
     firstName: 'Charles',
@@ -27,7 +27,8 @@ class _BasicState extends State<Basic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('دعبووول'),
+        title: Text('دعبووول', style: Theme.of(context).textTheme.titleSmall),
+        centerTitle: false,
       ),
       body: DashChat(
         currentUser: user,

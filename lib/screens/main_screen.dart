@@ -1,5 +1,6 @@
 import 'package:clinic_test_app/provider/five_screen_provider.dart';
 import 'package:clinic_test_app/screens/appointments/appointments.dart';
+import 'package:clinic_test_app/screens/chats/chats_list.dart';
 import 'package:clinic_test_app/screens/marks_screen.dart';
 import 'package:clinic_test_app/screens/notifications_screen.dart';
 import 'package:clinic_test_app/screens/profile.dart';
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     const ProfileScreen(),
     const NotificationsScreen(),
     const AppointmentsScreen(),
-    const Text('المحادثة'),
+    const ChatsListScreen(),
     const MarksScreen(),
   ];
 

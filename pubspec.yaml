@@ -49,6 +49,7 @@ dependencies:
   toastification: ^2.0.0
   table_calendar: ^3.0.0
   auto_size_text: ^3.0.0
+  dash_chat_2: ^0.0.21
 
 dev_dependencies:
   flutter_test:
