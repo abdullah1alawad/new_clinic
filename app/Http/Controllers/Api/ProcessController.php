@@ -18,6 +18,7 @@ use App\traits\GeneralTrait;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ProcessController extends Controller
 {
@@ -256,7 +257,7 @@ class ProcessController extends Controller
 
             DB::commit();
 
-            $process=UpcomingAppointmentsResource::make($process);
+            $process = UpcomingAppointmentsResource::make($process);
             return $this->apiResponse($process, true, 'The process has been stored successfully.');
 
         } catch (\Exception $ex) {
@@ -278,12 +279,25 @@ class ProcessController extends Controller
     public function patient_info_search(Request $request)
     {
 
-        $request->validate([
-            'name' => 'nullable|string|max:255',
-            'national_id' => 'nullable|string|max:255',
-        ]);
+        $rules = [
+            'national_id' => 'required|string|max:255',
+        ];
 
-        $name = $request->input('name');
+        // Define custom validation messages
+        $messages = [
+            'national_id.required' => 'The national ID is required.',
+            'national_id.string' => 'The national ID must be a string.',
+            'national_id.max' => 'The national ID may not be greater than 255 characters.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            // Return validation errors
+            return $this->apiResponse(null, false, $validator->errors(), 422);
+        }
+
+
         $national_id = $request->input('national_id');
 
         $clinic_id = $request->input('clinic_id');
@@ -291,26 +305,28 @@ class ProcessController extends Controller
 
         $student_id = auth('sanctum')->user()->id;
 
-        $query = Process::query();
 
-        if ($name) {
-            $query->where('student_id', $student_id)
-                ->whereIn('subject_id', $subjectIds)
-                ->whereRaw("JSON_CONTAINS(questions, '{\"id\": 1}')")
-                ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$name%"]);
+        $processes = Process::where('student_id', $student_id)
+            ->whereIn('subject_id', $subjectIds)
+            ->whereJsonContains('questions', [['id' => 2]])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $matchingProcess = 0;
+        foreach ($processes as $process) { //temporary later i will develop it
+            foreach ($process->questions as $question) {
+                if ($question['id'] == 2 && $question['answer'] === $national_id) {
+                    $matchingProcess = $process;
+                    break 2; // Break both loops once the match is found
+                }
+            }
+        }
+        if ($matchingProcess) {
+            $process = ProcessResource::make($matchingProcess);
+            return $this->apiResponse($process, true, 'patient info');
         }
 
-        if ($national_id) {
-            $query->where('student_id', $student_id)
-                ->whereIn('subject_id', $subjectIds)
-                ->orWhereRaw("JSON_CONTAINS(questions, '{\"id\": 2}')")
-                ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(questions, '$[*].answer')) LIKE ?", ["%$national_id%"]);
-        }
-
-        $process = $query->orderBy('created_at', 'desc')->first();
-        $process = ProcessResource::make($process);
-
-        return $this->apiResponse($process, true, 'patient info');
+        return $this->apiResponse(null, false, 'No matching patient info found.', 404);
     }
 
     /**

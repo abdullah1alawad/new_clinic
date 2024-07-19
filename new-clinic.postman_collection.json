@@ -488,7 +488,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{local}}process/search-patient?name=oh&national_id=&clinic_id=1",
+							"raw": "{{local}}process/search-patient?national_id=35&clinic_id=1",
 							"host": [
 								"{{local}}process"
 							],
@@ -497,12 +497,8 @@
 							],
 							"query": [
 								{
-									"key": "name",
-									"value": "oh"
-								},
-								{
 									"key": "national_id",
-									"value": ""
+									"value": "35"
 								},
 								{
 									"key": "clinic_id",

@@ -16,14 +16,17 @@ class ProcessResource extends JsonResource
     public function toArray(Request $request): array
     {
         $questions = [];
+
         if (is_array($this->questions)) { // temporary until data entry done
             foreach ($this->questions as $question) {
                 $queryQuestion = Patient_question::find($question['id']);
-                $questions[] = [
-                    'id' => $queryQuestion->id,
-                    'question' => $queryQuestion->question,
-                    'answer' => $question['answer'],
-                ];
+                if ($queryQuestion) {
+                    $questions[] = [
+                        'id' => $queryQuestion->id,
+                        'question' => $queryQuestion->question,
+                        'answer' => $question['answer'],
+                    ];
+                }
             }
         }
 
