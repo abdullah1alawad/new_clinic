@@ -1,6 +1,8 @@
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
+import 'package:clinic_test_app/widgets/cards/notification_details_card.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
 import 'package:clinic_test_app/widgets/cards/notifications_card.dart';
+import 'package:clinic_test_app/widgets/show_messages/show_success_message.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -16,21 +18,9 @@ class NotificationsScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'تم تعليم الكل ك مقروء',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                  backgroundColor: Colors.green.shade400,
-                  behavior: SnackBarBehavior.floating,
-                  width: 200,
-                  duration: Duration(milliseconds: 1000),
-                  //showCloseIcon: true,
-                ),
+              ShowSuccessMessage.showMessage(
+                context,
+                "تم تعليم الكل ك مقروء",
               );
             },
             icon: const Icon(
@@ -42,15 +32,39 @@ class NotificationsScreen extends StatelessWidget {
         ],
       ),
       body: BackGroundContainer(
-        child: ListView.builder(
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            if (index != 4) {
-              return const NotificationCard();
-            } else {
-              return const SizedBox(height: 50);
-            }
-          },
+        child: ListView.separated(
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(8),
+            child: NotificationCard(
+              photo: "assets/images/avatar.png",
+              date: "10:10",
+              message: "لقد وافق الدكتور فلان على حجز الموعد.",
+              isNotRead: index & 1 == 0,
+              onTap: () {
+                showDialog(
+                  useSafeArea: true,
+                  context: context,
+                  builder: (context) => const Dialog(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    alignment: Alignment.center,
+                    insetPadding: EdgeInsets.zero,
+                    child: SingleChildScrollView(
+                      child: NotificationDetailsCard(
+                        data: Text("لقد وافق الدكتور فلان على حجز الموعد."),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          separatorBuilder: (context, index) => const Divider(
+            color: Colors.blue,
+            indent: 30,
+            endIndent: 30,
+          ),
+          itemCount: 10,
         ),
       ),
     );

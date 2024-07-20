@@ -1,8 +1,8 @@
 import 'package:clinic_test_app/screens/chats/chat.dart';
 import 'package:clinic_test_app/widgets/back_ground_container.dart';
+import 'package:clinic_test_app/widgets/cards/chat_card.dart';
 import 'package:clinic_test_app/widgets/custom_bottom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ChatsListScreen extends StatelessWidget {
   const ChatsListScreen({super.key});
@@ -28,7 +28,11 @@ class ChatsListScreen extends StatelessWidget {
         child: ListView.separated(
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
+            child: ChatCard(
+              name: "عبدالله",
+              lastMessage: "مرحبااااااااااا !",
+              date: "10:50",
+              photo: "assets/images/avatar.png",
               onTap: () {
                 Navigator.push(
                   context,
@@ -53,20 +57,6 @@ class ChatsListScreen extends StatelessWidget {
                   ),
                 );
               },
-              child: const ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(
-                    'assets/images/avatar.png',
-                  ),
-                  radius: 23,
-                ),
-                title: Text(
-                  'عبدالله',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text('مرحبااااااااااااااااا !'),
-                trailing: Text('10:50'),
-              ),
             ),
           ),
           separatorBuilder: (context, index) => const Divider(
@@ -78,6 +68,5 @@ class ChatsListScreen extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

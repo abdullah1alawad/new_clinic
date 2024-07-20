@@ -48,11 +48,11 @@ class PatientSearch extends StatelessWidget {
           ),
           icon: Icons.search,
           onPressButton: () async {
-            if (patientSearchProvider.dataController.text.isEmpty) {
-              ShowErrorMessage.showMessage(
-                  context, "الرجاء ادخال الرقم الوطني");
-              return;
-            }
+            // if (patientSearchProvider.dataController.text.isEmpty) {
+            //   ShowErrorMessage.showMessage(
+            //       context, "الرجاء ادخال الرقم الوطني");
+            //   return;
+            // }
 
             await patientSearchProvider
                 .searchForPatient(screenProvider.clinicId);
