@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\ProcessController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,11 +67,15 @@ Route::group(['prefix' => 'process'], function () {
     Route::get('get-chairs/{doctor_id}/{clinic_id}', [ProcessController::class, 'get_chairs']);
     Route::post('book-chair', [ProcessController::class, 'book_chair']);
 
-    Route::delete('delete-process/{process_id}',[ProcessController::class,'destroy']);
-    Route::get('search-patient',[ProcessController::class,'patient_info_search']);
+    Route::delete('delete-process/{process_id}', [ProcessController::class, 'destroy']);
+    Route::get('search-patient', [ProcessController::class, 'patient_info_search']);
 
 });
 
+
+Route::apiResource('chat', ChatController::class)->only(['index', 'store', 'show']);
+Route::apiResource('chat_message', ChatMessageController::class)->only(['index', 'store']);
+Route::apiResource('user', UserController::class)->only(['index']);
 
 //--------------------------------------------------------------------------
 

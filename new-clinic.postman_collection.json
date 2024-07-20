@@ -522,7 +522,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -581,12 +581,200 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "chat",
+			"item": [
+				{
+					"name": "create chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}chat",
+							"host": [
+								"{{local}}chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-single-chat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}chat/:id",
+							"host": [
+								"{{local}}chat"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-many-chats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}chat",
+							"host": [
+								"{{local}}chat"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chat-message",
+			"item": [
+				{
+					"name": "get-chat-messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}chat_message?chat_id=1&page=1",
+							"host": [
+								"{{local}}chat_message"
+							],
+							"query": [
+								{
+									"key": "chat_id",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-chat-message",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "chat_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "message",
+									"value": "he\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}chat_message",
+							"host": [
+								"{{local}}chat_message"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
 		{
 			"key": "http://127.0.0.1:8000",
 			"value": "local"
+		},
+		{
+			"key": "token",
+			"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
+			"type": "string"
 		}
 	]
 }

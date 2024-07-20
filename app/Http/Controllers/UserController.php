@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ResetUserPasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        // get the rules you need
+        $users = User::where('id', '!=', auth('sanctum')->user()->id)->get();
+        return $this->apiResponse($users, true, 'all required users');
     }
 
     /**
