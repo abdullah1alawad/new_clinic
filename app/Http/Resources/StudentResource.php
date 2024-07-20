@@ -28,9 +28,9 @@ class StudentResource extends JsonResource
     {
         return [
 //            'token' => $this->token,
-            'id' => $this->id,
 //            'role' => RoleResource::collection($this->roles), // check it
             'profile' => [
+                'id' => $this->id,
                 'email' => $this->email,
                 'username' => $this->username,
                 'name' => $this->name,
