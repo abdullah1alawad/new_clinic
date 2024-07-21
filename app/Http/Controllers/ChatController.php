@@ -46,7 +46,7 @@ class ChatController extends Controller
             return $chat;
         });
 
-//        return $chats[0]->lastMessage;
+//        return $chats;
         $chats = ChatResource::collection($chats);
 
         return $this->apiResponse($chats, true, 'chats here.');
