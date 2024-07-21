@@ -50,6 +50,8 @@ dependencies:
   table_calendar: ^3.0.0
   auto_size_text: ^3.0.0
   dash_chat_2: ^0.0.21
+  search_page: ^2.3.0
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:

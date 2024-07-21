@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ChatCard extends StatelessWidget {
-  final String name, lastMessage, date, photo;
+  final String name, lastMessage, date;
+  final ImageProvider<Object>? backgroundImage;
   final VoidCallback onTap;
   const ChatCard({
     super.key,
     required this.name,
     required this.lastMessage,
     required this.date,
-    required this.photo,
+    required this.backgroundImage,
     required this.onTap,
   });
 
@@ -17,9 +18,7 @@ class ChatCard extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading: CircleAvatar(
-        backgroundImage: AssetImage(
-          photo,
-        ),
+        backgroundImage: backgroundImage,
         radius: 23,
       ),
       title: Text(

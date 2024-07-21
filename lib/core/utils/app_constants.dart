@@ -42,3 +42,15 @@ const String kSUBJECTS = 'subjects';
 const String kDOCTORS = 'doctors';
 const String kANSWER = 'answer';
 const String kPATIENTINFO = 'patient_information';
+const String kCREATEDAT = 'created_at';
+const String kUPDATEDAT = 'updated_at';
+const String kCREATEDBY = 'created_by';
+const String kLASTMESSAGE = 'last_message';
+const String kISPRIVATE = 'is_private';
+const String kOTHERUSER = 'other_participants';
+const String kUSERID = 'user_id';
+const String kCHATID = 'chat_id';
+const String kUSER = 'user';
+const String kPAGE = 'page';
+
+const String kIMAGEBASEURL = 'http://localhost:8000/images/';

@@ -16,11 +16,11 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<FiveScreenProvider>(context);
     ImageProvider<Object> backgroundImage;
-    if (profileProvider.profileModel!.photo == null) {
+    if (profileProvider.user!.photo == null) {
       backgroundImage = const AssetImage('assets/images/avatar.png');
     } else {
       backgroundImage = NetworkImage(
-          'http://localhost:8000/images/${profileProvider.profileModel!.photo}');
+          'http://localhost:8000/images/${profileProvider.user!.photo}');
     }
 
     return Scaffold(
@@ -64,7 +64,7 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: double.infinity, height: 20),
                       Text(
-                        profileProvider.profileModel!.name,
+                        profileProvider.user!.name,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(

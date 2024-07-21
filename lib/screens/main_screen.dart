@@ -1,4 +1,6 @@
+import 'package:clinic_test_app/provider/chat/get_many_chats_provider.dart';
 import 'package:clinic_test_app/provider/five_screen_provider.dart';
+import 'package:clinic_test_app/provider/get_all_users_provider.dart';
 import 'package:clinic_test_app/screens/appointments/appointments.dart';
 import 'package:clinic_test_app/screens/chats/chats_list.dart';
 import 'package:clinic_test_app/screens/marks_screen.dart';
@@ -36,6 +38,8 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<FiveScreenProvider>(context, listen: false).getFiveScreen();
+      Provider.of<GetManyChatsProvider>(context, listen: false).getManyChats();
+      Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
     });
   }
 

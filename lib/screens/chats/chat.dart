@@ -1,55 +1,59 @@
+import 'package:clinic_test_app/core/enum/connection_enum.dart';
+import 'package:clinic_test_app/provider/chat/create_message_provider.dart';
+import 'package:clinic_test_app/provider/chat/get_chat_messages_provider.dart';
+import 'package:clinic_test_app/provider/five_screen_provider.dart';
+import 'package:clinic_test_app/widgets/show_messages/show_error_message.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
   @override
-  State<ChatScreen> createState() => _BasicState();
-}
-
-class _BasicState extends State<ChatScreen> {
-  ChatUser user = ChatUser(
-    id: '1',
-    firstName: 'Charles',
-    lastName: 'Leclerc',
-  );
-
-  List<ChatMessage> messages = <ChatMessage>[
-    ChatMessage(
-      text: 'مرحبا !',
-      user: ChatUser(id: '2'),
-      createdAt: DateTime.now(),
-    ),
-  ];
-
-  @override
   Widget build(BuildContext context) {
+    final chatProvider = Provider.of<GetChatMessagesProvider>(context);
+    final messageProvider = Provider.of<CreateMessageProvider>(context);
+    ChatUser chatUser = Provider.of<FiveScreenProvider>(context, listen: false)
+        .user!
+        .toChatUser;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('دعبووول', style: Theme.of(context).textTheme.titleSmall),
+        title: Text(chatProvider.chat!.otherUser.name,
+            style: Theme.of(context).textTheme.titleSmall),
         centerTitle: false,
       ),
-      body: DashChat(
-        currentUser: user,
-        onSend: (ChatMessage m) {
-          setState(() {
-            messages.insert(0, m);
-            messages.insert(
-              0,
-              ChatMessage(
-                text: 'مرحبا !',
-                user: ChatUser(id: '2'),
-                createdAt: DateTime.now(),
-              ),
+      body: Consumer<GetChatMessagesProvider>(
+        builder: (context, provider, child) {
+          if (provider.connection == ConnectionEnum.connected) {
+            return DashChat(
+              currentUser: chatUser,
+              onSend: (ChatMessage m) async {
+                await messageProvider.createMessage(provider.chat!.id, m.text);
+
+                if (messageProvider.connection == ConnectionEnum.connected) {
+                  provider.addMessage(messageProvider.message!);
+                } else if (messageProvider.connection ==
+                    ConnectionEnum.failed) {
+                  if (context.mounted) {
+                    ShowErrorMessage.showMessage(
+                        context, messageProvider.errorMessage!);
+                  }
+                }
+              },
+              messages: provider.uiMessages,
+              inputOptions: inputOptions(),
+              messageOptions: messageOptions(chatUser.id),
+              messageListOptions: messageListOptions(),
+              scrollToBottomOptions: scrollToBottomOptions(),
             );
-          });
+          } else if (provider.connection == ConnectionEnum.failed) {
+            return Center(child: Text(provider.errorMessage ?? 'Error'));
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
         },
-        messages: messages,
-        inputOptions: inputOptions(),
-        messageOptions: messageOptions(),
-        messageListOptions: messageListOptions(),
-        scrollToBottomOptions: scrollToBottomOptions(),
       ),
     );
   }
@@ -75,7 +79,7 @@ class _BasicState extends State<ChatScreen> {
     );
   }
 
-  MessageOptions messageOptions() {
+  MessageOptions messageOptions(String userId) {
     return MessageOptions(
       currentUserContainerColor: Colors.white,
       currentUserTextColor: Colors.black,
@@ -86,7 +90,7 @@ class _BasicState extends State<ChatScreen> {
         ChatMessage? previousMessage,
         ChatMessage? nextMessage,
       ) {
-        bool isCurrentUser = message.user.id == user.id;
+        bool isCurrentUser = message.user.id == userId;
         bool isDefUser = nextMessage?.user.id != message.user.id;
         return defaultMessageDecoration(
           color: Colors.white,

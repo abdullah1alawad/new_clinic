@@ -13,9 +13,7 @@ class DioHelper {
     ),
   );
 
-  // static Future<Response> signUp(Map<String, dynamic> data) async {
-  //   return await dio.post(EndPoint.signup, data: FormData.fromMap(data));
-  // }
+//////////////////// auth ////////////////////////////
 
   static Future<Response> logIn(Map<String, dynamic> data) async {
     return await dio.post(EndPoint.login, data: FormData.fromMap(data));
@@ -35,11 +33,21 @@ class DioHelper {
         data: data);
   }
 
+  static Future<Response> getAllUsers(String token) async {
+    return await dio.get(
+      EndPoint.getAllUsers,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  }
+
+//////////////////// auth ////////////////////////////
+
   static Future<Response> getFiveScreen(String token) async {
     return await dio.get(EndPoint.getFiveScreen,
         options: Options(headers: {'Authorization': 'Bearer $token'}));
   }
 
+//////////////////// Appointment booking //////////////////////////
   static Future<Response> getClinics() async {
     return await dio.get(EndPoint.getClinics);
   }
@@ -78,8 +86,53 @@ class DioHelper {
     );
   }
 
-  // static Future<Response> getUserInfo() async {
-  //   return await dio.get(EndPoint.getUserDataEndPoint(
-  //       CacheHelper().getData(key: AppStrings.id)));
-  // }
+  //////////////////// Appointment booking //////////////////////////
+
+  //////////////////// chat ///////////////////////////////////
+
+  static Future<Response> createChat(
+      Map<String, dynamic> data, String token) async {
+    return await dio.post(
+      EndPoint.createChat,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap(data),
+    );
+  }
+
+  static Future<Response> getSingleChat(int chatId, String token) async {
+    return await dio.get(
+      "${EndPoint.getSingleChat}$chatId",
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  }
+
+  static Future<Response> getManyChats(String token) async {
+    return await dio.get(
+      EndPoint.getManyChats,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  }
+
+  static Future<Response> createMessage(
+    Map<String, dynamic> data,
+    String token,
+  ) async {
+    return await dio.post(
+      EndPoint.createMessage,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: FormData.fromMap(data),
+    );
+  }
+
+  static Future<Response> getChatMessages(int chatId, int page) async {
+    return await dio.get(
+      EndPoint.getChatMessages,
+      queryParameters: {
+        kCHATID: chatId,
+        kPAGE: page,
+      },
+    );
+  }
+
+  /////////////////////// chat ///////////////////////////////////
 }

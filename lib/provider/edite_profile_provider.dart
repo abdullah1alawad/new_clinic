@@ -3,7 +3,7 @@ import 'package:clinic_test_app/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/core/utils/app_services.dart';
 import 'package:clinic_test_app/dio/dio_helpers.dart';
-import 'package:clinic_test_app/model/profile_model.dart';
+import 'package:clinic_test_app/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -58,7 +58,7 @@ class EditeProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  initInfo(ProfileModel profileInfo) {
+  initInfo(UserModel profileInfo) {
     nameController.text = profileInfo.name;
     emailController.text = profileInfo.email;
     usernameController.text = profileInfo.username;

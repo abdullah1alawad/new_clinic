@@ -21,7 +21,7 @@ class EditeProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final editeProfileProvider = Provider.of<EditeProfileProvider>(context);
     final profileProvider = Provider.of<FiveScreenProvider>(context);
-    editeProfileProvider.initInfo(profileProvider.profileModel!);
+    editeProfileProvider.initInfo(profileProvider.user!);
     GlobalKey<FormState> formState = GlobalKey();
 
     ImageProvider<Object> backgroundImage;

@@ -4,12 +4,12 @@ import 'package:clinic_test_app/core/utils/app_constants.dart';
 import 'package:clinic_test_app/dio/dio_helpers.dart';
 import 'package:clinic_test_app/model/appointment_model.dart';
 import 'package:clinic_test_app/model/mark_model.dart';
-import 'package:clinic_test_app/model/profile_model.dart';
+import 'package:clinic_test_app/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 class FiveScreenProvider extends ChangeNotifier {
-  ProfileModel? profileModel;
+  UserModel? user;
   List<AppointmentModel>? comingAppointments;
   List<AppointmentModel>? completedAppointments;
   List<MarkModel>? marks;
@@ -24,7 +24,7 @@ class FiveScreenProvider extends ChangeNotifier {
       var response =
           await DioHelper.getFiveScreen(CacheHelper().getData(key: kTOKEN));
 
-      profileModel = ProfileModel.fromJson(response.data[kDATA][kPROFILE]);
+      user = UserModel.fromJson(response.data[kDATA][kPROFILE]);
 
       comingAppointments =
           (response.data[kDATA][kAPPOINTMENTS][kCOMINGAPPOINTMENTS] as List)

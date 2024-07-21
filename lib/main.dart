@@ -1,4 +1,10 @@
 import 'package:clinic_test_app/core/utils/app_constants.dart';
+import 'package:clinic_test_app/provider/chat/create_chat_provider.dart';
+import 'package:clinic_test_app/provider/chat/create_message_provider.dart';
+import 'package:clinic_test_app/provider/chat/get_chat_messages_provider.dart';
+import 'package:clinic_test_app/provider/chat/get_many_chats_provider.dart';
+import 'package:clinic_test_app/provider/chat/get_single_chat_provider.dart';
+import 'package:clinic_test_app/provider/get_all_users_provider.dart';
 import 'package:clinic_test_app/provider/providers.dart';
 import 'package:clinic_test_app/provider/theme_provider.dart';
 import 'package:clinic_test_app/screens/main_screen.dart';
@@ -42,6 +48,12 @@ void main() {
         ChangeNotifierProvider(
             create: (context) => CancelAppointmentProvider()),
         ChangeNotifierProvider(create: (context) => PatientSearchProvider()),
+        ChangeNotifierProvider(create: (context) => CreateChatProvider()),
+        ChangeNotifierProvider(create: (context) => CreateMessageProvider()),
+        ChangeNotifierProvider(create: (context) => GetManyChatsProvider()),
+        ChangeNotifierProvider(create: (context) => GetSingleChatProvider()),
+        ChangeNotifierProvider(create: (context) => GetChatMessagesProvider()),
+        ChangeNotifierProvider(create: (context) => GetAllUsersProvider()),
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
       ],
       child: const MyApp(),
