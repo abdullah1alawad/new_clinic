@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class ChatResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,15 +15,12 @@ class UserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-//            'token' => $this->token,
             'id' => $this->id,
-            'email' => $this->email,
-            'username' => $this->username,
+            'created_by' => $this->created_by,
             'name' => $this->name,
-            'gender' => $this->gender,
-            'phone' => $this->phone,
-            'photo' => $this->photo,
-            'national_id' => $this->national_id,
+            'is_private' => $this->is_private,
+            'last_message' => MessageResource::make($this->lastMessage),
+            'other_participants' => ParticipantsResource::collection($this->otherParticipants),
         ];
     }
 }

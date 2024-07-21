@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GetChatRequest;
 use App\Http\Requests\StoreChatRequest;
+use App\Http\Resources\ChatResource;
 use App\Models\Chat;
 use App\traits\GeneralTrait;
 use Illuminate\Http\JsonResponse;
@@ -33,6 +34,20 @@ class ChatController extends Controller
             ->with('lastMessage.user', 'participants.user')
             ->latest('updated_at')
             ->get();
+
+//        return $chats[0]->participants;
+
+        $userId = auth('sanctum')->user()->id;
+
+        $chats = $chats->map(function ($chat) use ($userId) {
+            $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
+                return $participant->user_id !== $userId;
+            })->values();
+            return $chat;
+        });
+
+//        return $chats[0]->lastMessage;
+        $chats = ChatResource::collection($chats);
 
         return $this->apiResponse($chats, true, 'chats here.');
     }
@@ -125,6 +140,17 @@ class ChatController extends Controller
     public function show(Chat $chat)
     {
         $chat->load('lastMessage.user', 'participants.user');
-        return $this->apiResponse($chat, true, 'chat');
+
+        $userId = auth('sanctum')->user()->id;
+
+        // Filter participants to exclude the authenticated user
+        $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
+            return $participant->user_id !== $userId;
+        })->values();
+
+        $chatResource = new ChatResource($chat);
+
+        return $this->apiResponse($chatResource, true, 'chat');
     }
+
 }
