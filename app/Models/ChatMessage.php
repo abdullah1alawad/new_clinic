@@ -14,6 +14,12 @@ class ChatMessage extends Model
 
     protected $touches = ['chat'];
 
+    protected $casts = [
+        'chat_id' => 'integer',
+        'user_id' => 'integer',
+        'message' => 'string',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

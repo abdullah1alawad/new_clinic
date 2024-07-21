@@ -12,6 +12,12 @@ class Chat extends Model
     protected $table = "chats";
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'created_by' => 'integer',
+        'name' => 'string',
+        'is_private'=>'boolean'
+    ];
+
     public function participants()
     {
         return $this->hasMany(ChatParticipant::class, 'chat_id');

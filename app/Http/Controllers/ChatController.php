@@ -61,6 +61,8 @@ class ChatController extends Controller
      */
     public function store(StoreChatRequest $request)
     {
+        $userId = auth('sanctum')->user()->id;
+
         $data = $this->prepareStoreData($request);
         if ($data['userId'] === $data['otherUserId']) {
             return $this->apiResponse(null, false,
@@ -82,11 +84,24 @@ class ChatController extends Controller
             ]);
 
             $chat->refresh()->load('lastMessage.user', 'participants.user');
+
+            $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
+                return $participant->user_id !== $userId;
+            })->values();
+
+            $chat = ChatResource::make($chat);
             return $this->apiResponse($chat, true, 'chat here.');
         }
 
-        return $this->apiResponse($previousChat->load('lastMessage.user', 'participants.user')
-            , true, 'okay');
+        $previousChat->load('lastMessage.user', 'participants.user');
+
+        $previousChat->otherParticipants = $previousChat->participants->filter(function ($participant) use ($userId) {
+            return $participant->user_id !== $userId;
+        })->values();
+
+        $previousChat = ChatResource::make($previousChat);
+
+        return $this->apiResponse($previousChat, true, 'okay');
     }
 
     /**

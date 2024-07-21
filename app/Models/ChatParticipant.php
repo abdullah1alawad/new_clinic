@@ -12,6 +12,11 @@ class ChatParticipant extends Model
     protected $table = "chat_participants";
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'chat_id' => 'integer',
+        'user_id' => 'integer',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
