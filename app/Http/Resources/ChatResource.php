@@ -20,8 +20,8 @@ class ChatResource extends JsonResource
             'created_by' => $this->created_by,
             'name' => $this->name,
             'is_private' => $this->is_private,
-            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s'),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
             'last_message' => MessageResource::make($this->lastMessage),
             'other_participants' => ParticipantsResource::collection($this->otherParticipants),
         ];
