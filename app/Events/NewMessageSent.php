@@ -15,14 +15,16 @@ class NewMessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    private $chatMessage;
+
     /**
      * NewMessageSent constructor.
      *
      * @param ChatMessage $chatMessage
      */
-    public function __construct(private ChatMessage $chatMessage)
+    public function __construct(ChatMessage $chatMessage)
     {
-
+        $this->chatMessage = $chatMessage;
     }
 
     /**

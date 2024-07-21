@@ -57,7 +57,7 @@ class ChatMessageController extends Controller
         $chatMessage->load('user');
 
         /// TODO send broadcast event to pusher and send notification to onesignal services
-//        $this->sendNotificationToOther($chatMessage);
+        $this->sendNotificationToOther($chatMessage);
 
         return $this->apiResponse($chatMessage, true, 'Message has been sent successfully.');
     }
@@ -71,7 +71,7 @@ class ChatMessageController extends Controller
     {
 
         // TODO move this event broadcast to observer
-//        broadcast(new NewMessageSent($chatMessage))->toOthers();
+        broadcast(new NewMessageSent($chatMessage))->toOthers();
 
         $user = auth('sanctum')->user();
         $userId = $user->id;

@@ -282,6 +282,30 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "get-users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}user",
+							"host": [
+								"{{local}}user"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -622,6 +646,16 @@
 				{
 					"name": "get-single-chat",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
