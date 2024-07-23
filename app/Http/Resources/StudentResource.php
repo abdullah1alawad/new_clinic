@@ -9,14 +9,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class StudentResource extends JsonResource
 {
 
-    private $upcomingAppointments, $completedAppointments, $studentMarks;
+    private $upcomingAppointments, $completedAppointments, $studentMarks, $notifications;
 
-    public function __construct($resource, $upcomingAppointments, $completedAppointments, $studentMarks = null)
+    public function __construct($resource, $upcomingAppointments, $completedAppointments, $studentMarks = null, $notifications)
     {
         parent::__construct($resource);
         $this->upcomingAppointments = $upcomingAppointments;
         $this->completedAppointments = $completedAppointments;
         $this->studentMarks = $studentMarks;
+        $this->notifications = $notifications;
     }
 
     /**
@@ -44,8 +45,9 @@ class StudentResource extends JsonResource
                 'CompletedAppointments' => CompletedAppointmentsResource::collection($this->completedAppointments),
             ],
             'marks' => isset($this->studentMarks) ? StudentMarkResource::collection($this->studentMarks) : '',
-            'notification' => [],
-            'chat' => [],
+            'notification' => NotificationResource::collection($this->notifications),
+//            'notification' => $this->notifications,
+
         ];
     }
 }

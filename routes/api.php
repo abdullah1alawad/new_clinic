@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AssistantController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\ProcessController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,7 @@ Route::group(['prefix' => 'student'], function () {
 
 Route::group(['prefix' => 'doctor'], function () {
     Route::get('/configuration', [DoctorController::class, 'configuration']);
+    Route::post('/decision/book-chair', [DoctorController::class, 'acceptBookChairRequest']);
 });
 
 
@@ -75,6 +78,9 @@ Route::group(['prefix' => 'process'], function () {
 
 });
 
+Route::group(['prefix' => 'assistant'], function () {
+    Route::get('get-empty-assistant', [AssistantController::class, 'index']);
+});
 
 Route::apiResource('chat', ChatController::class)->only(['index', 'store', 'show']);
 Route::apiResource('chat_message', ChatMessageController::class)->only(['index', 'store']);
@@ -83,11 +89,8 @@ Route::apiResource('user', UserController::class)->only(['index']);
 //--------------------------------------------------------------------------
 
 
-// send clinics
-// he will send the clinic id
-// will send questions and subjects and doctors
-//send the doctor who choose
-//see the doctor empty and chairs
-
-
-// subject will have doctor and clinic will have subjects
+// TODO----------------------------------------------
+//get the empty assistants
+// student cant book more than one chair at same time
+// check the delete process
+// delete the ole image in the update user

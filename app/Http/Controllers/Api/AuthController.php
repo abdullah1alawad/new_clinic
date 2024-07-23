@@ -38,8 +38,9 @@ class AuthController extends Controller
 
             $user->tokens()->delete();
             $user->token = $user->createToken('clinic')->plainTextToken;
+            $user_role = $user->roles->first();
 
-            return $this->apiResponse(['id' => $user->id, 'token' => $user->token, 'user_role' => RoleResource::collection($user->roles)], true, 'The user is logged in successfully.');
+            return $this->apiResponse(['id' => $user->id, 'token' => $user->token, 'user_role' => $user_role->name], true, 'The user is logged in successfully.');
 
         } catch (\Exception $ex) {
             return $this->internalServer($ex->getMessage());

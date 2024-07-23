@@ -110,6 +110,11 @@ class User extends Authenticatable
         return (!$val) ? 'Male' : 'Female';
     }
 
+    public function isAssistant(): bool
+    {
+        return $this->roles()->where('name', 'assistant')->exists();
+    }
+
 //    public function setGenderAttribute($val){
 //        $this->attributes['gender']=strtolower($val)=='female'? 1 : 0;
 //        dd($this->attributes['gender']);

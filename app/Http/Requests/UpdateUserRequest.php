@@ -34,7 +34,7 @@ class UpdateUserRequest extends FormRequest
             'national_id' => ['required', 'regex:/^[0-9]+$/', 'max:30', Rule::unique('users')->ignore(auth('sanctum')->user()->id)],
             'gender' => ['required','boolean'],
             'phone' => ['required', 'regex:/^[0-9]+$/', 'max:10', Rule::unique('users')->ignore(auth('sanctum')->user()->id)],
-            'photo' => ['image', 'max:2048'],
+            'photo' => ['nullable','image', 'max:2048'],
         ];
     }
 

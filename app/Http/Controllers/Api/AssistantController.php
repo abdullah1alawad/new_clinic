@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AssistantController extends Controller
@@ -12,7 +13,11 @@ class AssistantController extends Controller
      */
     public function index()
     {
-        //
+        $assistant = User::whereHas('roles', function ($query) {
+            $query->where('name', 'assistant');
+        })->get();
+
+        return $assistant;
     }
 
     /**

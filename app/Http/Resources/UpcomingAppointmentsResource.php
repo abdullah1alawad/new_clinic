@@ -38,7 +38,7 @@ class UpcomingAppointmentsResource extends JsonResource
             'doctor_name' => $this->doctor->name,
             'assistant_name' => isset($this->assistant->name) ? $this->assistant->name : '',
             'subject_name' => $this->subject->name,
-            'appointment_date' => $date_from_database->format('Y-m-d H:m'),
+            'appointment_date' => $date_from_database->format('Y-m-d H:i A'),
             'time_difference' => $time_difference,
             'clinic_name' => $this->chair->clinic->name,
             'chair_number' => $this->chair->chair_number,

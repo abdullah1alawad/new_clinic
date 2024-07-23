@@ -48,7 +48,11 @@ class UserController extends Controller
         try {
             $user = auth('sanctum')->user();
 
-            $photoBath = $this->saveImage($request->file('photo'), 'images');
+            if ($request->hasFile('photo')) {
+                /// TODO delete the old image
+                $photoPath = $this->saveImage($request->file('photo'), 'images');
+                $user->photo = $photoPath;
+            }
 
             $user->username = $request->username;
             $user->name = $request->name;
@@ -56,7 +60,6 @@ class UserController extends Controller
             $user->national_id = $request->national_id;
             $user->gender = $request->gender;
             $user->phone = $request->phone;
-            $user->photo = $photoBath;
 
             $user->save();
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\ChairBookRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProcessResource;
 use App\Http\Resources\UpcomingAppointmentsResource;
@@ -12,6 +13,7 @@ use App\Models\Process;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\User_schedule;
+use App\Notifications\ChairBookRequestNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\traits\GeneralTrait;
@@ -172,7 +174,7 @@ class ProcessController extends Controller
 
             $validatedData = $request->validate([
                 'clinic_id' => 'required|integer|exists:clinics,id',
-                'date' => 'required | date ',//'after_or_equal:' . Carbon::now()->subYears(100)->format('Y-m-d'),
+                'date' => 'required|date_format:Y-m-d H:i:s A',//'after_or_equal:' . Carbon::now()->subYears(100)->format('Y-m-d'),
                 'doctor_id' => 'required|integer',
                 'subject_id' => 'required|integer',
 //                'questions' => 'required|array',
@@ -255,9 +257,14 @@ class ProcessController extends Controller
             $process->status = 1;
             $process->save();
 
+            $process = UpcomingAppointmentsResource::make($process);
+
+            $doctor = User::find($process->doctor_id);
+
+            $doctor->notify(new ChairBookRequestNotification($process));
+
             DB::commit();
 
-            $process = UpcomingAppointmentsResource::make($process);
             return $this->apiResponse($process, true, 'The process has been stored successfully.');
 
         } catch (\Exception $ex) {
@@ -283,7 +290,6 @@ class ProcessController extends Controller
             'national_id' => 'required|string|max:255',
         ];
 
-        // Define custom validation messages
         $messages = [
             'national_id.required' => 'The national ID is required.',
             'national_id.string' => 'The national ID must be a string.',

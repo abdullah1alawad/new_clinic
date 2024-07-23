@@ -28,9 +28,13 @@ class StudentController extends Controller
                 ->where('date', '<', $current_time)
                 ->paginate(7);
 
+            $notifications = $user->notifications()
+                ->orderBy('created_at', 'desc')
+                ->get();
+
             $studentMarks = $user->studentMarks()->paginate(7);
 
-            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks);
+            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks, $notifications);
 
             return $this->apiResponse($user, true, 'configuration data.');
 
