@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Process;
 use App\Models\User;
+use App\Models\User_schedule;
 use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -29,13 +30,43 @@ class AssistantController extends Controller
             return $this->apiResponse(null, false, $validator->errors(), 422);
 
         $process = Process::find($request->process_id);
-
-        return $this->getDayByNumber(3);
+        $dayOfProcess = $this->getDayByDate($process->date);
 
         $assistants = User::whereHas('roles', function ($query) {
             $query->where('name', 'assistant');
         })->get();
 
+        $processTime = $process->date;
+        $processTime = $processTime->format('H:i');
+
+        $AvailableAssistantsBySchedule = [];
+        foreach ($assistants as $assistant) {
+            $user_schedule = User_schedule::where('user_id', $assistant->id)->first();
+
+            if ($user_schedule) {
+                foreach ($user_schedule->time_of_work as $key => $time) {
+                    $dayOfSchedule = $this->getDayByNumber($key);
+                    if ($dayOfProcess == $dayOfSchedule &&
+                        ($processTime >= $time[0] && $processTime < $time[1])) {
+                        $AvailableAssistantsBySchedule[] = [
+                            'id' => $assistant->id,
+                            'name' => $assistant->name,
+                        ];
+                    }
+                }
+            }
+        }
+
+        $AvailableAssistants = [];
+        foreach ($AvailableAssistantsBySchedule as $item) {
+
+            $checkAssistantProcessTime = Process::where('date', $process->date)
+                ->where('assistant_id', $item['id'])->exists();
+            if (!$checkAssistantProcessTime)
+                $AvailableAssistants[] = $item;
+        }
+
+        return $this->apiResponse($AvailableAssistants, true, 'all Available Assistants.');
 
     }
 
