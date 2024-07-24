@@ -52,6 +52,13 @@ dependencies:
   dash_chat_2: ^0.0.21
   search_page: ^2.3.0
   intl: ^0.19.0
+  laravel_echo:
+    git:
+      url: https://github.com/kakajansh/echo.git
+      ref: master
+  #pusher_client: ^2.0.0
+  pusher_client:
+    path: E:/pusher_client-master
 
 dev_dependencies:
   flutter_test:
