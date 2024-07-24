@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UpcomingAppointmentsResource;
 use App\Models\Process;
 use App\Models\User;
 use App\Models\User_schedule;
@@ -66,7 +67,13 @@ class AssistantController extends Controller
                 $AvailableAssistants[] = $item;
         }
 
-        return $this->apiResponse($AvailableAssistants, true, 'all Available Assistants.');
+        $process = UpcomingAppointmentsResource::make($process);
+
+
+        return $this->apiResponse([
+            'assistants' => $AvailableAssistants,
+            'process' => $process,
+        ], true, 'all Available Assistants.');
 
     }
 

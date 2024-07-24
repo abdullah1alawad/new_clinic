@@ -95,3 +95,4 @@ Route::apiResource('user', UserController::class)->only(['index']);
 // check the delete process
 // delete the old image in the update user
 // check when assistant is booked at the same time from two users in the post function
+// check the assistant if available in the post function
