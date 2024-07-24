@@ -11,7 +11,7 @@ class StudentResource extends JsonResource
 
     private $upcomingAppointments, $completedAppointments, $studentMarks, $notifications;
 
-    public function __construct($resource, $upcomingAppointments, $completedAppointments, $studentMarks = null, $notifications)
+    public function __construct($resource, $upcomingAppointments, $completedAppointments, $notifications, $studentMarks = null)
     {
         parent::__construct($resource);
         $this->upcomingAppointments = $upcomingAppointments;

@@ -38,7 +38,7 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'process' => UpcomingAppointmentsResource::make($this->process),
+            'process' => $this->process,
             'message' => $this->message,
         ];
     }
@@ -46,7 +46,7 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'process' => UpcomingAppointmentsResource::make($this->process),
+            'process' => $this->process,
             'message' => $this->message,
         ]);
     }

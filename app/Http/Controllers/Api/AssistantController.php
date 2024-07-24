@@ -3,21 +3,45 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Process;
 use App\Models\User;
+use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AssistantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    use GeneralTrait;
+
+    public function getAvailableAssistants(Request $request)
     {
-        $assistant = User::whereHas('roles', function ($query) {
+        $rules = [
+            'process_id' => 'required|exists:processes,id',
+        ];
+
+        $messages = [
+            'process_id.required' => 'The process_id is required.',
+            'process_id.exists' => 'This process does not exists.',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails())
+            return $this->apiResponse(null, false, $validator->errors(), 422);
+
+        $process = Process::find($request->process_id);
+
+        return $this->getDayByNumber(3);
+
+        $assistants = User::whereHas('roles', function ($query) {
             $query->where('name', 'assistant');
         })->get();
 
-        return $assistant;
+
+    }
+
+    public function index()
+    {
+
     }
 
     /**

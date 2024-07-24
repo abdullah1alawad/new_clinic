@@ -2,7 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Http\Resources\UpcomingAppointmentsResource;
+
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -41,7 +41,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'process' => UpcomingAppointmentsResource::make($this->process),
+            'process' => $this->process,
             'message' => 'A student want to book a chair.',
         ];
     }
@@ -49,7 +49,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'process' => UpcomingAppointmentsResource::make($this->process),
+            'process' => $this->process,
             'message' => 'A student want to book a chair.',
         ]);
     }

@@ -79,7 +79,7 @@ Route::group(['prefix' => 'process'], function () {
 });
 
 Route::group(['prefix' => 'assistant'], function () {
-    Route::get('get-empty-assistant', [AssistantController::class, 'index']);
+    Route::get('get-empty-assistant', [AssistantController::class, 'getAvailableAssistants']);
 });
 
 Route::apiResource('chat', ChatController::class)->only(['index', 'store', 'show']);
@@ -93,4 +93,4 @@ Route::apiResource('user', UserController::class)->only(['index']);
 //get the empty assistants
 // student cant book more than one chair at same time
 // check the delete process
-// delete the ole image in the update user
+// delete the old image in the update user
