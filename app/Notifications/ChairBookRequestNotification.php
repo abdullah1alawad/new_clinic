@@ -41,7 +41,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'process' => $this->process,
+            'process' => $this->process->id,
             'message' => 'A student want to book a chair.',
         ];
     }
@@ -49,7 +49,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'process' => $this->process,
+            'process' => $this->process->id,
             'message' => 'A student want to book a chair.',
         ]);
     }
