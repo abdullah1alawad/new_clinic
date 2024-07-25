@@ -261,8 +261,9 @@ class ProcessController extends Controller
             $process = UpcomingAppointmentsResource::make($process);
 
             $doctor = User::find($process->doctor_id);
+            $user=auth('sanctum')->user();
 
-            $doctor->notify(new ChairBookRequestNotification($process));
+            $doctor->notify(new ChairBookRequestNotification($process,$user));
 
             DB::commit();
 

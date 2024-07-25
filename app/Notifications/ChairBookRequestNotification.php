@@ -13,14 +13,15 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $process;
+    protected $process, $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($process)
+    public function __construct($process, $user)
     {
         $this->process = $process;
+        $this->user = $user;
     }
 
     /**
@@ -41,7 +42,8 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'process' => $this->process->id,
+            'process_id' => $this->process->id,
+            'user' => $this->user,
             'message' => 'A student want to book a chair.',
         ];
     }
@@ -49,7 +51,8 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'process' => $this->process->id,
+            'process_id' => $this->process->id,
+            'user' => $this->user,
             'message' => 'A student want to book a chair.',
         ]);
     }
