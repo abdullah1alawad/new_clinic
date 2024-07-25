@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Api\Subprocess_markController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,8 @@ Route::group(['prefix' => 'doctor'], function () {
     Route::get('/configuration', [DoctorController::class, 'configuration']);
     Route::post('/decision/book-chair', [DoctorController::class, 'decisionBookChairRequest']);
     Route::put('/update/decision/book-chair', [DoctorController::class, 'updateDecisionBookChairRequest']);
+    Route::post('/add-marks', [Subprocess_markController::class, 'store']);
+    Route::post('/delete-sub-process', [Subprocess_markController::class, 'destroy']);
 });
 
 
@@ -73,7 +76,6 @@ Route::group(['prefix' => 'process'], function () {
     Route::get('get-info/{clinic_id}', [ProcessController::class, 'get_info']);
     Route::get('get-chairs/{doctor_id}/{clinic_id}', [ProcessController::class, 'get_chairs']);
     Route::post('book-chair', [ProcessController::class, 'book_chair']);
-
     Route::delete('delete-process/{process_id}', [ProcessController::class, 'destroy']);
     Route::get('search-patient', [ProcessController::class, 'patient_info_search']);
 
@@ -92,9 +94,12 @@ Route::apiResource('user', UserController::class)->only(['index']);
 
 
 // TODO----------------------------------------------
-//get the empty assistants
 // student cant book more than one chair at same time
 // check the delete process
 // delete the old image in the update user
 // check when assistant is booked at the same time from two users in the post function
 // check the assistant if available in the post function
+// see the diseases and medicines for the patient
+// student marks table
+//maybe the student fails and his data on the database duplicated like his marks on the same subject
+// in the student resource in the mark you should check the appointments

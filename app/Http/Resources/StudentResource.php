@@ -45,8 +45,8 @@ class StudentResource extends JsonResource
                 'CompletedAppointments' => CompletedAppointmentsResource::collection($this->completedAppointments),
             ],
             'marks' => isset($this->studentMarks) ? StudentMarkResource::collection($this->studentMarks) : '',
+//            'marks' => $this->studentMarks,
             'notification' => NotificationResource::collection($this->notifications),
-//            'notification' => $this->notifications,
 
         ];
     }

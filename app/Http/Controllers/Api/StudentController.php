@@ -34,7 +34,7 @@ class StudentController extends Controller
 
             $studentMarks = $user->studentMarks()->paginate(7);
 
-            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $studentMarks, $notifications);
+            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $notifications, $studentMarks);
 
             return $this->apiResponse($user, true, 'configuration data.');
 
