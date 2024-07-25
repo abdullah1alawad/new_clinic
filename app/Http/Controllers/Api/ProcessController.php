@@ -174,7 +174,7 @@ class ProcessController extends Controller
 
             $validatedData = $request->validate([
                 'clinic_id' => 'required|integer|exists:clinics,id',
-                'date' => 'required|date_format:Y-m-d H:i:s A',//'after_or_equal:' . Carbon::now()->subYears(100)->format('Y-m-d'),
+                'date' => 'required|date_format:Y-m-d H:i A',//'after_or_equal:' . Carbon::now()->subYears(100)->format('Y-m-d'),
                 'doctor_id' => 'required|integer',
                 'subject_id' => 'required|integer',
 //                'questions' => 'required|array',
@@ -182,6 +182,7 @@ class ProcessController extends Controller
 //                'questions.*.answer' => 'required|string',
             ]);
 
+            $request->date = Carbon::parse($request->date)->format('Y-m-d h:i:s A');
             $requiredQuestions = [];
             $validationQuestions = [];
             $questions = $request->input('questions');
