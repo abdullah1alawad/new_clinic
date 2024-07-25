@@ -444,7 +444,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -453,7 +453,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-07-15 12:00:00 AM\",\r\n    \"doctor_id\": 1,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"33\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"John Doe\"\r\n        }\r\n    ]\r\n}\r\n",
+							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-07-15 12:00:00 PM\",\r\n    \"doctor_id\": 1,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"33\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"John Doe\"\r\n        }\r\n    ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -585,7 +585,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "2|2M4ftHVmCrq8vjNc33LeiQHCVeNsr2k8wjTCAinW62afe9a3",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -599,6 +599,94 @@
 							],
 							"path": [
 								"configuration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "doctor-decision",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "process_id",
+									"value": "44",
+									"type": "text"
+								},
+								{
+									"key": "assistant_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "decision",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}doctor/decision/book-chair",
+							"host": [
+								"{{local}}doctor"
+							],
+							"path": [
+								"decision",
+								"book-chair"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-doctor-decision",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "process_id",
+									"value": "44",
+									"type": "text"
+								},
+								{
+									"key": "assistant_id",
+									"value": "1",
+									"description": "nullable",
+									"type": "text"
+								},
+								{
+									"key": "decision",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}doctor/update/decision/book-chair",
+							"host": [
+								"{{local}}doctor"
+							],
+							"path": [
+								"update",
+								"decision",
+								"book-chair"
 							]
 						}
 					},
@@ -761,7 +849,7 @@
 								},
 								{
 									"key": "message",
-									"value": "he\n",
+									"value": "hellllllooooooooo",
 									"type": "text"
 								}
 							]
@@ -770,6 +858,68 @@
 							"raw": "{{local}}chat_message",
 							"host": [
 								"{{local}}chat_message"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "assistant",
+			"item": [
+				{
+					"name": "get-all-empty-assistant",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}assistant/get-empty-assistant?process_id=44",
+							"host": [
+								"{{local}}assistant"
+							],
+							"path": [
+								"get-empty-assistant"
+							],
+							"query": [
+								{
+									"key": "process_id",
+									"value": "44"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assistant-configuration",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}assistant/configuration",
+							"host": [
+								"{{local}}assistant"
+							],
+							"path": [
+								"configuration"
 							]
 						}
 					},
@@ -807,7 +957,7 @@
 		},
 		{
 			"key": "token",
-			"value": "7|Vifz30hCLhwYptHmeiXx6lpvamNI6HlXWkxMZHTM514f557c",
+			"value": "10|V8a35Jdi461Ngf5QqD0hhCizjHdnsSIzAsimtKVqcff38e64",
 			"type": "string"
 		}
 	]

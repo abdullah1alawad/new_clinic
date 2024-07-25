@@ -54,7 +54,8 @@ Route::group(['prefix' => 'student'], function () {
 
 Route::group(['prefix' => 'doctor'], function () {
     Route::get('/configuration', [DoctorController::class, 'configuration']);
-    Route::post('/decision/book-chair', [DoctorController::class, 'acceptBookChairRequest']);
+    Route::post('/decision/book-chair', [DoctorController::class, 'decisionBookChairRequest']);
+    Route::put('/update/decision/book-chair', [DoctorController::class, 'updateDecisionBookChairRequest']);
 });
 
 
@@ -80,6 +81,7 @@ Route::group(['prefix' => 'process'], function () {
 
 Route::group(['prefix' => 'assistant'], function () {
     Route::get('get-empty-assistant', [AssistantController::class, 'getAvailableAssistants']);
+    Route::get('configuration', [AssistantController::class, 'configuration']);
 });
 
 Route::apiResource('chat', ChatController::class)->only(['index', 'store', 'show']);

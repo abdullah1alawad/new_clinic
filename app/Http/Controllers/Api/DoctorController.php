@@ -7,6 +7,7 @@ use App\Http\Resources\StudentResource;
 use App\Models\Process;
 use App\Models\User;
 use App\Notifications\AssistantBookChair;
+use App\Notifications\AssistantChanged;
 use App\Notifications\ChairBookRequestNotification;
 use App\Notifications\DoctorDecisionBookChair;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class DoctorController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
-            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments,$notifications);
+            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $notifications);
 
             return $this->apiResponse($user, true, 'configuration data.');
 
@@ -47,7 +48,7 @@ class DoctorController extends Controller
         }
     }
 
-    public function acceptBookChairRequest(Request $request)
+    public function decisionBookChairRequest(Request $request)
     {
         $rules = [
             'process_id' => 'required|exists:processes,id',
@@ -96,44 +97,71 @@ class DoctorController extends Controller
 
     }
 
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function updateDecisionBookChairRequest(Request $request)
     {
-        //
+        $rules = [
+            'process_id' => 'required|exists:processes,id',
+            'assistant_id' => 'nullable',
+            'decision' => 'required|boolean',
+        ];
+
+        $messages = [
+            'decision.required' => 'The decision is required.',
+            'decision.boolean' => 'The decision must be a boolean.',
+            'process_id.required' => 'The process_id is required.',
+            'process_id.exists' => 'This process does not exists.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails())
+            return $this->apiResponse(null, false, $validator->errors(), 422);
+
+        $process = Process::find($request->process_id);
+
+        $student = User::find($process->student_id);
+
+        if ($request->decision) {
+            $assistant = User::find($request->assistant_id);
+
+            $oldAssistant = null;
+            if ($assistant) {
+                if ($process->assistant_id) {
+                    $oldAssistant = User::find($process->assistant_id);
+                    $oldAssistant->notify(new DoctorDecisionBookChair(
+                        $process,'the doctor changed you.'));
+                }
+                $process->assistant_id = $request->assistant_id;
+                $assistant->notify(new DoctorDecisionBookChair(
+                    $process,'the doctor choose you.'));
+            } else {
+                if (!$process->assistant_id) {
+                    return $this->apiResponse(null, false,
+                        'choose assistant for the process.', 422);
+                }
+            }
+
+            $process->status = 1;
+            $process->save();
+
+            $message = 'the doctor accept your request.';
+            $student->notify(new DoctorDecisionBookChair($process, $message));
+
+            return $this->apiResponse(null, true, 'the process is accepted.');
+        }
+
+        $assistant = User::find($process->assistant_id);
+
+        $message = 'the doctor reject your request.';
+        $process->status = 0;
+        $process->save();
+        $student->notify(new DoctorDecisionBookChair($process, $message));
+        $message = 'the doctor reject this process.';
+        $assistant->notify(new DoctorDecisionBookChair($process, $message));
+
+        return $this->apiResponse(null, true, 'this process is rejected.');
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

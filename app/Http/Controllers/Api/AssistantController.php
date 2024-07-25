@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentResource;
 use App\Http\Resources\UpcomingAppointmentsResource;
 use App\Models\Process;
 use App\Models\User;
 use App\Models\User_schedule;
 use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class AssistantController extends Controller
@@ -77,40 +79,32 @@ class AssistantController extends Controller
 
     }
 
-    public function index()
+    public function configuration()
     {
+        try {
+            $user = auth('sanctum')->user();
 
-    }
+            $current_time = Carbon::now();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            $upcomingAppointments = $user->assistantProcesses()
+                ->where('date', '>=', $current_time)
+                ->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            $completedAppointments = $user->assistantProcesses()
+                ->where('date', '<', $current_time)
+                ->paginate(7);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            ///TODO i will send the notifications
+            $notifications = $user->notifications()
+                ->orderBy('created_at', 'desc')
+                ->get();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            $user = StudentResource::make($user, $upcomingAppointments, $completedAppointments, $notifications);
+
+            return $this->apiResponse($user, true, 'configuration data.');
+
+        } catch (\Exception $ex) {
+            return $this->internalServer($ex->getMessage());
+        }
     }
 }
