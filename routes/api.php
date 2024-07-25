@@ -82,7 +82,7 @@ Route::group(['prefix' => 'process'], function () {
 });
 
 Route::group(['prefix' => 'assistant'], function () {
-    Route::get('get-empty-assistant', [AssistantController::class, 'getAvailableAssistants']);
+    Route::get('get-available-assistant', [AssistantController::class, 'getAvailableAssistants']);
     Route::get('configuration', [AssistantController::class, 'configuration']);
 });
 

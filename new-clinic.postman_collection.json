@@ -691,6 +691,85 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "add-marks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "process_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "name[0]",
+									"value": "take_out",
+									"type": "text"
+								},
+								{
+									"key": "name[1]",
+									"value": "take_in",
+									"type": "text"
+								},
+								{
+									"key": "mark[0]",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "mark[1]",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}doctor/add-marks",
+							"host": [
+								"{{local}}doctor"
+							],
+							"path": [
+								"add-marks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-sub-process",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "sub_process_id[0]",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "sub_process_id[1]",
+									"value": "13",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}doctor/delete-sub-process",
+							"host": [
+								"{{local}}doctor"
+							],
+							"path": [
+								"delete-sub-process"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -869,7 +948,7 @@
 			"name": "assistant",
 			"item": [
 				{
-					"name": "get-all-empty-assistant",
+					"name": "get-all-available-assistants",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -881,12 +960,12 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{local}}assistant/get-empty-assistant?process_id=44",
+							"raw": "{{local}}assistant/get-available-assistant?process_id=44",
 							"host": [
 								"{{local}}assistant"
 							],
 							"path": [
-								"get-empty-assistant"
+								"get-available-assistant"
 							],
 							"query": [
 								{
