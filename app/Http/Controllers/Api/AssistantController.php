@@ -30,8 +30,10 @@ class AssistantController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
+//        if ($validator->fails())
+//            return $this->apiResponse(null, false, $validator->errors(), 422);
         if ($validator->fails())
-            return $this->apiResponse(null, false, $validator->errors(), 422);
+            return $this->apiResponse(null, false, $validator->errors()->first(), 422);
 
         $process = Process::find($request->process_id);
         $dayOfProcess = $this->getDayByDate($process->date);
