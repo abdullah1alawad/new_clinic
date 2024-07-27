@@ -8,8 +8,6 @@ use App\Models\Process;
 use App\Models\Subprocess_mark;
 use App\Models\User;
 use App\Notifications\AssistantBookChair;
-use App\Notifications\AssistantChanged;
-use App\Notifications\ChairBookRequestNotification;
 use App\Notifications\DoctorDecisionBookChair;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -89,7 +87,8 @@ class DoctorController extends Controller
                 $process->save();
 
                 $message = 'the doctor accept your request.';
-                $student->notify(new DoctorDecisionBookChair($process, $message));
+                $cause = 'doctor_decision_book_chair_for_student';
+                $student->notify(new DoctorDecisionBookChair($process, $message, $cause));
                 $assistant->notify(new AssistantBookChair($process));
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
@@ -97,7 +96,8 @@ class DoctorController extends Controller
             $message = 'the doctor reject your request.';
             $process->status = 0;
             $process->save();
-            $student->notify(new DoctorDecisionBookChair($process, $message));
+            $cause = 'doctor_decision_book_chair_for_student';
+            $student->notify(new DoctorDecisionBookChair($process, $message,$cause));
 
             DB::commit();
 
@@ -143,11 +143,11 @@ class DoctorController extends Controller
                     if ($process->assistant_id) {
                         $oldAssistant = User::find($process->assistant_id);
                         $oldAssistant->notify(new DoctorDecisionBookChair(
-                            $process, 'the doctor changed you.'));
+                            $process, 'the doctor changed you.', 'doctor_choose_assistant'));
                     }
                     $process->assistant_id = $request->assistant_id;
                     $assistant->notify(new DoctorDecisionBookChair(
-                        $process, 'the doctor choose you.'));
+                        $process, 'the doctor choose you.', 'doctor_choose_assistant'));
                 } else {
                     if (!$process->assistant_id) {
                         return $this->apiResponse(null, false,
@@ -159,7 +159,8 @@ class DoctorController extends Controller
                 $process->save();
 
                 $message = 'the doctor accept your request.';
-                $student->notify(new DoctorDecisionBookChair($process, $message));
+                $cause = 'doctor_decision_book_chair_for_student';
+                $student->notify(new DoctorDecisionBookChair($process, $message,$cause));
 
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
@@ -169,9 +170,11 @@ class DoctorController extends Controller
             $message = 'the doctor reject your request.';
             $process->status = 0;
             $process->save();
-            $student->notify(new DoctorDecisionBookChair($process, $message));
+            $cause = 'doctor_decision_book_chair_for_student';
+            $student->notify(new DoctorDecisionBookChair($process, $message,$cause));
             $message = 'the doctor reject this process.';
-            $assistant->notify(new DoctorDecisionBookChair($process, $message));
+            $cause = 'doctor_decision_book_chair_for_assistant';
+            $assistant->notify(new DoctorDecisionBookChair($process, $message,$cause));
 
             DB::commit();
 
@@ -182,7 +185,6 @@ class DoctorController extends Controller
             return $this->internalServer($ex->getMessage());
         }
     }
-
 
 
 }

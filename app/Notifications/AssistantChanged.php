@@ -37,6 +37,7 @@ class AssistantChanged extends Notification
     public function toArray($notifiable)
     {
         return [
+            'cause' => 'choose_assistant',
             'process' => $this->process->id,
             'message' => $this->message,
         ];
@@ -45,6 +46,7 @@ class AssistantChanged extends Notification
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
+            'cause' => 'choose_assistant',
             'process' => $this->process->id,
             'message' => $this->message,
         ]);

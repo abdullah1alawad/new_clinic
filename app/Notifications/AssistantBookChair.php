@@ -35,6 +35,7 @@ class AssistantBookChair extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
+            'cause' => 'choose_assistant',
             'process' => $this->process,
             'message' => 'The doctor Choose you to this process.',
         ];
