@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../core/utils/app_constants.dart';
 import '../core/enum/connection_enum.dart';
 import '../core/utils/validations.dart';
 import '../model/user_model.dart';
@@ -15,22 +16,35 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class EditeProfileScreen extends StatelessWidget {
+class EditeProfileScreen extends StatefulWidget {
   final UserModel user;
   const EditeProfileScreen({super.key, required this.user});
 
   @override
+  State<EditeProfileScreen> createState() => _EditeProfileScreenState();
+}
+
+class _EditeProfileScreenState extends State<EditeProfileScreen> {
+  @override
+  void initState() {
+    Provider.of<EditeProfileProvider>(context, listen: false)
+        .initInfo(widget.user);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final editeProfileProvider = Provider.of<EditeProfileProvider>(context);
-    editeProfileProvider.initInfo(user);
     GlobalKey<FormState> formState = GlobalKey();
 
-    ImageProvider<Object> backgroundImage;
-    if (editeProfileProvider.photo == null) {
-      backgroundImage = const AssetImage('assets/images/avatar.png');
-    } else {
-      backgroundImage = FileImage(File(editeProfileProvider.photo!.path));
-    }
+    // ImageProvider<Object> backgroundImage;
+    // if (editeProfileProvider.photo != null) {
+    //   backgroundImage = FileImage(File(editeProfileProvider.photo!.path));
+    // } else if (user.photo != null) {
+    //   backgroundImage = NetworkImage("$kIMAGEBASEURL${user.photo}");
+    // } else {
+    //   backgroundImage = const AssetImage('assets/images/avatar.png');
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +64,13 @@ class EditeProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 70,
                     backgroundColor: Theme.of(context).colorScheme.surface,
-                    backgroundImage: backgroundImage,
+                    backgroundImage: editeProfileProvider.photo != null
+                        ? FileImage(File(editeProfileProvider.photo!.path))
+                            as ImageProvider<Object>
+                        : widget.user.photo != null
+                            ? NetworkImage("$kIMAGEBASEURL${widget.user.photo}")
+                                as ImageProvider<Object>
+                            : const AssetImage('assets/images/avatar.png'),
                     child: Stack(
                       children: [
                         Positioned(
@@ -68,8 +88,12 @@ class EditeProfileScreen extends StatelessWidget {
                               onTap: () {
                                 ImagePicker()
                                     .pickImage(source: ImageSource.gallery)
-                                    .then((value) => editeProfileProvider
-                                        .uploadProfilePhoto(value!));
+                                    .then((value) {
+                                  if (value != null) {
+                                    editeProfileProvider
+                                        .uploadProfilePhoto(value);
+                                  }
+                                });
                               },
                               child: const Icon(
                                 Icons.camera_alt_sharp,

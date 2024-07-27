@@ -1,4 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clinic_test_app/doctor/provider/marks/add_mark_provider.dart';
+import 'package:clinic_test_app/doctor/provider/marks/delete_mark_provider.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+
+import '../../../common/core/utils/app_constants.dart';
+import '../../../common/model/user_model.dart';
 import '../../model/appointment_model.dart';
+import '../../provider/cancel_appointment_provider.dart';
+import '../../provider/get_all_available_assistants_provider.dart';
 import '../../provider/init_screens_provider.dart';
 
 import '../../../common/core/enum/connection_enum.dart';
@@ -10,20 +19,23 @@ import '../../../common/widgets/show_messages/show_success_message.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AppointmentDetailsCard extends StatelessWidget {
+class CompletedAppointmentDetails extends StatelessWidget {
   final AppointmentModel appointment;
-  final bool? cancelAppointment;
+  final int? index;
 
-  const AppointmentDetailsCard({
+  const CompletedAppointmentDetails({
     super.key,
     required this.appointment,
-    this.cancelAppointment,
+    this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
+    final markProvider = Provider.of<AddMarkProvider>(context);
+    final deleteMarkProvider = Provider.of<DeleteMarkProvider>(context);
     final appointmentProvider = Provider.of<InitScreensProvider>(context);
+    int totalMark = 0;
 
     return Column(
       children: [
@@ -31,6 +43,12 @@ class AppointmentDetailsCard extends StatelessWidget {
           data: SingleChildScrollView(
             child: Column(
               children: [
+                AutoSizeText(
+                  "معلومات وتعديل الموعد",
+                  style: Theme.of(context).textTheme.titleMedium,
+                  maxLines: 1,
+                ),
+                const SizedBox(height: 20),
                 Text(
                   appointment.subjectName,
                   style: const TextStyle(
@@ -46,14 +64,14 @@ class AppointmentDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'اشراف :',
+                          'الطالب :',
                           style: TextStyle(
                             fontFamily: 'ElMessiri',
                             fontSize: 20,
                           ),
                         ),
                         Text(
-                          'المحضر :',
+                          'المساعد :',
                           style: TextStyle(
                             fontFamily: 'ElMessiri',
                             fontSize: 20,
@@ -100,7 +118,7 @@ class AppointmentDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          appointment.doctorName,
+                          appointment.studentName,
                           style: const TextStyle(
                             fontFamily: 'ElMessiri',
                             fontSize: 20,
@@ -133,7 +151,6 @@ class AppointmentDetailsCard extends StatelessWidget {
                                         Navigator.of(context).pop();
                                       },
                                       buttonText: 'تم',
-                                      //height: screenHeight * 0.87,
                                       loading: false,
                                     ),
                                   ],
@@ -149,10 +166,6 @@ class AppointmentDetailsCard extends StatelessWidget {
                               color: Colors.blue,
                             ),
                           ),
-                          // const Icon(
-                          //   Icons.read_more,
-                          //   textDirection: TextDirection.ltr,
-                          // ),
                         ),
                         Text(
                           appointment.clinicName,
@@ -238,16 +251,45 @@ class AppointmentDetailsCard extends StatelessWidget {
                     ...List.generate(
                       appointment.subprocesses.length,
                       (index) {
+                        totalMark += appointment.subprocesses[index].mark;
                         return TableRow(
                           children: [
                             TableCell(
                               child: Center(
-                                child: Text(
-                                  appointment.subprocesses[index].name,
-                                  style: const TextStyle(
-                                    fontFamily: 'ElMessiri',
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () async {
+                                        await deleteMarkProvider.deleteMark(
+                                            appointment.subprocesses[index].id);
+
+                                        if (deleteMarkProvider.connection ==
+                                            ConnectionEnum.connected) {
+                                          appointmentProvider.deleteMark(
+                                              this.index!,
+                                              appointment
+                                                  .subprocesses[index].id);
+                                        } else if (deleteMarkProvider
+                                                .connection ==
+                                            ConnectionEnum.failed) {
+                                          ShowErrorMessage.showMessage(context,
+                                              deleteMarkProvider.errorMessage!);
+                                        }
+                                      },
+                                      icon: const Icon(
+                                        EvaIcons.closeCircle,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      appointment.subprocesses[index].name,
+                                      style: const TextStyle(
+                                        fontFamily: 'ElMessiri',
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -265,6 +307,28 @@ class AppointmentDetailsCard extends StatelessWidget {
                           ],
                         );
                       },
+                    ),
+                    TableRow(
+                      children: [
+                        TableCell(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: "اكتب هنا",
+                              contentPadding: EdgeInsets.only(right: 35),
+                            ),
+                            controller: markProvider.name,
+                          ),
+                        ),
+                        TableCell(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: "اكتب هنا",
+                              contentPadding: EdgeInsets.only(right: 35),
+                            ),
+                            controller: markProvider.mark,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -288,7 +352,7 @@ class AppointmentDetailsCard extends StatelessWidget {
                         TableCell(
                           child: Center(
                             child: Text(
-                              '${appointment.mark}',
+                              '$totalMark',
                               style: const TextStyle(
                                   fontFamily: 'ElMessiri',
                                   fontSize: 20,
@@ -299,6 +363,45 @@ class AppointmentDetailsCard extends StatelessWidget {
                       ],
                     ),
                   ],
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40.0)),
+                    backgroundColor: Colors.green,
+                  ),
+                  onPressed: () async {
+                    if (markProvider.name.text.isEmpty ||
+                        markProvider.mark.text.isEmpty) {
+                      ShowErrorMessage.showMessage(
+                          context, "الرجاء ادخال الوصف والعلامة");
+
+                      return;
+                    }
+
+                    await markProvider.addMark(appointment.id);
+
+                    if (markProvider.connection == ConnectionEnum.connected) {
+                      appointmentProvider.addMark(
+                          index!, markProvider.subprocess!);
+                    } else if (markProvider.connection ==
+                        ConnectionEnum.failed) {
+                      if (context.mounted) {
+                        ShowErrorMessage.showMessage(
+                            context, markProvider.errorMessage!);
+                      }
+                    }
+                  },
+                  child: markProvider.connection == ConnectionEnum.cunnecting
+                      ? const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text("إضافة العلامة",
+                          style: Theme.of(context).textTheme.titleSmall),
                 ),
                 const SizedBox(height: 20),
                 const Text(

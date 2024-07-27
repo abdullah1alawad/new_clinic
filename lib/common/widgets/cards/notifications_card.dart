@@ -2,12 +2,13 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class NotificationCard extends StatelessWidget {
-  final String photo, date, message;
+  final String date, message;
+  final ImageProvider<Object>? backgroundImage;
   final bool isNotRead;
   final VoidCallback onTap;
   const NotificationCard({
     super.key,
-    required this.photo,
+    required this.backgroundImage,
     required this.date,
     required this.message,
     required this.isNotRead,
@@ -19,9 +20,7 @@ class NotificationCard extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading: CircleAvatar(
-        backgroundImage: AssetImage(
-          photo,
-        ),
+        backgroundImage: backgroundImage,
         radius: 23,
       ),
       title: Text(

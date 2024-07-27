@@ -2,7 +2,7 @@ import 'package:clinic_test_app/common/cache/cache_helper.dart';
 import 'package:clinic_test_app/common/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/common/core/utils/app_constants.dart';
 import 'package:clinic_test_app/student/dio/dio_helpers.dart';
-import 'package:clinic_test_app/student/model/patient_info_model.dart';
+import 'package:clinic_test_app/common/model/patient_info_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 

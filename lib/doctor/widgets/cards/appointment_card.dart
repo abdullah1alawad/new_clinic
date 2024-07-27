@@ -1,31 +1,60 @@
+import 'package:provider/provider.dart';
+
 import '../../model/appointment_model.dart';
+import '../../provider/get_all_available_assistants_provider.dart';
 import '../../widgets/cards/appointment_details_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 
+import 'completed_appointment_details.dart';
+
 class AppointmentCard extends StatelessWidget {
   final AppointmentModel appointment;
-  final bool? cancelAppointment;
+  final bool completed;
+  final int? index;
 
   const AppointmentCard({
     super.key,
     required this.appointment,
-    this.cancelAppointment,
+    required this.completed,
+    this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showDialog(
-          useSafeArea: true,
-          context: context,
-          builder: (context) => AppointmentDetailsCard(
-            appointment: appointment,
-            cancelAppointment: cancelAppointment,
-          ),
-        );
+        if (!completed) {
+          Provider.of<GetAllAvailableAssistantsProvider>(
+            context,
+            listen: false,
+          ).getAllAvailableAssistants(appointment.id);
+          showDialog(
+            useSafeArea: true,
+            context: context,
+            builder: (context) => AppointmentDetailsCard(
+              appointment: appointment,
+            ),
+          );
+        } else {
+          showDialog(
+            useSafeArea: true,
+            context: context,
+            builder: (context) => Dialog(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              alignment: Alignment.center,
+              insetPadding: EdgeInsets.zero,
+              child: SingleChildScrollView(
+                child: CompletedAppointmentDetails(
+                  appointment: appointment,
+                  index: index,
+                ),
+              ),
+            ),
+          );
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -62,7 +91,7 @@ class AppointmentCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'اشراف الدكتور: ${appointment.doctorName}',
+                        'الطالب: ${appointment.studentName}',
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,
@@ -83,7 +112,7 @@ class AppointmentCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'تاريخ الموعد:   :   ${appointment.date}',
+                        'تاريخ الموعد   :   ${appointment.date}',
                         style: const TextStyle(
                           fontFamily: 'ElMessiri',
                           fontSize: 20,

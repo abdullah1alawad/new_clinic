@@ -21,7 +21,7 @@ class ComingAppointments extends StatelessWidget {
                 if (index != provider.comingAppointments!.length) {
                   return AppointmentCard(
                     appointment: provider.comingAppointments![index],
-                    cancelAppointment: true,
+                    completed: false,
                   );
                 } else {
                   return const SizedBox(height: 50);

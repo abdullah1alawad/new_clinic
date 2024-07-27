@@ -1,4 +1,4 @@
-import 'package:clinic_test_app/common/core/utils/app_constants.dart';
+import '../core/utils/app_constants.dart';
 
 class PatientInfoModel {
   final int id;

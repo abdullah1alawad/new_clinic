@@ -8,10 +8,13 @@ import 'package:clinic_test_app/common/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+import '../model/notification/notification_model.dart';
+
 class FiveScreenProvider extends ChangeNotifier {
   UserModel? user;
   List<AppointmentModel>? comingAppointments;
   List<AppointmentModel>? completedAppointments;
+  List<NotificationModel>? notifications;
   List<MarkModel>? marks;
   ConnectionEnum? connection;
   String? errorMessage;
@@ -40,6 +43,10 @@ class FiveScreenProvider extends ChangeNotifier {
 
       marks = (response.data[kDATA][kMARKS] as List)
           .map((mark) => MarkModel.fromjson(mark))
+          .toList();
+
+      notifications = (response.data[kDATA][kNOTIFICATION] as List)
+          .map((notification) => NotificationModel.fromJson(notification))
           .toList();
 
       connection = ConnectionEnum.connected;

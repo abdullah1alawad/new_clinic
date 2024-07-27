@@ -7,6 +7,7 @@ class NotificationDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Column(
       children: [
         CustomContainer(
@@ -18,6 +19,7 @@ class NotificationDetailsCard extends StatelessWidget {
             Navigator.of(context).pop();
           },
           buttonText: "تم",
+          height: screenHeight * 0.89,
           loading: false,
         ),
       ],

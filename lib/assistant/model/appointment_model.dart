@@ -1,5 +1,5 @@
 import 'package:clinic_test_app/common/core/utils/app_constants.dart';
-import 'package:clinic_test_app/student/model/patient_info_model.dart';
+import 'package:clinic_test_app/common/model/patient_info_model.dart';
 import 'package:clinic_test_app/student/model/subprocess_model.dart';
 
 class AppointmentModel {

@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:clinic_test_app/student/model/patient_info_model.dart';
+import '../../model/patient_info_model.dart';
 import 'package:clinic_test_app/common/widgets/patient_question_text_field.dart';
 import 'package:flutter/material.dart';
 

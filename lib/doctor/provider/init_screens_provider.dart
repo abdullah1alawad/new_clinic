@@ -2,16 +2,20 @@ import 'package:clinic_test_app/common/cache/cache_helper.dart';
 import 'package:clinic_test_app/common/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/common/core/utils/app_constants.dart';
 import 'package:clinic_test_app/common/model/user_model.dart';
+import '../model/subprocess_model.dart';
 import '../dio/dio_helpers.dart';
 import '../model/appointment_model.dart';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+import '../model/notification/notification_model.dart';
+
 class InitScreensProvider extends ChangeNotifier {
   UserModel? user;
   List<AppointmentModel>? comingAppointments;
   List<AppointmentModel>? completedAppointments;
+  List<NotificationModel>? notifications;
   ConnectionEnum? connection;
   String? errorMessage;
 
@@ -37,6 +41,10 @@ class InitScreensProvider extends ChangeNotifier {
                   AppointmentModel.fromJson(completedAppointment))
               .toList();
 
+      notifications = (response.data[kDATA][kNOTIFICATION] as List)
+          .map((notification) => NotificationModel.fromJson(notification))
+          .toList();
+
       connection = ConnectionEnum.connected;
       notifyListeners();
     } on DioException catch (e) {
@@ -46,15 +54,16 @@ class InitScreensProvider extends ChangeNotifier {
     }
   }
 
-  void cancelAppointment(int appointmentId) {
-    comingAppointments
-        ?.removeWhere((appointment) => appointment.id == appointmentId);
+  void addMark(int index, SubprocessModel subProcess) {
+    completedAppointments![index].subprocesses.add(subProcess);
     notifyListeners();
   }
 
-  void addAppointment(AppointmentModel appointment) {
-    comingAppointments!.add(appointment);
-    notifyListeners();
+  void deleteMark(int index, int id) {
+    completedAppointments![index].subprocesses.removeWhere(
+          (element) => element.id == id,
+        );
+         notifyListeners();
   }
 
   void fun() {

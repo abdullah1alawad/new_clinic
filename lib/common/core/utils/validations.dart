@@ -35,4 +35,15 @@ class Validations {
     }
     return null;
   }
+
+  static String? validateSubproccesName(String? value){
+if (value == null || value.isEmpty) {
+      return 'الرجاء إدخال وصف للعلامة';
+    }
+    final RegExp nameExp = RegExp(r'^[a-zA-Z\u0621-\u064A ][a-zA-Z0-9\u0621-\u064A ]+$');
+    if (!nameExp.hasMatch(value)) {
+      return 'احرف انجليزية وارقام ونقط و _ ويبدأ بحرف';
+    }
+    return null;
+  }
 }

@@ -2,7 +2,7 @@ import 'package:clinic_test_app/common/core/enum/connection_enum.dart';
 import 'package:clinic_test_app/common/core/utils/app_constants.dart';
 import 'package:clinic_test_app/student/dio/dio_helpers.dart';
 import 'package:clinic_test_app/student/model/doctor_model.dart';
-import 'package:clinic_test_app/student/model/patient_info_model.dart';
+import 'package:clinic_test_app/common/model/patient_info_model.dart';
 import 'package:clinic_test_app/student/model/question_model.dart';
 import 'package:clinic_test_app/student/model/subject_model.dart';
 import 'package:clinic_test_app/common/widgets/patient_question_text_field.dart';

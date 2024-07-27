@@ -1,5 +1,5 @@
+import '../../common/core/enum/connection_enum.dart';
 import '../../common/cache/cache_helper.dart';
-
 import '../../common/core/utils/app_constants.dart';
 import '../../common/core/utils/laravel_echo.dart';
 
@@ -83,34 +83,37 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
-                Icon(Icons.notifications),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: Text(
-                      '7',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
+                const Icon(Icons.notifications),
+                if (Provider.of<InitScreensProvider>(context)
+                        .connection ==
+                    ConnectionEnum.connected)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      textAlign: TextAlign.center,
+                      constraints: const BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                      child: Text(
+                        '${Provider.of<InitScreensProvider>(context, listen: false).notifications!.length}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                )
+                  )
               ],
             ),
             label: 'الاشعارات',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(
               Icons.dashboard,
             ),
@@ -119,22 +122,22 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
-                Icon(Icons.email),
+                const Icon(Icons.email),
                 Positioned(
                   right: 0,
                   child: Container(
-                    padding: EdgeInsets.all(1),
+                    padding: const EdgeInsets.all(1),
                     decoration: BoxDecoration(
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    constraints: BoxConstraints(
+                    constraints: const BoxConstraints(
                       minWidth: 12,
                       minHeight: 12,
                     ),
                     child: Text(
                       '5',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
                       ),

@@ -1,9 +1,9 @@
-import 'package:clinic_test_app/common/core/utils/app_constants.dart';
-import 'package:clinic_test_app/student/model/patient_info_model.dart';
-import 'package:clinic_test_app/student/model/subprocess_model.dart';
+import '../../common/core/utils/app_constants.dart';
+import '../../common/model/patient_info_model.dart';
+import 'subprocess_model.dart';
 
 class AppointmentModel {
-  final String doctorName,
+  final String studentName,
       assistentName,
       subjectName,
       clinicName,
@@ -16,7 +16,7 @@ class AppointmentModel {
   final List<PatientInfoModel> patientInfo;
 
   AppointmentModel({
-    required this.doctorName,
+    required this.studentName,
     required this.assistentName,
     required this.subjectName,
     required this.clinicName,
@@ -33,7 +33,7 @@ class AppointmentModel {
 
   factory AppointmentModel.fromJson(Map<String, dynamic> jsonData) {
     return AppointmentModel(
-      doctorName: jsonData[kDOCTORNAME],
+      studentName: jsonData[kSTUDENTNAME],
       assistentName: jsonData[kASSISTENTNAME],
       subjectName: jsonData[kSUBJECTNAME],
       clinicName: jsonData[kCLINICNAME],

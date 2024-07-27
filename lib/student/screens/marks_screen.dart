@@ -17,19 +17,30 @@ class MarksScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('العلامات'),
         bottom: const CustomBottonAppBar(),
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.filter_list,
-            color: Colors.white,
-            size: 35,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {},
+        //   icon: const Icon(
+        //     Icons.filter_list,
+        //     color: Colors.white,
+        //     size: 35,
+        //   ),
+        // ),
       ),
       body: BackGroundContainer(
         child: Consumer<FiveScreenProvider>(
           builder: (context, provider, child) {
             if (provider.connection == ConnectionEnum.connected) {
+              if (provider.marks!.isEmpty) {
+                return const Center(
+                  child: Text(
+                    "لاتوجد علامات حتى الان",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'ElMessiri',
+                        fontWeight: FontWeight.bold),
+                  ),
+                );
+              }
               return ListView.builder(
                 itemCount: provider.marks!.length + 1,
                 itemBuilder: (context, index) {

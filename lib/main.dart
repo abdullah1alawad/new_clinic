@@ -32,6 +32,13 @@ import 'student/provider/five_screen_provider.dart';
 
 import 'doctor/provider/init_screens_provider.dart' as doctor;
 import 'doctor/provider/cancel_appointment_provider.dart' as doctor;
+import 'doctor/provider/get_all_available_assistants_provider.dart';
+import 'doctor/provider/decision/decision_provider.dart';
+import 'doctor/provider/decision/update_decision_provider.dart';
+import 'doctor/provider/marks/add_mark_provider.dart';
+import 'doctor/provider/marks/delete_mark_provider.dart';
+
+import 'assistant/provider/init_screens_provider.dart' as assistant;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,8 +70,23 @@ void main() async {
             create: (context) => student.CancelAppointmentProvider()),
         ChangeNotifierProvider(create: (context) => PatientSearchProvider()),
         //////////////////// doctor ////////////////////////////
-        ChangeNotifierProvider(create: (context) =>doctor.InitScreensProvider()),
-        ChangeNotifierProvider(create: (context) =>doctor.CancelAppointmentProvider()),
+        ChangeNotifierProvider(
+            create: (context) => doctor.InitScreensProvider()),
+        ChangeNotifierProvider(
+            create: (context) => doctor.CancelAppointmentProvider()),
+            ChangeNotifierProvider(
+            create: (context) => GetAllAvailableAssistantsProvider()),
+            ChangeNotifierProvider(
+            create: (context) => DecisionProvider()),
+            ChangeNotifierProvider(
+            create: (context) => UpdateDecisionProvider()),
+            ChangeNotifierProvider(
+            create: (context) => AddMarkProvider()),
+            ChangeNotifierProvider(
+            create: (context) => DeleteMarkProvider()),
+        //////////////////// assistant /////////////////////////
+        ChangeNotifierProvider(
+            create: (context) => assistant.InitScreensProvider()),
       ],
       child: const MyApp(),
     ),

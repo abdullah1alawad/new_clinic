@@ -8,10 +8,13 @@ import '../model/appointment_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+import '../model/notification/notification_model.dart';
+
 class InitScreensProvider extends ChangeNotifier {
   UserModel? user;
   List<AppointmentModel>? comingAppointments;
   List<AppointmentModel>? completedAppointments;
+  List<NotificationModel>? notifications;
   ConnectionEnum? connection;
   String? errorMessage;
 
@@ -36,6 +39,10 @@ class InitScreensProvider extends ChangeNotifier {
               .map((completedAppointment) =>
                   AppointmentModel.fromJson(completedAppointment))
               .toList();
+      
+      notifications = (response.data[kDATA][kNOTIFICATION] as List)
+          .map((notification) => NotificationModel.fromJson(notification))
+          .toList();
 
       connection = ConnectionEnum.connected;
       notifyListeners();

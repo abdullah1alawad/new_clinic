@@ -25,6 +25,7 @@ class ChatsListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text('الدردشات'),
@@ -47,11 +48,23 @@ class ChatsListScreen extends StatelessWidget {
           builder: (context, provider, child) {
             if (provider.connection == ConnectionEnum.connected) {
               if (provider.chats!.isEmpty) {
-                return const Center(
-                  child: Column(
+                return SizedBox(
+                  height: screenSize.height,
+                  width: screenSize.width,
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.chat_sharp),
-                      Text("لايوجد محادثات حتى الان"),
+                      Icon(
+                        Icons.chat_sharp,
+                        size: 50,
+                      ),
+                      Text(
+                        "لاتوجد محادثات حتى الان",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'ElMessiri',
+                            fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
                 );

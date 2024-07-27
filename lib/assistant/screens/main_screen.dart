@@ -40,8 +40,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<InitScreensProvider>(context, listen: false).getInitScreens();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<InitScreensProvider>(context, listen: false).getInitScreens();
       Provider.of<GetManyChatsProvider>(context, listen: false).getManyChats();
       Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
       //LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));

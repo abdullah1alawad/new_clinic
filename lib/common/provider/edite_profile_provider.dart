@@ -65,5 +65,6 @@ class EditeProfileProvider extends ChangeNotifier {
     phoneController.text = profileInfo.phone;
     nationalIdController.text = profileInfo.nationalId;
     gender = profileInfo.gender.length == 4 ? 0 : 1;
+    photo = null;
   }
 }
