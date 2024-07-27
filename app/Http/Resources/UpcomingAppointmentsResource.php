@@ -35,6 +35,7 @@ class UpcomingAppointmentsResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'student_name' => $this->student->name,
             'doctor_name' => $this->doctor->name,
             'assistant_name' => isset($this->assistant->name) ? $this->assistant->name : '',
             'subject_name' => $this->subject->name,
