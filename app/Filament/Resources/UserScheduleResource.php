@@ -4,7 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserScheduleResource\Pages;
 use App\Filament\Resources\UserScheduleResource\RelationManagers;
-use App\Models\UserSchedule;
+use App\Models\User_schedule;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserScheduleResource extends Resource
 {
-    protected static ?string $model = UserSchedule::class;
+    protected static ?string $model = User_schedule::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-flag';
 

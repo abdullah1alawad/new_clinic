@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProcessResource\Pages;
 use App\Filament\Resources\ProcessResource\RelationManagers;
+use App\Models\Patient_question;
 use App\Models\Process;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Symfony\Component\Finder\Iterator\PathFilterIterator;
 
 class ProcessResource extends Resource
 {
@@ -29,6 +31,7 @@ class ProcessResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $questions = Patient_question::all();
         return $form
             ->schema([
 
@@ -72,18 +75,27 @@ class ProcessResource extends Resource
                     ->required(),
 
                 Forms\Components\select::make('chair_id')
-                    ->relationship('chair','chair_number')
+                    ->relationship('chair', 'chair_number')
                     ->searchable()
                     ->preload()
                     ->required(),
                 Forms\Components\select::make('subject_id')
-                    ->relationship('subject','name')
+                    ->relationship('subject', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\Textarea::make('questions')
-                    ->required()
-                    ->columnSpanFull(),
+//                Forms\Components\Textarea::make('questions')
+//                    ->required()
+//                    ->columnSpanFull(),
+
+                Forms\Components\Fieldset::make('Questions')
+                    ->schema(
+                        $questions->map(function ($question) {
+                            return Forms\Components\TextInput::make('question_' . $question->id)
+                                ->label($question->question)
+                                ->required();
+                        })->toArray()
+                    ),
                 Forms\Components\DateTimePicker::make('date')
                     ->required(),
                 Forms\Components\FileUpload::make('photo')

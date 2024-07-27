@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
 use App\Http\Resources\UpcomingAppointmentsResource;
+use App\Http\Resources\UserResource;
 use App\Models\Process;
 use App\Models\User;
 use App\Models\User_schedule;
@@ -52,31 +53,26 @@ class AssistantController extends Controller
                     $dayOfSchedule = $this->getDayByNumber($key);
                     if ($dayOfProcess == $dayOfSchedule &&
                         ($processTime >= $time[0] && $processTime < $time[1])) {
-                        $AvailableAssistantsBySchedule[] = [
-                            'id' => $assistant->id,
-                            'name' => $assistant->name,
-                        ];
+                        $AvailableAssistantsBySchedule[] = $assistant;
                     }
                 }
             } else {
-                $AvailableAssistantsBySchedule[] = [
-                    'id' => $assistant->id,
-                    'name' => $assistant->name,
-                ];
+                $AvailableAssistantsBySchedule[] = $assistant;
             }
         }
+//        return $AvailableAssistantsBySchedule;
 
         $AvailableAssistants = [];
         foreach ($AvailableAssistantsBySchedule as $item) {
 
             $checkAssistantProcessTime = Process::where('date', $process->date)
-                ->where('assistant_id', $item['id'])->exists();
+                ->where('assistant_id', $item->id)->exists();
             if (!$checkAssistantProcessTime)
                 $AvailableAssistants[] = $item;
         }
 
         $process = UpcomingAppointmentsResource::make($process);
-
+        $AvailableAssistants = UserResource::collection($AvailableAssistants);
 
         return $this->apiResponse([
             'assistants' => $AvailableAssistants,
