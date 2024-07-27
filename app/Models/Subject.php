@@ -15,6 +15,7 @@ class Subject extends Model
     protected $fillable = [
         'id',
         'name',
+        'clinic_id',
         'created_at', 'updated_at',
     ];
 
@@ -24,13 +25,14 @@ class Subject extends Model
     ];
 
     protected $casts = [
-        'id'=>'integer',
-        'name'=>'string',
+        'id' => 'integer',
+        'name' => 'string',
+        'clinic_id' => 'integer',
     ];
 
     public function doctor()
     {
-        return $this->belongsTo(User::class,'doctor_id','id');
+        return $this->belongsTo(User::class, 'doctor_id', 'id');
     }
 
     public function clinic()

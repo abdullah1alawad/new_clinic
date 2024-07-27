@@ -43,6 +43,7 @@ class AssistantController extends Controller
         $processTime = $processTime->format('H:i');
 
         $AvailableAssistantsBySchedule = [];
+
         foreach ($assistants as $assistant) {
             $user_schedule = User_schedule::where('user_id', $assistant->id)->first();
 
@@ -57,6 +58,11 @@ class AssistantController extends Controller
                         ];
                     }
                 }
+            } else {
+                $AvailableAssistantsBySchedule[] = [
+                    'id' => $assistant->id,
+                    'name' => $assistant->name,
+                ];
             }
         }
 
