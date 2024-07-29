@@ -13,16 +13,17 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $process, $message, $cause;
+    protected $process, $message, $cause, $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($process, $message, $cause)
+    public function __construct($process, $message, $cause, $user)
     {
         $this->process = $process;
         $this->message = $message;
         $this->cause = $cause;
+        $this->user = $user;
     }
 
     /**
@@ -40,6 +41,7 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
     {
         return [
             'cause' => $this->cause,
+            'user' => $this->user,
             'process' => $this->process->id,
             'message' => $this->message,
         ];
@@ -49,6 +51,7 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'cause' => $this->cause,
+            'user' => $this->user,
             'process' => $this->process->id,
             'message' => $this->message,
         ]);

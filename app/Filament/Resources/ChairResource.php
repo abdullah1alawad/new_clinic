@@ -47,7 +47,7 @@ class ChairResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('clinic_id')
+                Tables\Columns\TextColumn::make('clinic.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('chair_number')

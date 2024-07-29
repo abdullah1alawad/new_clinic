@@ -63,7 +63,7 @@ class PatientQuestionResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('clinic_id')
+                TextColumn::make('clinic.name')
                     ->label('Clinic ID')
                     ->sortable(),
                 TextColumn::make('question')

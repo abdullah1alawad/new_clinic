@@ -67,6 +67,8 @@ class DoctorController extends Controller
             ];
             $validator = Validator::make($request->all(), $rules, $messages);
 
+            $user = auth('sanctum')->user();
+
             if ($validator->fails())
                 return $this->apiResponse(null, false, $validator->errors(), 422);
 
@@ -86,18 +88,18 @@ class DoctorController extends Controller
                 $process->assistant_id = $request->assistant_id;
                 $process->save();
 
-                $message = 'the doctor accept your request.';
+                $message = 'لقد قبل الدكتور هذا الموعد.';
                 $cause = 'doctor_decision_book_chair_for_student';
-                $student->notify(new DoctorDecisionBookChair($process, $message, $cause));
-                $assistant->notify(new AssistantBookChair($process));
+                $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+                $assistant->notify(new AssistantBookChair($process, $user));
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
 
-            $message = 'the doctor reject your request.';
+            $message = 'لقد رفض الدكتور هذا الموعد.';
             $process->status = 0;
             $process->save();
             $cause = 'doctor_decision_book_chair_for_student';
-            $student->notify(new DoctorDecisionBookChair($process, $message,$cause));
+            $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
 
             DB::commit();
 
@@ -131,6 +133,8 @@ class DoctorController extends Controller
             if ($validator->fails())
                 return $this->apiResponse(null, false, $validator->errors(), 422);
 
+            $user = auth('sanctum')->user();
+
             $process = Process::find($request->process_id);
 
             $student = User::find($process->student_id);
@@ -143,11 +147,11 @@ class DoctorController extends Controller
                     if ($process->assistant_id) {
                         $oldAssistant = User::find($process->assistant_id);
                         $oldAssistant->notify(new DoctorDecisionBookChair(
-                            $process, 'the doctor changed you.', 'doctor_choose_assistant'));
+                            $process, 'لقد تم تغييرك من هذا الموعد.', 'doctor_choose_assistant', $user));
                     }
                     $process->assistant_id = $request->assistant_id;
                     $assistant->notify(new DoctorDecisionBookChair(
-                        $process, 'the doctor choose you.', 'doctor_choose_assistant'));
+                        $process, 'لقد تم اختيارك من قبل الدكتور.', 'doctor_choose_assistant', $user));
                 } else {
                     if (!$process->assistant_id) {
                         return $this->apiResponse(null, false,
@@ -158,23 +162,23 @@ class DoctorController extends Controller
                 $process->status = 1;
                 $process->save();
 
-                $message = 'the doctor accept your request.';
+                $message = 'لقد قبل الدكتور طلبك لحجز موعد.';
                 $cause = 'doctor_decision_book_chair_for_student';
-                $student->notify(new DoctorDecisionBookChair($process, $message,$cause));
+                $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
 
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
 
             $assistant = User::find($process->assistant_id);
 
-            $message = 'the doctor reject your request.';
+            $message = 'لقد رفض الدكتور طلبك لحجز موعد.';
             $process->status = 0;
             $process->save();
             $cause = 'doctor_decision_book_chair_for_student';
-            $student->notify(new DoctorDecisionBookChair($process, $message,$cause));
-            $message = 'the doctor reject this process.';
+            $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+            $message = 'لقد رفض الدكتور هذا الموعد.';
             $cause = 'doctor_decision_book_chair_for_assistant';
-            $assistant->notify(new DoctorDecisionBookChair($process, $message,$cause));
+            $assistant->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
 
             DB::commit();
 

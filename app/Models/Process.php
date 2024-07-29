@@ -20,6 +20,7 @@ class Process extends Model
         'questions',
         'date',
         'photo',
+        'status',
         'created_at', 'updated_at',
     ];
 
@@ -76,7 +77,6 @@ class Process extends Model
     {
         return $this->hasMany(Subprocess_mark::class);
     }
-
 
 
 }

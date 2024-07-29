@@ -45,7 +45,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
             'cause' => 'student_book_request',
             'process_id' => $this->process->id,
             'user' => $this->user,
-            'message' => 'A student want to book a chair.',
+            'message' => 'الطالب يريد حجز موعد.',
         ];
     }
 
@@ -55,7 +55,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
             'cause' => 'student_book_request',
             'process_id' => $this->process->id,
             'user' => $this->user,
-            'message' => 'A student want to book a chair.',
+            'message' => 'الطالب يريد حجز موعد.',
         ]);
     }
 }

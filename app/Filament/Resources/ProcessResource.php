@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProcessResource\Pages;
 use App\Filament\Resources\ProcessResource\RelationManagers;
+use App\Models\Clinic;
 use App\Models\Patient_question;
 use App\Models\Process;
 use Filament\Forms;
@@ -34,12 +35,6 @@ class ProcessResource extends Resource
         $questions = Patient_question::all();
         return $form
             ->schema([
-
-//                Forms\Components\select::make('clinic_id')
-//                    ->relationship('clinic','name')
-//                    ->searchable()
-//                    ->preload()
-//                    ->required(),
 
                 Forms\Components\Select::make('student_id')
                     ->label('Student')
@@ -88,14 +83,35 @@ class ProcessResource extends Resource
 //                    ->required()
 //                    ->columnSpanFull(),
 
-                Forms\Components\Fieldset::make('Questions')
-                    ->schema(
-                        $questions->map(function ($question) {
-                            return Forms\Components\TextInput::make('question_' . $question->id)
-                                ->label($question->question)
-                                ->required();
-                        })->toArray()
-                    ),
+                Forms\Components\Select::make('clinic')
+                    ->options(Clinic::all()->pluck('name', 'id'))
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $questions = Patient_question::where('clinic_id', $state)->get();
+                        $questionsArray = $questions->map(function ($item) {
+                            return [
+                                'id' => $item->id,
+                                'question' => $item->question,
+                                'answer' => '',
+                            ];
+                        })->toArray();
+                        $set('questions', $questionsArray); // Set an array
+                    })
+                    ->required(),
+
+                Forms\Components\Repeater::make('questions')
+                    ->schema([
+                        Forms\Components\Hidden::make('id'),
+                        Forms\Components\TextInput::make('question')
+                            ->label('Question')
+                            ->disabled(),
+                        Forms\Components\TextInput::make('answer')
+                            ->label('Answer')
+                            ->required(),
+                    ])
+                    ->label('Questions')
+                    ->hidden(fn($get) => empty($get('clinic'))),
+
                 Forms\Components\DateTimePicker::make('date')
                     ->required(),
                 Forms\Components\FileUpload::make('photo')
@@ -119,21 +135,26 @@ class ProcessResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('student_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('doctor_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('assistant_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('chair_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('subject_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('student.name')
+                    ->label('Student Name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('doctor.name')
+                    ->label('Doctor Name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('assistant.name')
+                    ->label('Assistant Name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('chair.chair_number')
+                    ->label('Chair Number')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('subject.name')
+                    ->label('Subject Name')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('date')
                     ->dateTime()
                     ->sortable(),

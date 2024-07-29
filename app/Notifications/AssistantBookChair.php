@@ -12,14 +12,15 @@ class AssistantBookChair extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    protected $process;
+    protected $process, $user;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct($process)
+    public function __construct($process, $user)
     {
         $this->process = $process;
+        $this->user = $user;
     }
 
     /**
@@ -36,8 +37,9 @@ class AssistantBookChair extends Notification implements ShouldQueue
     {
         return [
             'cause' => 'choose_assistant',
+            'user' => $this->user,
             'process' => $this->process,
-            'message' => 'The doctor Choose you to this process.',
+            'message' => 'لقد اختارك الدكتور لهذا الموعد.',
         ];
     }
 
@@ -45,7 +47,8 @@ class AssistantBookChair extends Notification implements ShouldQueue
     {
         return new BroadcastMessage([
             'process' => $this->process,
-            'message' => 'The doctor Choose you to this process.',
+            'user' => $this->user,
+            'message' => 'لقد اختارك الدكتور لهذا الموعد.',
         ]);
     }
 }
