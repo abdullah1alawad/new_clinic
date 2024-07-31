@@ -255,7 +255,7 @@ class ProcessController extends Controller
             $process->questions = $request->questions;
             $process->date = $request->date;
             $process->photo = $photoPath;
-            $process->status = 1;
+            $process->status = 2;
             $process->save();
 
             $process = UpcomingAppointmentsResource::make($process);
