@@ -17,12 +17,12 @@ class UserSeeder extends Seeder
     {
 //        User::factory(30)->create();
         DB::table('users')->insert([
-            'username' => 'abdullah_alawad_',
-            'email'=>'abdullah@gmail.com',
-            'name'=>'abdullah alawad',
-            'national_id' => '1234567',
+            'username' => 'abood',
+            'email'=>'abd@doctor.com',
+            'name'=>'abood',
+            'national_id' => '12567',
             'gender' => 0,
-            'phone' => '0957275976',
+            'phone' => '0957335986',
             'photo'=>'1716055673.jpg',
             'password' => Hash::make('12345678'),
         ]);

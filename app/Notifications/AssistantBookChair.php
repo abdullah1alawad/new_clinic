@@ -38,7 +38,7 @@ class AssistantBookChair extends Notification implements ShouldQueue
         return [
             'cause' => 'choose_assistant',
             'user' => $this->user,
-            'process' => $this->process,
+            'process' => $this->process->id,
             'message' => 'لقد اختارك الدكتور لهذا الموعد.',
         ];
     }
@@ -46,7 +46,7 @@ class AssistantBookChair extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'process' => $this->process,
+            'process' => $this->process->id,
             'user' => $this->user,
             'message' => 'لقد اختارك الدكتور لهذا الموعد.',
         ]);

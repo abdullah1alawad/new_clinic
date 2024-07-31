@@ -92,6 +92,7 @@ class DoctorController extends Controller
                 $cause = 'doctor_decision_book_chair_for_student';
                 $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
                 $assistant->notify(new AssistantBookChair($process, $user));
+                DB::commit();
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
 
