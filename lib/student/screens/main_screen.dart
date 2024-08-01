@@ -1,3 +1,4 @@
+import 'package:clinic_test_app/common/core/enum/connection_enum.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 
 import '../../common/cache/cache_helper.dart';
@@ -46,10 +47,11 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<FiveScreenProvider>(context, listen: false).getFiveScreen();
+      await Provider.of<FiveScreenProvider>(context, listen: false)
+          .getFiveScreen();
       Provider.of<GetManyChatsProvider>(context, listen: false).getManyChats();
       Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
-      //LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
+      // LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
 
       _screens = [
         const ProfileScreen(),
@@ -93,28 +95,33 @@ class _MainScreenState extends State<MainScreen> {
             icon: Stack(
               children: <Widget>[
                 Icon(Icons.notifications),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: Text(
-                      '7',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
+                if (Provider.of<FiveScreenProvider>(context).connection ==
+                        ConnectionEnum.connected &&
+                    Provider.of<FiveScreenProvider>(context)
+                        .notifications!
+                        .isNotEmpty)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      textAlign: TextAlign.center,
+                      constraints: BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                      child: Text(
+                        '${Provider.of<FiveScreenProvider>(context, listen: false).notifications!.length}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                )
+                  )
               ],
             ),
             label: 'الاشعارات',

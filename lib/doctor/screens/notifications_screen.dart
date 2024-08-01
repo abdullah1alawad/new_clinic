@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:provider/provider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:pusher_client/pusher_client.dart';
 
+import '../../common/core/utils/laravel_echo.dart';
 import '../provider/get_all_available_assistants_provider.dart';
 import '../widgets/cards/notification_data_card.dart';
 import '../provider/init_screens_provider.dart';
@@ -15,12 +19,57 @@ import '../../common/widgets/custom_bottom_app_bar.dart';
 import '../../common/widgets/cards/notifications_card.dart';
 import '../../common/widgets/show_messages/show_success_message.dart';
 
-
-class NotificationsScreen extends StatelessWidget {
+class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
+}
+
+class _NotificationsScreenState extends State<NotificationsScreen> {
+  late InitScreensProvider _userProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _userProvider = Provider.of<InitScreensProvider>(context, listen: false);
+  }
+
+  void listenNotificationChannel(int userId) {
+    LaravelEcho.instance
+        .private('App.User.$userId')
+        .listen('.notification.sent', (e) {
+      if (e is PusherEvent) {
+        if (e.data != null) {
+          _handleNewNotification(jsonDecode(e.data!));
+        }
+      }
+    }).error((err) {
+      print(err);
+    });
+  }
+
+  void leaveNotificationChannel(int userId) {
+    try {
+      LaravelEcho.instance.leave('App.User.$userId');
+    } catch (err) {
+      print(err);
+    }
+  }
+
+  void _handleNewNotification(Map<String, dynamic> data) {
+    _userProvider.addNotification(data);
+  }
+
+  @override
+  void dispose() {
+    leaveNotificationChannel(_userProvider.user!.id);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    listenNotificationChannel(_userProvider.user!.id);
     return Scaffold(
       appBar: AppBar(
         title: const Text('الإشعارات'),
@@ -89,7 +138,8 @@ class NotificationsScreen extends StatelessWidget {
                             insetPadding: EdgeInsets.zero,
                             child: SingleChildScrollView(
                               child: NotificationDetailsCard(
-                                data: NotificationDataCard(notification: notification),
+                                data: NotificationDataCard(
+                                    notification: notification),
                               ),
                             ),
                           ),

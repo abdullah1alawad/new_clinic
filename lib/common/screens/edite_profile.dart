@@ -37,15 +37,6 @@ class _EditeProfileScreenState extends State<EditeProfileScreen> {
     final editeProfileProvider = Provider.of<EditeProfileProvider>(context);
     GlobalKey<FormState> formState = GlobalKey();
 
-    // ImageProvider<Object> backgroundImage;
-    // if (editeProfileProvider.photo != null) {
-    //   backgroundImage = FileImage(File(editeProfileProvider.photo!.path));
-    // } else if (user.photo != null) {
-    //   backgroundImage = NetworkImage("$kIMAGEBASEURL${user.photo}");
-    // } else {
-    //   backgroundImage = const AssetImage('assets/images/avatar.png');
-    // }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('تعديل الملف الشخصي'),

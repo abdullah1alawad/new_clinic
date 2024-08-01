@@ -1,3 +1,4 @@
+import '../../common/core/utils/app_services.dart';
 import '../../common/cache/cache_helper.dart';
 import '../../common/core/enum/connection_enum.dart';
 import '../../common/core/utils/app_constants.dart';
@@ -35,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('الملف الشخصي'),
         leading: IconButton(
           onPressed: () {
-            //LaravelEcho.instance.disconnect();
+            // LaravelEcho.instance.disconnect();
             CacheHelper().removeData(key: kTOKEN);
             Navigator.pushReplacement(
               context,
@@ -52,12 +53,14 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      EditeProfileScreen(user: profileProvider.user!),
-                ),
-              );
+              navigator(
+                  EditeProfileScreen(user: profileProvider.user!), context);
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (context) =>
+              //         ,
+              //   ),
+              // );
             },
             icon: const Icon(EvaIcons.edit2Outline),
             color: Colors.white,

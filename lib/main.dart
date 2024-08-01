@@ -74,16 +74,12 @@ void main() async {
             create: (context) => doctor.InitScreensProvider()),
         ChangeNotifierProvider(
             create: (context) => doctor.CancelAppointmentProvider()),
-            ChangeNotifierProvider(
+        ChangeNotifierProvider(
             create: (context) => GetAllAvailableAssistantsProvider()),
-            ChangeNotifierProvider(
-            create: (context) => DecisionProvider()),
-            ChangeNotifierProvider(
-            create: (context) => UpdateDecisionProvider()),
-            ChangeNotifierProvider(
-            create: (context) => AddMarkProvider()),
-            ChangeNotifierProvider(
-            create: (context) => DeleteMarkProvider()),
+        ChangeNotifierProvider(create: (context) => DecisionProvider()),
+        ChangeNotifierProvider(create: (context) => UpdateDecisionProvider()),
+        ChangeNotifierProvider(create: (context) => AddMarkProvider()),
+        ChangeNotifierProvider(create: (context) => DeleteMarkProvider()),
         //////////////////// assistant /////////////////////////
         ChangeNotifierProvider(
             create: (context) => assistant.InitScreensProvider()),
@@ -101,24 +97,26 @@ class MyApp extends StatelessWidget {
     final userRole = CacheHelper().getDataString(key: kUSERROLE);
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('ar'), // English
-      ],
-      title: 'Clinic App',
-      theme: Provider.of<ThemeProvider>(context).themeData,
-      home: token == null
-          ? const LoginScreen()
-          : userRole == kSTUDENT
-              ? const student.MainScreen()
-              : userRole == kDOCTOR
-                  ? const doctor.MainScreen()
-                  : const assistant.MainScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('ar'), // English
+        ],
+        title: 'Clinic App',
+        theme: Provider.of<ThemeProvider>(context).themeData,
+        home:
+            //token == null
+            //?
+            const LoginScreen()
+        // : userRole == kSTUDENT
+        // ? const student.MainScreen()
+        // : userRole == kDOCTOR
+        // ? const doctor.MainScreen()
+        // : const assistant.MainScreen(),
+        );
   }
 }

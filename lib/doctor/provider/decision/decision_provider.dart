@@ -23,6 +23,7 @@ class DecisionProvider extends ChangeNotifier {
       kASSISTANTID: assistantId,
       kDECISION: choice,
     };
+    // print(data);
 
     try {
       var response = await DioHelper.decision(

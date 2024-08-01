@@ -1,4 +1,6 @@
 import 'package:provider/provider.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import 'package:flutter/material.dart';
 
 import '../provider/init_screens_provider.dart';
 
@@ -10,9 +12,7 @@ import '../../common/widgets/cards/notification_details_card.dart';
 import '../../common/widgets/custom_bottom_app_bar.dart';
 import '../../common/widgets/cards/notifications_card.dart';
 import '../../common/widgets/show_messages/show_success_message.dart';
-
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/material.dart';
+import '../widgets/cards/notification_data_card.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -82,8 +82,10 @@ class NotificationsScreen extends StatelessWidget {
                             insetPadding: EdgeInsets.zero,
                             child: SingleChildScrollView(
                               child: NotificationDetailsCard(
-                                data: Text(
-                                  notification.data.message,
+                                data: NotificationDataCard(
+                                  notification: notification,
+                                  appointment: provider.getAppointment(
+                                      notification.data.processId),
                                 ),
                               ),
                             ),

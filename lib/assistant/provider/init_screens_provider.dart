@@ -39,7 +39,7 @@ class InitScreensProvider extends ChangeNotifier {
               .map((completedAppointment) =>
                   AppointmentModel.fromJson(completedAppointment))
               .toList();
-      
+
       notifications = (response.data[kDATA][kNOTIFICATION] as List)
           .map((notification) => NotificationModel.fromJson(notification))
           .toList();
@@ -53,15 +53,9 @@ class InitScreensProvider extends ChangeNotifier {
     }
   }
 
-  void cancelAppointment(int appointmentId) {
-    comingAppointments
-        ?.removeWhere((appointment) => appointment.id == appointmentId);
-    notifyListeners();
-  }
-
-  void addAppointment(AppointmentModel appointment) {
-    comingAppointments!.add(appointment);
-    notifyListeners();
+  AppointmentModel getAppointment(appointmentId) {
+    return comingAppointments!
+        .firstWhere((appointment) => appointment.id == appointmentId);
   }
 
   void fun() {

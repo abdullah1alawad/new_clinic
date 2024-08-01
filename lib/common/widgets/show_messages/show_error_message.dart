@@ -5,15 +5,20 @@ import 'package:toastification/toastification.dart';
 class ShowErrorMessage {
   static void showMessage(BuildContext context, String errorMessage) {
     toastification.show(
-      context: context, // optional if you use ToastificationWrapper
+      context: context,
       type: ToastificationType.error,
       style: ToastificationStyle.flatColored,
       autoCloseDuration: const Duration(seconds: 5),
-      title: const Text('Error!'),
+      //title: const Text('Error!'),
       // you can also use RichText widget for title and description parameters
-      description: RichText(text: TextSpan(text: errorMessage)),
+      description: RichText(
+        text: TextSpan(
+          text: errorMessage,
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+      ),
       alignment: Alignment.bottomCenter,
-      direction: TextDirection.ltr,
+      direction: TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 300),
       animationBuilder: (context, animation, alignment, child) {
         return FadeTransition(
@@ -21,7 +26,7 @@ class ShowErrorMessage {
           child: child,
         );
       },
-      icon: const Icon(EvaIcons.closeCircle, size: 30),
+      icon: const Icon(EvaIcons.closeCircleOutline, size: 35),
       primaryColor: Colors.red,
       backgroundColor: Colors.redAccent,
       //foregroundColor: Colors.black,

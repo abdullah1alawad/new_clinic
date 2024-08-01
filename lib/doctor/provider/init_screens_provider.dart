@@ -63,7 +63,12 @@ class InitScreensProvider extends ChangeNotifier {
     completedAppointments![index].subprocesses.removeWhere(
           (element) => element.id == id,
         );
-         notifyListeners();
+    notifyListeners();
+  }
+
+  void addNotification(Map<String, dynamic> jsonData) {
+    notifications!.insert(0, NotificationModel.fromJson(jsonData));
+    notifyListeners();
   }
 
   void fun() {

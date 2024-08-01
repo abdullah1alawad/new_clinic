@@ -33,7 +33,7 @@ class LoginProvider extends ChangeNotifier {
       notifyListeners();
     } on DioException catch (e) {
       connecion = ConnectionEnum.failed;
-      //print(e.response!.data[kMESSAGE][0]);
+      print(e.response!.data);
       errorMessage = e.response!.data[kMESSAGE][0];
       notifyListeners();
     }

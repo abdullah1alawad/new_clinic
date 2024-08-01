@@ -53,283 +53,287 @@ class AppointmentDetailsCard extends StatelessWidget {
                           fontSize: 22,
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'الطالب :',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'المساعد :',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'المريض :',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'العيادة :',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'الكرسي :',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'تاريخ الموعد : ',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'حالة الموعد :',
-                                style: TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                provider.appointment!.studentName,
-                                style: const TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
-                                ),
-                              ),
-                              GestureDetector(
-                                      onTap: () {
-                                        showAssistantSearch(
-                                            context, provider.assistants!);
-                                      },
-                                      child: Text(
-                                        provider.appointment!.assistentName
-                                                .isNotEmpty
-                                            ? provider
-                                                .appointment!.assistentName
-                                            : updateDecision
-                                                    .assistantName.isNotEmpty
-                                                ? updateDecision.assistantName
-                                                : "إنقر لإختيار المساعد!",
-                                        style: const TextStyle(
-                                          fontFamily: 'ElMessiri',
-                                          fontSize: 20,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                    useSafeArea: true,
-                                    context: context,
-                                    builder: (context) => Dialog(
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                      alignment: Alignment.center,
-                                      insetPadding: EdgeInsets.zero,
-                                      child: Column(
-                                        children: [
-                                          CustomContainer(
-                                            data: PatientInfo(
-                                                patientInfo: provider
-                                                    .appointment!.patientInfo),
-                                            icon: Icons.person,
-                                            onPressButton: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            buttonText: 'تم',
-                                            loading: false,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'انقر للمزيد',
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'الطالب :',
                                   style: TextStyle(
                                     fontFamily: 'ElMessiri',
                                     fontSize: 20,
-                                    color: Colors.blue,
                                   ),
                                 ),
-                              ),
-                              Text(
-                                provider.appointment!.clinicName,
-                                style: const TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
+                                Text(
+                                  'المساعد :',
+                                  style: TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                '${provider.appointment!.chairNumber}',
-                                style: const TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
+                                Text(
+                                  'المريض :',
+                                  style: TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                provider.appointment!.date,
-                                style: const TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
+                                Text(
+                                  'العيادة :',
+                                  style: TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                provider.appointment!.status == 0
-                                    ? 'مرفوضة'
-                                    : provider.appointment!.status == 1
-                                        ? 'مقبولة'
-                                        : provider.appointment!.status == 2
-                                            ? 'قيد الانتظار'
-                                            : provider.appointment!.status == 3
-                                                ? 'جارية'
-                                                : 'منتهية',
-                                style: const TextStyle(
-                                  fontFamily: 'ElMessiri',
-                                  fontSize: 20,
+                                Text(
+                                  'الكرسي :',
+                                  style: TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'العلامات الجزئية',
-                        style: TextStyle(
-                          fontFamily: 'ElMessiri',
-                          fontSize: 20,
+                                Text(
+                                  'تاريخ الموعد : ',
+                                  style: TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  'حالة الموعد :',
+                                  style: TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  provider.appointment!.studentName,
+                                  style: const TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    showAssistantSearch(
+                                        context, provider.assistants!);
+                                  },
+                                  child: Text(
+                                    provider.appointment!.assistentName.isNotEmpty
+                                        ? provider.appointment!.assistentName
+                                        : updateDecision.assistantName.isNotEmpty
+                                            ? updateDecision.assistantName
+                                            : "إنقر لإختيار المساعد!",
+                                    style: const TextStyle(
+                                      fontFamily: 'ElMessiri',
+                                      fontSize: 20,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    showDialog(
+                                      useSafeArea: true,
+                                      context: context,
+                                      builder: (context) => Dialog(
+                                        backgroundColor: Colors.transparent,
+                                        elevation: 0,
+                                        alignment: Alignment.center,
+                                        insetPadding: EdgeInsets.zero,
+                                        child: Column(
+                                          children: [
+                                            CustomContainer(
+                                              data: PatientInfo(
+                                                  patientInfo: provider
+                                                      .appointment!.patientInfo),
+                                              icon: Icons.person,
+                                              onPressButton: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              buttonText: 'تم',
+                                              loading: false,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'انقر للمزيد',
+                                    style: TextStyle(
+                                      fontFamily: 'ElMessiri',
+                                      fontSize: 20,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  provider.appointment!.clinicName,
+                                  style: const TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  '${provider.appointment!.chairNumber}',
+                                  style: const TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  provider.appointment!.date,
+                                  style: const TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  provider.appointment!.status == 0
+                                      ? 'مرفوضة'
+                                      : provider.appointment!.status == 1
+                                          ? 'مقبولة'
+                                          : provider.appointment!.status == 2
+                                              ? 'قيد الانتظار'
+                                              : provider.appointment!.status == 3
+                                                  ? 'جارية'
+                                                  : 'منتهية',
+                                  style: const TextStyle(
+                                    fontFamily: 'ElMessiri',
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      Table(
-                        border: TableBorder.all(color: Colors.black),
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [
-                          const TableRow(
-                            children: [
-                              TableCell(
-                                child: Center(
-                                  child: Text(
-                                    'الوصف',
-                                    style: TextStyle(
-                                      fontFamily: 'ElMessiri',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              TableCell(
-                                child: Center(
-                                  child: Text(
-                                    'العلامة',
-                                    style: TextStyle(
-                                      fontFamily: 'ElMessiri',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          ...List.generate(
-                            provider.appointment!.subprocesses.length,
-                            (index) {
-                              return TableRow(
-                                children: [
-                                  TableCell(
-                                    child: Center(
-                                      child: Text(
-                                        provider.appointment!
-                                            .subprocesses[index].name,
-                                        style: const TextStyle(
-                                          fontFamily: 'ElMessiri',
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  TableCell(
-                                    child: Center(
-                                      child: Text(
-                                        '${provider.appointment!.subprocesses[index].mark}',
-                                        style: const TextStyle(
-                                          fontFamily: 'ElMessiri',
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Table(
-                        border: TableBorder.all(color: Colors.black),
-                        defaultVerticalAlignment:
-                            TableCellVerticalAlignment.middle,
-                        children: [
-                          TableRow(
-                            children: [
-                              const TableCell(
-                                child: Center(
-                                  child: Text(
-                                    'العلامة النهائية',
-                                    style: TextStyle(
-                                        fontFamily: 'ElMessiri',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              TableCell(
-                                child: Center(
-                                  child: Text(
-                                    '${provider.appointment!.mark}',
-                                    style: const TextStyle(
-                                        fontFamily: 'ElMessiri',
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                       const SizedBox(height: 20),
+                      if (appointment.mark != null)
+                        Column(
+                          children: [
+                            const Text(
+                              'العلامات الجزئية',
+                              style: TextStyle(
+                                fontFamily: 'ElMessiri',
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Table(
+                              border: TableBorder.all(color: Colors.black),
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              children: [
+                                const TableRow(
+                                  children: [
+                                    TableCell(
+                                      child: Center(
+                                        child: Text(
+                                          'الوصف',
+                                          style: TextStyle(
+                                            fontFamily: 'ElMessiri',
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TableCell(
+                                      child: Center(
+                                        child: Text(
+                                          'العلامة',
+                                          style: TextStyle(
+                                            fontFamily: 'ElMessiri',
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                ...List.generate(
+                                  provider.appointment!.subprocesses.length,
+                                  (index) {
+                                    return TableRow(
+                                      children: [
+                                        TableCell(
+                                          child: Center(
+                                            child: Text(
+                                              provider.appointment!
+                                                  .subprocesses[index].name,
+                                              style: const TextStyle(
+                                                fontFamily: 'ElMessiri',
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        TableCell(
+                                          child: Center(
+                                            child: Text(
+                                              '${provider.appointment!.subprocesses[index].mark}',
+                                              style: const TextStyle(
+                                                fontFamily: 'ElMessiri',
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            Table(
+                              border: TableBorder.all(color: Colors.black),
+                              defaultVerticalAlignment:
+                                  TableCellVerticalAlignment.middle,
+                              children: [
+                                TableRow(
+                                  children: [
+                                    const TableCell(
+                                      child: Center(
+                                        child: Text(
+                                          'العلامة النهائية',
+                                          style: TextStyle(
+                                              fontFamily: 'ElMessiri',
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                    TableCell(
+                                      child: Center(
+                                        child: Text(
+                                          '${provider.appointment!.mark}',
+                                          style: const TextStyle(
+                                              fontFamily: 'ElMessiri',
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
                       const Text(
                         'صورة الحالة  :',
                         style: TextStyle(
@@ -344,95 +348,93 @@ class AppointmentDetailsCard extends StatelessWidget {
                             image: AssetImage('assets/images/avatar.png')),
                       ),
                       const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40.0)),
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.error,
-                              ),
-                              onPressed: () async {
-                                await updateDecision.updateDecision(
-                                    appointment.id, 0);
-
-                                if (updateDecision.connection ==
-                                    ConnectionEnum.connected) {
-                                  if (context.mounted) {
-                                    Navigator.of(context).pop();
-                                    ShowSuccessMessage.showMessage(
-                                        context, "تم رفض الموعد بنجاح");
-                                  }
-                                } else if (updateDecision.connection ==
-                                    ConnectionEnum.failed) {
-                                  if (context.mounted) {
-                                    ShowErrorMessage.showMessage(
-                                        context, updateDecision.errorMessage!);
-                                  }
-                                }
-                              },
-                              child: updateDecision.connection ==
-                                          ConnectionEnum.cunnecting &&
-                                      updateDecision.button == 0
-                                  ? const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ))
-                                  : Text("رفض",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.0)),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.error,
                             ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40.0)),
-                                backgroundColor: Colors.green,
-                              ),
-                              onPressed: () async {
-                                if (updateDecision.assistantId == null) {
+                            onPressed: () async {
+                              await updateDecision.updateDecision(
+                                  appointment.id, 0);
+
+                              if (updateDecision.connection ==
+                                  ConnectionEnum.connected) {
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  ShowSuccessMessage.showMessage(
+                                      context, "تم رفض الموعد بنجاح");
+                                }
+                              } else if (updateDecision.connection ==
+                                  ConnectionEnum.failed) {
+                                if (context.mounted) {
                                   ShowErrorMessage.showMessage(
-                                      context, "الرجاء اختيار المساعد!");
-                                  return;
+                                      context, updateDecision.errorMessage!);
                                 }
-
-                                await updateDecision.updateDecision(
-                                    appointment.id, 1);
-
-                                if (updateDecision.connection ==
-                                    ConnectionEnum.connected) {
-                                  if (context.mounted) {
-                                    Navigator.of(context).pop();
-                                    ShowSuccessMessage.showMessage(
-                                        context, "تم قبول الموعد بنجاح");
-                                  }
-                                } else if (updateDecision.connection ==
-                                    ConnectionEnum.failed) {
-                                  if (context.mounted) {
-                                    ShowErrorMessage.showMessage(
-                                        context, updateDecision.errorMessage!);
-                                  }
-                                }
-                              },
-                              child: updateDecision.connection ==
-                                          ConnectionEnum.cunnecting &&
-                                      updateDecision.button == 1
-                                  ? const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : Text("قبول",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall),
+                              }
+                            },
+                            child: updateDecision.connection ==
+                                        ConnectionEnum.cunnecting &&
+                                    updateDecision.button == 0
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ))
+                                : Text("رفض",
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40.0)),
+                              backgroundColor: Colors.green,
                             ),
-                          ],
-                        ),
+                            onPressed: () async {
+                              if (updateDecision.assistantId == null) {
+                                ShowErrorMessage.showMessage(
+                                    context, "الرجاء اختيار المساعد!");
+                                return;
+                              }
+
+                              await updateDecision.updateDecision(
+                                  appointment.id, 1);
+
+                              if (updateDecision.connection ==
+                                  ConnectionEnum.connected) {
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  ShowSuccessMessage.showMessage(
+                                      context, "تم قبول الموعد بنجاح");
+                                }
+                              } else if (updateDecision.connection ==
+                                  ConnectionEnum.failed) {
+                                if (context.mounted) {
+                                  ShowErrorMessage.showMessage(
+                                      context, updateDecision.errorMessage!);
+                                }
+                              }
+                            },
+                            child: updateDecision.connection ==
+                                        ConnectionEnum.cunnecting &&
+                                    updateDecision.button == 1
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text("قبول",
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall),
+                          ),
+                        ],
+                      ),
                     ],
                   );
                 } else if (provider.connection == ConnectionEnum.failed) {

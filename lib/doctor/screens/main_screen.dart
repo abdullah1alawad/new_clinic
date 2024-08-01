@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
           .getInitScreens();
       Provider.of<GetManyChatsProvider>(context, listen: false).getManyChats();
       Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
-      //LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
+      LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
 
       _screens.add(
         ChatsListScreen(
@@ -84,9 +84,11 @@ class _MainScreenState extends State<MainScreen> {
             icon: Stack(
               children: <Widget>[
                 const Icon(Icons.notifications),
-                if (Provider.of<InitScreensProvider>(context)
-                        .connection ==
-                    ConnectionEnum.connected)
+                if (Provider.of<InitScreensProvider>(context).connection ==
+                        ConnectionEnum.connected &&
+                    Provider.of<InitScreensProvider>(context)
+                        .notifications!
+                        .isNotEmpty)
                   Positioned(
                     right: 0,
                     child: Container(

@@ -21,7 +21,4 @@ class DioHelper {
     );
   }
 
-  static Future<Response> cancelAppoinment(int appointmentId) async {
-    return await dio.delete("${EndPoint.cancelAppointment}$appointmentId");
-  }
 }

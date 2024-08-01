@@ -32,7 +32,7 @@ class PusherConfig {
   static const key = "b569d10ad2e19ca04a11";
   static const secret = "48610279374c3d42e3e6";
   static const cluster = "eu";
-  static const hostEndPoint = "https://71d5-93-190-140-117.ngrok-free.app";
+  static const hostEndPoint = "https://34ad-130-180-169-5.ngrok-free.app";
   static const hostAuthEndPoint = "$hostEndPoint/api/broadcasting/auth";
   static const port = 443;
 }

@@ -69,6 +69,11 @@ class FiveScreenProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  AppointmentModel getAppoointment(int appointmentId) {
+    return comingAppointments!
+        .firstWhere((appointment) => appointment.id == appointmentId);
+  }
+
   void fun() {
     print(CacheHelper().getData(key: kTOKEN));
   }

@@ -71,5 +71,5 @@ const String kBOOKREQUEST = 'student_book_request';
 const String mobile = '10.0.2.2';
 const String win = '127.0.0.1';
 
-const String kIMAGEBASEURL = 'http://$win:8000/images/';
-const String kBASEURL = 'http://$win:8000/api/';
+const String kIMAGEBASEURL = 'http://$mobile:8000/images/';
+const String kBASEURL = 'http://$mobile:8000/api/';
