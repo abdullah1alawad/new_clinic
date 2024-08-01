@@ -19,12 +19,18 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "abdullah_alawad_",
-									"type": "text"
+									"value": "abood",
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "password",
 									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "abdullah_alawad_",
 									"type": "text"
 								}
 							]
@@ -42,6 +48,39 @@
 							"path": [
 								"api",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/logout",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"logout"
 							]
 						}
 					},
@@ -453,7 +492,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-07-15 12:00:00 PM\",\r\n    \"doctor_id\": 1,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"33\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"John Doe\"\r\n        }\r\n    ]\r\n}\r\n",
+							"raw": "{\r\n    \"clinic_id\": 1,\r\n    \"date\": \"2024-08-19 09:00 AM\",\r\n    \"doctor_id\": 10,\r\n    \"subject_id\": 3,\r\n    \"questions\": [\r\n        {\r\n            \"id\":1,\r\n            \"answer\": \"John Doe\"\r\n        },\r\n        {\r\n            \"id\":2,\r\n            \"answer\": \"33\"\r\n        },\r\n        {\r\n            \"id\":3,\r\n            \"answer\": \"John Doe\"\r\n        }\r\n    ]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -624,12 +663,12 @@
 							"formdata": [
 								{
 									"key": "process_id",
-									"value": "44",
+									"value": "59",
 									"type": "text"
 								},
 								{
 									"key": "assistant_id",
-									"value": "1",
+									"value": "4",
 									"type": "text"
 								},
 								{
@@ -796,7 +835,12 @@
 							"formdata": [
 								{
 									"key": "user_id",
-									"value": "2",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "chattt",
 									"type": "text"
 								}
 							]
@@ -862,6 +906,43 @@
 							"raw": "{{local}}chat",
 							"host": [
 								"{{local}}chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "make-read",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "chat_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}chat/read-it",
+							"host": [
+								"{{local}}chat"
+							],
+							"path": [
+								"read-it"
 							]
 						}
 					},
@@ -960,7 +1041,7 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "{{local}}assistant/get-available-assistant?process_id=44",
+							"raw": "{{local}}assistant/get-available-assistant?process_id=",
 							"host": [
 								"{{local}}assistant"
 							],
@@ -970,7 +1051,7 @@
 							"query": [
 								{
 									"key": "process_id",
-									"value": "44"
+									"value": ""
 								}
 							]
 						}
@@ -1036,7 +1117,7 @@
 		},
 		{
 			"key": "token",
-			"value": "10|V8a35Jdi461Ngf5QqD0hhCizjHdnsSIzAsimtKVqcff38e64",
+			"value": "20|OwDUzkOBgP7Vk22MMdIsiYSeWNuMlQNcIybKZS2G9f8d7260",
 			"type": "string"
 		}
 	]

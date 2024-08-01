@@ -78,7 +78,6 @@ Route::group(['prefix' => 'process'], function () {
     Route::post('book-chair', [ProcessController::class, 'book_chair']);
     Route::delete('delete-process/{process_id}', [ProcessController::class, 'destroy']);
     Route::get('search-patient', [ProcessController::class, 'patient_info_search']);
-
 });
 
 Route::group(['prefix' => 'assistant'], function () {
@@ -88,6 +87,7 @@ Route::group(['prefix' => 'assistant'], function () {
 
 Route::apiResource('chat', ChatController::class)->only(['index', 'store', 'show']);
 Route::apiResource('chat_message', ChatMessageController::class)->only(['index', 'store']);
+Route::put('chat/read-it', [ChatController::class, 'makeRead']);
 Route::apiResource('user', UserController::class)->only(['index']);
 
 //--------------------------------------------------------------------------

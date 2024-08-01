@@ -7,6 +7,7 @@ use App\Http\Requests\StoreChatRequest;
 use App\Http\Resources\ChatResource;
 use App\Models\Chat;
 use App\traits\GeneralTrait;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class ChatController extends Controller
@@ -80,7 +81,7 @@ class ChatController extends Controller
                 ],
                 [
                     'user_id' => $data['otherUserId']
-                ]
+                ],
             ]);
 
             $chat->refresh()->load('lastMessage.user', 'participants.user');
@@ -166,6 +167,25 @@ class ChatController extends Controller
         $chatResource = new ChatResource($chat);
 
         return $this->apiResponse($chatResource, true, 'chat');
+    }
+
+    public function makeRead(Request $request)
+    {
+        $user_id = auth('sanctum')->user()->id;
+
+        $chat = Chat::where('id', $request->chat_id)
+            ->with(['participants' => function ($query) use ($user_id) {
+                $query->where('user_id', '=', $user_id);
+            }])
+            ->first();
+
+        if ($chat) {
+            $chat->participants->each(function ($participant) {
+                $participant->update(['status' => 1]);
+            });
+        }
+        return $this->apiResponse(null, true, 'done');
+
     }
 
 }

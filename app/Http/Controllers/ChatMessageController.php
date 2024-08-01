@@ -52,14 +52,55 @@ class ChatMessageController extends Controller
     {
         $data = $request->validated();
         $data['user_id'] = auth('sanctum')->user()->id;
+        $userId = $data['user_id'];
 
+        $chat = Chat::where('id', $request->chat_id)
+            ->with(['participants' => function ($query) use ($userId) {
+                $query->where('user_id', '!=', $userId);
+            }])
+            ->first();
+
+        if ($chat) {
+            // Update the status of other participants to 1
+            $chat->participants->each(function ($participant) {
+                $participant->update(['status' => 0]);
+            });
+        }
+
+        // Create the chat message
         $chatMessage = ChatMessage::create($data);
         $chatMessage->load('user');
 
-        /// TODO send broadcast event to pusher and send notification to onesignal services
-        $this->sendNotificationToOther($chatMessage);
+        // Load the chat with its relationships
+        $chat = $chatMessage->chat()->with('lastMessage.user', 'participants.user')->first();
 
-        return $this->apiResponse($chatMessage, true, 'Message has been sent successfully.');
+
+        // Add other participants to the chat object
+        $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
+            return $participant->user_id !== $userId;
+        })->values();
+
+        unset($chat->participants);
+
+        // Attach the chat to the chatMessage
+//        $chatMessage->chat = $chat;
+//        $chatMessage->save();
+
+        $response = [
+            'chat_id' => $chatMessage->chat_id,
+            'message' => $chatMessage->message,
+            'user_id' => $chatMessage->user_id,
+            'updated_at' => $chatMessage->updated_at,
+            'created_at' => $chatMessage->created_at,
+            'id' => $chatMessage->id,
+            'chat' => $chat,
+            'user' => $chatMessage->user
+        ];
+
+        /// TODO send broadcast event to pusher and send notification to onesignal services
+        $this->sendNotificationToOther($chatMessage,$response);
+
+        return $this->apiResponse($response, true, 'Message has been sent successfully.');
     }
 
     /**
@@ -67,11 +108,11 @@ class ChatMessageController extends Controller
      *
      * @param ChatMessage $chatMessage
      */
-    private function sendNotificationToOther(ChatMessage $chatMessage)
+    private function sendNotificationToOther(ChatMessage $chatMessage,$response)
     {
 
         // TODO move this event broadcast to observer
-        broadcast(new NewMessageSent($chatMessage))->toOthers();
+        broadcast(new NewMessageSent($chatMessage,$response))->toOthers();
 
         $user = auth('sanctum')->user();
         $userId = $user->id;
@@ -92,8 +133,7 @@ class ChatMessageController extends Controller
                     'chatId' => $chatMessage->chat_id
                 ]
             ]);
-
         }
-
     }
+
 }

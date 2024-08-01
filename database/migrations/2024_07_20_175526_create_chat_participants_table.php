@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('chat_id')->constrained('chats')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->boolean('status')->default(false);
             $table->unique([
                 'chat_id',
                 'user_id'

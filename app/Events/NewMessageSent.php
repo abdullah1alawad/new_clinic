@@ -15,16 +15,17 @@ class NewMessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $chatMessage;
+    private $chatMessage, $response;
 
     /**
      * NewMessageSent constructor.
      *
      * @param ChatMessage $chatMessage
      */
-    public function __construct(ChatMessage $chatMessage)
+    public function __construct($chatMessage, $response)
     {
         $this->chatMessage = $chatMessage;
+        $this->response = $response;
     }
 
     /**
@@ -54,9 +55,6 @@ class NewMessageSent implements ShouldBroadcast
      */
     public function broadcastWith(): array
     {
-        return [
-            'chat_id' => $this->chatMessage->chat_id,
-            'message' => $this->chatMessage->toArray(),
-        ];
+        return $this->response;
     }
 }

@@ -15,6 +15,7 @@ class ChatParticipant extends Model
     protected $casts = [
         'chat_id' => 'integer',
         'user_id' => 'integer',
+        'status' => 'boolean'
     ];
 
     public function user()
