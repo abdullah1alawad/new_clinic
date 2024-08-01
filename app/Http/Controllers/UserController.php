@@ -118,12 +118,12 @@ class UserController extends Controller
 
         $userId = auth('sanctum')->user()->id;
 
-        $affected = DB::table('notifications')
+        DB::table('notifications')
             ->where('id', $request->notification_id)
             ->where('notifiable_id', $userId)
             ->update(['read_at' => now()]);
 
-      
+
         return $this->apiResponse(null, true, 'Notification marked as read.');
 
     }
