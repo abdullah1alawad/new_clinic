@@ -1086,6 +1086,33 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "read-notification",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "notification_id",
+							"value": "7086b3e5-11d8-4e02-aa74-112e5edf9bd0",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{local}}notification/read-it",
+					"host": [
+						"{{local}}notification"
+					],
+					"path": [
+						"read-it"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -1117,7 +1144,7 @@
 		},
 		{
 			"key": "token",
-			"value": "20|OwDUzkOBgP7Vk22MMdIsiYSeWNuMlQNcIybKZS2G9f8d7260",
+			"value": "21|TfsMSybqtqxFMHr4lW6Hl9q1KWQyWihaB44LIGJ6a4a6c516",
 			"type": "string"
 		}
 	]

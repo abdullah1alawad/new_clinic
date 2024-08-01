@@ -90,6 +90,8 @@ Route::apiResource('chat_message', ChatMessageController::class)->only(['index',
 Route::put('chat/read-it', [ChatController::class, 'makeRead']);
 Route::apiResource('user', UserController::class)->only(['index']);
 
+Route::put('notification/read-it', [UserController::class, 'makeNotificationRead']);
+
 //--------------------------------------------------------------------------
 
 

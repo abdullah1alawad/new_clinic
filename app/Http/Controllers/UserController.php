@@ -8,7 +8,10 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -94,5 +97,34 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function makeNotificationRead(Request $request)
+    {
+        $rules = [
+            'notification_id' => 'required|exists:notifications,id',
+        ];
+
+        $messages = [
+            'notification_id.required' => 'The notification_id is required.',
+            'notification_id.exists' => 'This notification does not exists.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails())
+            return $this->apiResponse(null, false, $validator->errors()->first(), 422);
+
+        $userId = auth('sanctum')->user()->id;
+
+        $affected = DB::table('notifications')
+            ->where('id', $request->notification_id)
+            ->where('notifiable_id', $userId)
+            ->update(['read_at' => now()]);
+
+      
+        return $this->apiResponse(null, true, 'Notification marked as read.');
+
     }
 }
