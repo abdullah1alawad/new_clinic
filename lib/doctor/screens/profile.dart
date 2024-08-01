@@ -37,6 +37,12 @@ class ProfileScreen extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             LaravelEcho.instance.disconnect();
+            try {
+              LaravelEcho.instance
+                  .leave('App.User.${profileProvider.user!.id}');
+            } catch (err) {
+              print(err);
+            }
             CacheHelper().removeData(key: kTOKEN);
             Navigator.pushReplacement(
               context,
@@ -53,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-               navigator(
+              navigator(
                   EditeProfileScreen(user: profileProvider.user!), context);
               // Navigator.of(context).push(
               //   MaterialPageRoute(

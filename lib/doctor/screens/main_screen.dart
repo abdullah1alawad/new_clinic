@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:pusher_client/pusher_client.dart';
+
 import '../../common/core/enum/connection_enum.dart';
 import '../../common/cache/cache_helper.dart';
 import '../../common/core/utils/app_constants.dart';
@@ -24,6 +28,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedScreen = 2;
+  late InitScreensProvider _userProvider;
 
   List<Widget> _screens = [
     const ProfileScreen(),
@@ -43,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Provider.of<InitScreensProvider>(context, listen: false)
           .getInitScreens();
+
       Provider.of<GetManyChatsProvider>(context, listen: false).getManyChats();
       Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
       LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
@@ -53,8 +59,30 @@ class _MainScreenState extends State<MainScreen> {
                 .user!
                 .toChatUser),
       );
+
+      _userProvider = Provider.of<InitScreensProvider>(context, listen: false);
+      listenNotificationChannel(_userProvider.user!.id);
     });
   }
+
+  void listenNotificationChannel(int userId) {
+    LaravelEcho.instance
+        .private('App.User.$userId')
+        .listen('.notification.sent', (e) {
+      if (e is PusherEvent) {
+        if (e.data != null) {
+          _handleNewNotification(jsonDecode(e.data!));
+        }
+      }
+    }).error((err) {
+      print(err);
+    });
+  }
+
+  void _handleNewNotification(Map<String, dynamic> data) {
+    _userProvider.addNotification(data);
+  }
+  
 
   @override
   Widget build(BuildContext context) {
