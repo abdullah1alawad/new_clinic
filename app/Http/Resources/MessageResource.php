@@ -22,7 +22,6 @@ class MessageResource extends JsonResource
             'message' => $this->message,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'status' => $this->status,
             'user' => UserResource::make($this->user)
         ];
     }
