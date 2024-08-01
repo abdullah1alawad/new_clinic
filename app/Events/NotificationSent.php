@@ -27,6 +27,12 @@ class NotificationSent implements ShouldBroadcast
         return new PrivateChannel('App.User.' . $this->user->id);
     }
 
+
+    public function broadcastAs(): string
+    {
+        return 'notification.sent';
+    }
+
     public function broadcastWith()
     {
         return [
