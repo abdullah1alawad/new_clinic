@@ -28,7 +28,7 @@ Broadcast::channel('chat.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return $user->id == $id;
 });
 
 //Broadcast::channel('notifications.{userId}', function ($user, $userId) {
@@ -37,5 +37,5 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 
 Broadcast::channel('notifications.{id}', function ($user, $id) {
     \Log::info('Broadcast channel authorization:', ['user_id' => $user->id, 'channel_id' => $id]);
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
 });
