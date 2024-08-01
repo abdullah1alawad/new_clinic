@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\ChairBookRequest;
-use App\Events\NewMessageSent;
 use App\Events\NotificationSent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProcessResource;
 use App\Http\Resources\UpcomingAppointmentsResource;
 use App\Models\Chair;
-use App\Models\Chat;
-use App\Models\ChatMessage;
 use App\Models\Clinic;
 use App\Models\Patient_question;
 use App\Models\Process;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\User_schedule;
-use App\Notifications\ChairBookRequestNotification;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use App\traits\GeneralTrait;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;

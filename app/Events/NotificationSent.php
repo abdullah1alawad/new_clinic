@@ -24,7 +24,7 @@ class NotificationSent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('App.User.' . $this->user->id);
+        return new PrivateChannel('App.User.' . $this->process->doctor_id);
     }
 
 
