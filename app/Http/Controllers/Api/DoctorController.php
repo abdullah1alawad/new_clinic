@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NotificationSent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
 use App\Models\Process;
@@ -90,8 +91,15 @@ class DoctorController extends Controller
 
                 $message = 'لقد قبل الدكتور هذا الموعد.';
                 $cause = 'doctor_decision_book_chair_for_student';
+
                 $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+                $storedNotification = $student->notifications()->latest()->first();
+                $this->sendNotificationUser($student->id, $storedNotification);
+
                 $assistant->notify(new AssistantBookChair($process, $user));
+                $storedNotification = $assistant->notifications()->latest()->first();
+                $this->sendNotificationUser($assistant->id, $storedNotification);
+
                 DB::commit();
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
@@ -99,8 +107,11 @@ class DoctorController extends Controller
             $message = 'لقد رفض الدكتور هذا الموعد.';
             $process->status = 0;
             $process->save();
+
             $cause = 'doctor_decision_book_chair_for_student';
             $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+            $storedNotification = $student->notifications()->latest()->first();
+            $this->sendNotificationUser($student->id, $storedNotification);
 
             DB::commit();
 
@@ -149,10 +160,14 @@ class DoctorController extends Controller
                         $oldAssistant = User::find($process->assistant_id);
                         $oldAssistant->notify(new DoctorDecisionBookChair(
                             $process, 'لقد تم تغييرك من هذا الموعد.', 'doctor_choose_assistant', $user));
+                        $storedNotification = $oldAssistant->notifications()->latest()->first();
+                        $this->sendNotificationUser($oldAssistant->id, $storedNotification);
                     }
                     $process->assistant_id = $request->assistant_id;
                     $assistant->notify(new DoctorDecisionBookChair(
                         $process, 'لقد تم اختيارك من قبل الدكتور.', 'doctor_choose_assistant', $user));
+                    $storedNotification = $assistant->notifications()->latest()->first();
+                    $this->sendNotificationUser($assistant->id, $storedNotification);
                 } else {
                     if (!$process->assistant_id) {
                         return $this->apiResponse(null, false,
@@ -166,6 +181,8 @@ class DoctorController extends Controller
                 $message = 'لقد قبل الدكتور طلبك لحجز موعد.';
                 $cause = 'doctor_decision_book_chair_for_student';
                 $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+                $storedNotification = $student->notifications()->latest()->first();
+                $this->sendNotificationUser($student->id, $storedNotification);
 
                 return $this->apiResponse(null, true, 'the process is accepted.');
             }
@@ -175,11 +192,17 @@ class DoctorController extends Controller
             $message = 'لقد رفض الدكتور طلبك لحجز موعد.';
             $process->status = 0;
             $process->save();
+
             $cause = 'doctor_decision_book_chair_for_student';
             $student->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+            $storedNotification = $student->notifications()->latest()->first();
+            $this->sendNotificationUser($student->id, $storedNotification);
+
             $message = 'لقد رفض الدكتور هذا الموعد.';
             $cause = 'doctor_decision_book_chair_for_assistant';
             $assistant->notify(new DoctorDecisionBookChair($process, $message, $cause, $user));
+            $storedNotification = $assistant->notifications()->latest()->first();
+            $this->sendNotificationUser($assistant->id, $storedNotification);
 
             DB::commit();
 
@@ -190,6 +213,5 @@ class DoctorController extends Controller
             return $this->internalServer($ex->getMessage());
         }
     }
-
 
 }

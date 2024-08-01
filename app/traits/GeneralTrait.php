@@ -2,6 +2,7 @@
 
 namespace App\traits;
 
+use App\Events\NotificationSent;
 use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
@@ -91,7 +92,8 @@ trait GeneralTrait
         return $dayOfWeek;
     }
 
-    public function is_date($value) {
+    public function is_date($value)
+    {
         if (!$value) return false;
         try {
             new DateTime($value);
@@ -101,6 +103,10 @@ trait GeneralTrait
         }
     }
 
+    public function sendNotificationUser($user_id, $storedNotification)
+    {
+        broadcast(new NotificationSent($user_id, $storedNotification))->toOthers();
+    }
 
 
 }

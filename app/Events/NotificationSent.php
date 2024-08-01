@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Http\Resources\NotificationResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,17 +16,17 @@ class NotificationSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $process, $user;
+    protected $notification, $user_id;
 
-    public function __construct($process, $user)
+    public function __construct($user_id, $notification)
     {
-        $this->process = $process;
-        $this->user = $user;
+        $this->notification = $notification;
+        $this->user_id = $user_id;
     }
 
     public function broadcastOn()
     {
-        return new PrivateChannel('App.User.' . $this->process->doctor_id);
+        return new PrivateChannel('App.User.' . $this->user_id);
     }
 
 
@@ -35,9 +37,6 @@ class NotificationSent implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return [
-            'process_id' => $this->process->id,
-            'user' => $this->user->toArray(),
-        ];
+        return NotificationResource::make($this->notification)->toArray(request());
     }
 }

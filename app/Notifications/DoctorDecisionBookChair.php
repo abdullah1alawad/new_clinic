@@ -33,7 +33,7 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database'];
     }
 
 
@@ -42,18 +42,18 @@ class DoctorDecisionBookChair extends Notification implements ShouldQueue
         return [
             'cause' => $this->cause,
             'user' => $this->user,
-            'process' => $this->process->id,
+            'process_id' => $this->process->id,
             'message' => $this->message,
         ];
     }
-
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'cause' => $this->cause,
-            'user' => $this->user,
-            'process' => $this->process->id,
-            'message' => $this->message,
-        ]);
-    }
+//
+//    public function toBroadcast($notifiable)
+//    {
+//        return new BroadcastMessage([
+//            'cause' => $this->cause,
+//            'user' => $this->user,
+//            'process' => $this->process->id,
+//            'message' => $this->message,
+//        ]);
+//    }
 }

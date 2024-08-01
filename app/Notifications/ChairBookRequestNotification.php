@@ -32,7 +32,7 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database'];
     }
 
     /**
@@ -50,18 +50,14 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
         ];
     }
 
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'cause' => 'student_book_request',
-            'process_id' => $this->process->id,
-            'user' => $this->user,
-            'message' => 'الطالب يريد حجز موعد.',
-        ]);
-    }
+//    public function toBroadcast($notifiable)
+//    {
+//        return new BroadcastMessage([
+//            'cause' => 'student_book_request',
+//            'process_id' => $this->process->id,
+//            'user' => $this->user,
+//            'message' => 'الطالب يريد حجز موعد.',
+//        ]);
+//    }
 
-    public function broadcastOn()
-    {
-        return new PrivateChannel('App.User.' . $this->user->id);
-    }
 }

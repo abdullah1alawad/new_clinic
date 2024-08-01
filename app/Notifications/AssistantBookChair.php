@@ -30,7 +30,7 @@ class AssistantBookChair extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database'];
     }
 
     public function toArray($notifiable)
@@ -38,17 +38,17 @@ class AssistantBookChair extends Notification implements ShouldQueue
         return [
             'cause' => 'choose_assistant',
             'user' => $this->user,
-            'process' => $this->process->id,
+            'process_id' => $this->process->id,
             'message' => 'لقد اختارك الدكتور لهذا الموعد.',
         ];
     }
-
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'process' => $this->process->id,
-            'user' => $this->user,
-            'message' => 'لقد اختارك الدكتور لهذا الموعد.',
-        ]);
-    }
+//
+//    public function toBroadcast($notifiable)
+//    {
+//        return new BroadcastMessage([
+//            'process_id' => $this->process->id,
+//            'user' => $this->user,
+//            'message' => 'لقد اختارك الدكتور لهذا الموعد.',
+//        ]);
+//    }
 }

@@ -13,6 +13,7 @@ use App\Models\Process;
 use App\Models\Subject;
 use App\Models\User;
 use App\Models\User_schedule;
+use App\Notifications\ChairBookRequestNotification;
 use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -261,8 +262,9 @@ class ProcessController extends Controller
             $doctor = User::find($process->doctor_id);
             $user = auth('sanctum')->user();
 
-            $this->sendNotificationDoctor($process);
-//            $doctor->notify(new ChairBookRequestNotification($process, $user));
+            $doctor->notify(new ChairBookRequestNotification($process, $user));
+            $storedNotification = $doctor->notifications()->latest()->first();
+            $this->sendNotificationUser($doctor->id, $storedNotification);
 
             DB::commit();
 
@@ -281,14 +283,6 @@ class ProcessController extends Controller
             Log::error('Error storing process: ' . $ex->getMessage());
             return $this->internalServer($ex->getMessage());
         }
-
-    }
-
-    private function sendNotificationDoctor($process)
-    {
-        $user = auth('sanctum')->user();
-
-        broadcast(new NotificationSent($process,$user))->toOthers();
 
     }
 

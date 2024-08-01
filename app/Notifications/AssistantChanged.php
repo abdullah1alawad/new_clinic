@@ -30,7 +30,7 @@ class AssistantChanged extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return ['database'];
     }
 
 
@@ -38,17 +38,17 @@ class AssistantChanged extends Notification implements ShouldQueue
     {
         return [
             'cause' => 'choose_assistant',
-            'process' => $this->process->id,
+            'process_id' => $this->process->id,
             'message' => $this->message,
         ];
     }
 
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage([
-            'cause' => 'choose_assistant',
-            'process' => $this->process->id,
-            'message' => $this->message,
-        ]);
-    }
+//    public function toBroadcast($notifiable)
+//    {
+//        return new BroadcastMessage([
+//            'cause' => 'choose_assistant',
+//            'process_id' => $this->process->id,
+//            'message' => $this->message,
+//        ]);
+//    }
 }
