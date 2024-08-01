@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -57,5 +58,10 @@ class ChairBookRequestNotification extends Notification implements ShouldQueue
             'user' => $this->user,
             'message' => 'الطالب يريد حجز موعد.',
         ]);
+    }
+
+    public function broadcastOn()
+    {
+        return new PrivateChannel('App.User.' . $this->user->id);
     }
 }

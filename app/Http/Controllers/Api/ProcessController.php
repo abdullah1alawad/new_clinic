@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\ChairBookRequest;
+use App\Events\NewMessageSent;
+use App\Events\NotificationSent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProcessResource;
 use App\Http\Resources\UpcomingAppointmentsResource;
 use App\Models\Chair;
+use App\Models\Chat;
+use App\Models\ChatMessage;
 use App\Models\Clinic;
 use App\Models\Patient_question;
 use App\Models\Process;
@@ -261,9 +265,10 @@ class ProcessController extends Controller
             $process = UpcomingAppointmentsResource::make($process);
 
             $doctor = User::find($process->doctor_id);
-            $user=auth('sanctum')->user();
+            $user = auth('sanctum')->user();
 
-            $doctor->notify(new ChairBookRequestNotification($process,$user));
+            $this->sendNotificationDoctor($process);
+//            $doctor->notify(new ChairBookRequestNotification($process, $user));
 
             DB::commit();
 
@@ -284,6 +289,15 @@ class ProcessController extends Controller
         }
 
     }
+
+    private function sendNotificationDoctor($process)
+    {
+        $user = auth('sanctum')->user();
+
+        broadcast(new NotificationSent($process,$user))->toOthers();
+
+    }
+
 
     public function patient_info_search(Request $request)
     {
@@ -340,7 +354,8 @@ class ProcessController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public
+    function store(Request $request)
     {
         //
     }
@@ -348,7 +363,8 @@ class ProcessController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public
+    function show(string $id)
     {
         //
     }
@@ -356,7 +372,8 @@ class ProcessController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public
+    function update(Request $request, string $id)
     {
         //
     }
@@ -364,7 +381,8 @@ class ProcessController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($process_id)
+    public
+    function destroy($process_id)
     {
         DB::beginTransaction();
         try {
