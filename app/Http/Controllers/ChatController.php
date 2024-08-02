@@ -57,7 +57,7 @@ class ChatController extends Controller
 
         $chats = $chats->map(function ($chat) use ($userId) {
             // Add the status of the authenticated user to each chat
-            $chat->authUserStatus = $chat->participants()
+            $chat->status = $chat->participants()
                 ->where('user_id', $userId)
                 ->value('status');
 
@@ -68,8 +68,6 @@ class ChatController extends Controller
 
             return $chat;
         });
-
-//        $chats->status = $status;
 
 
 //        return $chats;

@@ -18,6 +18,7 @@ class ChatResource extends JsonResource
         return [
             'id' => $this->id,
             'created_by' => $this->created_by,
+            'status'=>$this->status,
             'name' => $this->name,
             'is_private' => $this->is_private,
             'created_at' => $this->created_at,
