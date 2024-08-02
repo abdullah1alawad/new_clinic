@@ -110,6 +110,10 @@ class ChatController extends Controller
 
             $chat->refresh()->load('lastMessage.user', 'participants.user');
 
+            $chat->status = $chat->participants()
+                ->where('user_id', $userId)
+                ->value('status');
+
             $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
                 return $participant->user_id !== $userId;
             })->values();
@@ -119,6 +123,10 @@ class ChatController extends Controller
         }
 
         $previousChat->load('lastMessage.user', 'participants.user');
+
+        $previousChat->status = $previousChat->participants()
+            ->where('user_id', $userId)
+            ->value('status');
 
         $previousChat->otherParticipants = $previousChat->participants->filter(function ($participant) use ($userId) {
             return $participant->user_id !== $userId;
@@ -135,7 +143,8 @@ class ChatController extends Controller
      * @param int $otherUserId
      * @return mixed
      */
-    private function getPreviousChat($otherUserId)
+    private
+    function getPreviousChat($otherUserId)
     {
         $userId = auth('sanctum')->user()->id;
 
@@ -156,7 +165,8 @@ class ChatController extends Controller
      * @param StoreChatRequest $request
      * @return array
      */
-    private function prepareStoreData(StoreChatRequest $request)
+    private
+    function prepareStoreData(StoreChatRequest $request)
     {
         $data = $request->validated();
         $otherUserId = (int)$data['user_id'];
@@ -177,12 +187,17 @@ class ChatController extends Controller
      * @param Chat $chat
      * @return JsonResponse
      */
-    public function show(Chat $chat)
+    public
+    function show(Chat $chat)
     {
         $chat->load('lastMessage.user', 'participants.user');
 
         $userId = auth('sanctum')->user()->id;
 
+        $chat->status = $chat->participants()
+            ->where('user_id', $userId)
+            ->value('status');
+        
         // Filter participants to exclude the authenticated user
         $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
             return $participant->user_id !== $userId;
@@ -193,7 +208,8 @@ class ChatController extends Controller
         return $this->apiResponse($chatResource, true, 'chat');
     }
 
-    public function makeRead(Request $request)
+    public
+    function makeRead(Request $request)
     {
         $user_id = auth('sanctum')->user()->id;
 
