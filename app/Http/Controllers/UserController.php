@@ -9,6 +9,7 @@ use App\Models\User;
 use App\traits\GeneralTrait;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -20,12 +21,27 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+//    public function index()
+//    {
+//        $userId = auth('sanctum')->user()->id;
+//
+//        // Fetch and cache users
+//        $users = Cache::remember("all_users_except_{$userId}", 60, function() use ($userId) {
+//            return User::select('id', 'email', 'username', 'name', 'gender', 'phone', 'photo', 'national_id')
+//                ->where('id', '!=', $userId)
+//                ->get();
+//        });
+//
+//        return $this->apiResponse($users, true, 'all required users');
+//    }
+
     public function index()
     {
         // get the rules you need
         $users = User::where('id', '!=', auth('sanctum')->user()->id)->get();
         return $this->apiResponse($users, true, 'all required users');
     }
+
 
     /**
      * Store a newly created resource in storage.

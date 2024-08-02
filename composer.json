@@ -12,6 +12,7 @@
         "laravel-notification-channels/onesignal": "^2.5",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.3",
+        "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.8",
         "pusher/pusher-php-server": "^7.2"
     },

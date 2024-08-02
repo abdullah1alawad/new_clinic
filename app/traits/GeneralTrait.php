@@ -21,6 +21,41 @@ trait GeneralTrait
         return response()->json($array, $statusCode);
     }
 
+
+//    public function apiResponse($data = null, $status = true, $message = null, $statusCode = 200)
+//    {
+//        $startTime = microtime(true);
+//
+//        $simpleData = $data->map(function($user) {
+//            return [
+//                'id' => $user->id,
+//                'email' => $user->email,
+//                'username' => $user->username,
+//                'name' => $user->name,
+//                'gender' => $user->gender,
+//                'phone' => $user->phone,
+//                'photo' => $user->photo,
+//                'national_id' => $user->national_id
+//            ];
+//        });
+//
+//        $array = [
+//            'data' => $simpleData,
+//            'status' => $status,
+//            'message' => $message,
+//        ];
+//
+//        $response = response()->json($array, $statusCode);
+//
+//        $endTime = microtime(true);
+//        $duration = $endTime - $startTime;
+//
+//        \Log::info("apiResponse duration: {$duration} seconds");
+//
+//        return $response;
+//    }
+
+
     public function unAuthorisedResponse()
     {
         return $this->apiResponse(null, false, 'Unauthorised !!', 401);
