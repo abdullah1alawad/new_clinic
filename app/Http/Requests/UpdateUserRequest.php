@@ -12,6 +12,7 @@ use Illuminate\Validation\ValidationException;
 class UpdateUserRequest extends FormRequest
 {
     use GeneralTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -29,12 +30,12 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'username' => ['required', 'regex:/^[a-zA-Z][a-zA-Z0-9._]{0,29}$/', Rule::unique('users')->ignore(auth('sanctum')->user()->id),],
-            'name' => ['required', 'regex:/^[A-Za-z\s]+$/', 'max:40'],
+            'name' => ['required', 'regex:/^[\u0621-\u064A ]+$/u', 'max:40'],
             'email' => ['required', 'email', Rule::unique('users')->ignore(auth('sanctum')->user()->id)],
             'national_id' => ['required', 'regex:/^[0-9]+$/', 'max:30', Rule::unique('users')->ignore(auth('sanctum')->user()->id)],
-            'gender' => ['required','boolean'],
+            'gender' => ['required', 'boolean'],
             'phone' => ['required', 'regex:/^[0-9]+$/', 'max:10', Rule::unique('users')->ignore(auth('sanctum')->user()->id)],
-            'photo' => ['nullable','image', 'max:2048'],
+            'photo' => ['nullable', 'image', 'max:2048'],
         ];
     }
 

@@ -75,6 +75,10 @@ class ChatMessageController extends Controller
         $chat = $chatMessage->chat()->with('lastMessage.user', 'participants.user')->first();
 
 
+        $chat->status = $chat->participants()
+            ->where('user_id', $userId)
+            ->value('status');
+
         // Add other participants to the chat object
         $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
             return $participant->user_id !== $userId;
@@ -122,6 +126,11 @@ class ChatMessageController extends Controller
                 $query->where('user_id', '!=', $userId);
             }])
             ->first();
+
+        $chat->status = $chat->participants()
+            ->where('user_id', $userId)
+            ->value('status');
+
         if (count($chat->participants) > 0) {
             $otherUserId = $chat->participants[0]->user_id;
 

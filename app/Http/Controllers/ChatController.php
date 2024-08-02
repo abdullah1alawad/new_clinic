@@ -197,7 +197,7 @@ class ChatController extends Controller
         $chat->status = $chat->participants()
             ->where('user_id', $userId)
             ->value('status');
-        
+
         // Filter participants to exclude the authenticated user
         $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
             return $participant->user_id !== $userId;
