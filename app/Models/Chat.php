@@ -15,7 +15,7 @@ class Chat extends Model
     protected $casts = [
         'created_by' => 'integer',
         'name' => 'string',
-        'is_private'=>'boolean'
+        'is_private' => 'boolean'
     ];
 
     public function participants()
@@ -38,5 +38,10 @@ class Chat extends Model
         return $query->whereHas('participants', function ($q) use ($userId) {
             $q->where('user_id', $userId);
         });
+    }
+
+    public function participantStatus($userId)
+    {
+        return $this->participants()->where('user_id', $userId)->value('status');
     }
 }

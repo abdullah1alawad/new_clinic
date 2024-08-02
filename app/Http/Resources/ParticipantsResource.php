@@ -18,7 +18,7 @@ class ParticipantsResource extends JsonResource
             'id' => $this->id,
             'chat_id' => $this->chat_id,
 //            'user_id'=>$this->user_id,
-            'status'=>$this->status,
+//            'status'=>$this->status,
             'user' => UserResource::make($this->user),
         ];
     }

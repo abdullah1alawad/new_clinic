@@ -40,17 +40,43 @@ class ChatController extends Controller
 
         $userId = auth('sanctum')->user()->id;
 
+//        $status = $chats->map(function ($chat) use ($userId) {
+//            $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
+//                return $participant->user_id === $userId;
+//            })->values();
+//            return $chat->status;
+//        });
+
+
+//        $chats = $chats->map(function ($chat) use ($userId) {
+//            $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
+//                return $participant->user_id !== $userId;
+//            })->values();
+//            return $chat;
+//        });
+
         $chats = $chats->map(function ($chat) use ($userId) {
+            // Add the status of the authenticated user to each chat
+            $chat->authUserStatus = $chat->participants()
+                ->where('user_id', $userId)
+                ->value('status');
+
+            // Filter participants to exclude the authenticated user
             $chat->otherParticipants = $chat->participants->filter(function ($participant) use ($userId) {
                 return $participant->user_id !== $userId;
             })->values();
+
             return $chat;
         });
+
+//        $chats->status = $status;
+
 
 //        return $chats;
         $chats = ChatResource::collection($chats);
 
         return $this->apiResponse($chats, true, 'chats here.');
+
     }
 
 
