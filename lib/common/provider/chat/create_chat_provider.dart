@@ -23,9 +23,9 @@ class CreateChatProvider extends ChangeNotifier {
         CacheHelper().getData(key: kTOKEN),
       );
 
-      print(data);
+      // print(data);
 
-      print(response.data[kDATA]);
+      // print(response.data[kDATA]);
 
       chat = ChatModel.fromJson(response.data[kDATA]);
 

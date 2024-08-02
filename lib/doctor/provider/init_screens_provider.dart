@@ -16,6 +16,7 @@ class InitScreensProvider extends ChangeNotifier {
   List<AppointmentModel>? comingAppointments;
   List<AppointmentModel>? completedAppointments;
   List<NotificationModel>? notifications;
+  int unReadNotify = 0;
   ConnectionEnum? connection;
   String? errorMessage;
 
@@ -45,6 +46,8 @@ class InitScreensProvider extends ChangeNotifier {
           .map((notification) => NotificationModel.fromJson(notification))
           .toList();
 
+      calcUnReadNotify();
+
       connection = ConnectionEnum.connected;
       notifyListeners();
     } on DioException catch (e) {
@@ -68,6 +71,36 @@ class InitScreensProvider extends ChangeNotifier {
 
   void addNotification(Map<String, dynamic> jsonData) {
     notifications!.insert(0, NotificationModel.fromJson(jsonData));
+    notifyListeners();
+  }
+
+  void calcUnReadNotify() {
+    unReadNotify = 0;
+    for (int i = 0; i < notifications!.length; i++) {
+      if (notifications![i].readAt == null) {
+        unReadNotify++;
+      }
+    }
+
+    notifyListeners();
+  }
+
+  void makeNotifyUnRead(String notifyId) {
+    for (int i = 0; i < notifications!.length; i++) {
+      if (notifications![i].id == notifyId) {
+        notifications![i].readAt = "m.k";
+      }
+    }
+
+    calcUnReadNotify();
+  }
+
+  void makeAllNotifyRead() {
+    for (int i = 0; i < notifications!.length; i++) {
+      notifications![i].readAt = "m.k";
+    }
+
+    unReadNotify = 0;
     notifyListeners();
   }
 

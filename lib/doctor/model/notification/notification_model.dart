@@ -5,7 +5,7 @@ import 'notification_data_model.dart';
 class NotificationModel {
   final String id;
   final NotificationDataModel data;
-  final String? readAt;
+  String? readAt;
   final String createdAt, updatedAt;
 
   NotificationModel({

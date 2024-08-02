@@ -3,6 +3,7 @@ import '../../common/cache/cache_helper.dart';
 import '../../common/core/enum/connection_enum.dart';
 import '../../common/core/utils/app_constants.dart';
 import '../../common/core/utils/laravel_echo.dart';
+import '../../common/provider/chat/get_many_chats_provider.dart';
 import '../../common/screens/auth/login.dart';
 import '../../common/screens/edite_profile.dart';
 import '../../common/widgets/charts/activity_graph.dart';
@@ -22,6 +23,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<FiveScreenProvider>(context);
+    final chatsProvider = Provider.of<GetManyChatsProvider>(context);
 
     ImageProvider<Object> backgroundImage;
     if (profileProvider.user!.photo == null) {
@@ -36,7 +38,21 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('الملف الشخصي'),
         leading: IconButton(
           onPressed: () {
-            // LaravelEcho.instance.disconnect();
+            LaravelEcho.instance.disconnect();
+            try {
+              LaravelEcho.instance
+                  .leave('App.User.${profileProvider.user!.id}');
+            } catch (err) {
+              print(err);
+            }
+            for (int i = 0; i < chatsProvider.chats!.length; i++) {
+              try {
+                LaravelEcho.instance
+                    .leave('chat.${chatsProvider.chats![i].id}');
+              } catch (err) {
+                print(err);
+              }
+            }
             CacheHelper().removeData(key: kTOKEN);
             Navigator.pushReplacement(
               context,

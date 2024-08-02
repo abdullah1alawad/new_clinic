@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -21,13 +22,20 @@ class NotificationCard extends StatelessWidget {
       onTap: onTap,
       leading: CircleAvatar(
         backgroundImage: backgroundImage,
-        radius: 23,
+        radius: 30,
       ),
-      title: Text(
+      title: AutoSizeText(
         message,
+        style: TextStyle(fontSize: 17),
+        maxLines: 3,
       ),
-      subtitle: Text(date),
-      trailing: isNotRead ? const Icon(EvaIcons.checkmark) : const Icon(EvaIcons.doneAll),
+      subtitle: Text(
+        date,
+        // style: TextStyle(fontSize: 17),
+      ),
+      trailing: isNotRead
+          ? const Icon(EvaIcons.checkmark)
+          : const Icon(EvaIcons.doneAll),
     );
   }
 }

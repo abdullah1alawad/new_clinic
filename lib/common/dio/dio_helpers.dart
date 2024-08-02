@@ -6,6 +6,9 @@ class DioHelper {
   static Dio dio = Dio(
     BaseOptions(
       baseUrl: kBASEURL,
+      connectTimeout: Duration(seconds: 10), // Connection timeout
+      receiveTimeout: Duration(seconds: 10), // Receive timeout
+      sendTimeout: Duration(seconds: 10),
     ),
   );
 
@@ -29,10 +32,9 @@ class DioHelper {
         data: data);
   }
 
-
 //////////////////// auth ////////////////////////////
 
-static Future<Response> getAllUsers(String token) async {
+  static Future<Response> getAllUsers(String token) async {
     return await dio.get(
       EndPoint.getAllUsers,
       options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -89,5 +91,26 @@ static Future<Response> getAllUsers(String token) async {
     );
   }
 
+  static Future<Response> makeChatRead(int chatId, String token) async {
+    return await dio.put(
+      EndPoint.makeChatRead,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: {
+        kCHATID: chatId,
+      },
+    );
+  }
+
   /////////////////////// chat ///////////////////////////////////
+
+  static Future<Response> makeNotificationRead(
+      String notificationId, String token) async {
+    return await dio.put(
+      EndPoint.makeNotificationRead,
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+      data: {
+        kNOTIFICATIONID: notificationId,
+      },
+    );
+  }
 }

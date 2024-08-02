@@ -4,10 +4,12 @@ import 'package:clinic_test_app/common/model/user_model.dart';
 
 class ChatModel {
   final int id, createdBy;
-  final String createdAt, updatedAt;
+  final String createdAt;
+  String updatedAt;
   final String? name;
-  final MessageModel? lastMessage;
+  MessageModel? lastMessage;
   final bool isPrivate;
+  bool isRead;
   final UserModel otherUser;
 
   ChatModel({
@@ -19,6 +21,7 @@ class ChatModel {
     required this.lastMessage,
     required this.isPrivate,
     required this.otherUser,
+    required this.isRead,
   });
 
   factory ChatModel.fromJson(Map<String, dynamic> jsonData) {
@@ -33,6 +36,7 @@ class ChatModel {
           ? MessageModel.fromJson(jsonData[kLASTMESSAGE])
           : null,
       otherUser: UserModel.fromJson(jsonData[kOTHERUSER][0][kUSER]),
+      isRead: jsonData[kSTATUS],
     );
   }
 }

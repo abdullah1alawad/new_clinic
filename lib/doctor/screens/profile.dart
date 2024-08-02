@@ -1,3 +1,5 @@
+import 'package:clinic_test_app/common/provider/chat/get_many_chats_provider.dart';
+
 import '../../common/cache/cache_helper.dart';
 import '../../common/core/enum/connection_enum.dart';
 import '../../common/core/utils/app_constants.dart';
@@ -22,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<InitScreensProvider>(context);
+    final chatsProvider = Provider.of<GetManyChatsProvider>(context);
 
     ImageProvider<Object> backgroundImage;
     if (profileProvider.user!.photo == null) {
@@ -42,6 +45,14 @@ class ProfileScreen extends StatelessWidget {
                   .leave('App.User.${profileProvider.user!.id}');
             } catch (err) {
               print(err);
+            }
+            for (int i = 0; i < chatsProvider.chats!.length; i++) {
+              try {
+                LaravelEcho.instance
+                    .leave('chat.${chatsProvider.chats![i].id}');
+              } catch (err) {
+                print(err);
+              }
             }
             CacheHelper().removeData(key: kTOKEN);
             Navigator.pushReplacement(

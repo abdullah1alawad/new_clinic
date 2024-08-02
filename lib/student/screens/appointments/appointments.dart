@@ -47,16 +47,16 @@ class AppointmentsScreen extends StatelessWidget {
               )
             ],
           ),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                // Provider.of<ThemeProvider>(context, listen: false)
-                //     .toggleTheme();
-                Provider.of<FiveScreenProvider>(context, listen: false).fun();
-              },
-              child: Icon(Icons.light_mode),
-            )
-          ],
+          // actions: [
+          //   ElevatedButton(
+          //     onPressed: () {
+          //       // Provider.of<ThemeProvider>(context, listen: false)
+          //       //     .toggleTheme();
+          //       Provider.of<FiveScreenProvider>(context, listen: false).fun();
+          //     },
+          //     child: Icon(Icons.light_mode),
+          //   )
+          // ],
         ),
         body: const BackGroundContainer(
           child: TabBarView(

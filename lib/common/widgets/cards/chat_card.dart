@@ -1,7 +1,9 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class ChatCard extends StatelessWidget {
   final String name, lastMessage, date;
+  final bool isNotRead;
   final ImageProvider<Object>? backgroundImage;
   final VoidCallback onTap;
   const ChatCard({
@@ -11,6 +13,7 @@ class ChatCard extends StatelessWidget {
     required this.date,
     required this.backgroundImage,
     required this.onTap,
+    required this.isNotRead,
   });
 
   @override
@@ -19,14 +22,31 @@ class ChatCard extends StatelessWidget {
       onTap: onTap,
       leading: CircleAvatar(
         backgroundImage: backgroundImage,
-        radius: 23,
+        radius: 30,
       ),
-      title: Text(
+      title: AutoSizeText(
         name,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        maxLines: 1,
       ),
-      subtitle: Text(lastMessage),
-      trailing: Text(date),
+      subtitle: AutoSizeText(
+        lastMessage,
+        style: isNotRead
+            ? TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 17,
+              )
+            : null,
+        maxLines: 1,
+      ),
+      trailing: AutoSizeText(
+        date,
+        style: TextStyle(fontSize: 15),
+        maxLines: 1,
+      ),
     );
   }
 }

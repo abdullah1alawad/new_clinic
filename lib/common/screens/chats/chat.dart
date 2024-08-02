@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import '../../core/enum/connection_enum.dart';
 import '../../core/utils/laravel_echo.dart';
-import '../../model/chat/chat_model.dart';
-import '../../model/chat/message_model.dart';
 import '../../provider/chat/create_message_provider.dart';
 import '../../provider/chat/get_chat_messages_provider.dart';
 import '../../widgets/show_messages/show_error_message.dart';
@@ -11,71 +7,20 @@ import '../../widgets/show_messages/show_error_message.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pusher_client/pusher_client.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   final ChatUser chatUser;
   const ChatScreen({super.key, required this.chatUser});
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  late GetChatMessagesProvider _chatProvider;
-
-  @override
-  void initState() {
-    super.initState();
-    _chatProvider =
-        Provider.of<GetChatMessagesProvider>(context, listen: false);
-  }
-
-  void listenChatChannel(ChatModel chat) {
-    LaravelEcho.instance.private('chat.${chat.id}').listen('.message.sent',
-        (e) {
-      if (e is PusherEvent) {
-        if (e.data != null) {
-          _handleNewMessage(jsonDecode(e.data!));
-        }
-      }
-    }).error((err) {
-      print(err);
-    });
-  }
-
-  void leaveChatChannel(ChatModel chat) {
-    try {
-      LaravelEcho.instance.leave('chat.${chat.id}');
-    } catch (err) {
-      print(err);
-    }
-  }
-
-  void _handleNewMessage(Map<String, dynamic> data) {
-    final selectedChat = _chatProvider.chat!;
-    if (selectedChat.id == data['chat_id']) {
-      final chatMessage = MessageModel.fromJson(data['message']);
-      _chatProvider.addMessage(chatMessage);
-    }
-  }
-
-  @override
-  void dispose() {
-    leaveChatChannel(_chatProvider.chat!);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final messageProvider = Provider.of<CreateMessageProvider>(context);
-    ChatUser chatUser = widget.chatUser;
-
-    listenChatChannel(_chatProvider.chat!);
+    final chatProvider =
+        Provider.of<GetChatMessagesProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_chatProvider.chat!.otherUser.name,
+        title: Text(chatProvider.chat!.otherUser.name,
             style: Theme.of(context).textTheme.titleSmall),
         centerTitle: false,
       ),

@@ -1,3 +1,4 @@
+import 'package:clinic_test_app/common/provider/make_notification_read_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -10,6 +11,7 @@ import 'doctor/screens/main_screen.dart' as doctor;
 import 'assistant/screens/main_screen.dart' as assistant;
 import 'common/screens/auth/login.dart';
 
+import '/common/provider/chat/make_chat_read_provider.dart';
 import 'common/provider/chat/create_chat_provider.dart';
 import 'common/provider/chat/create_message_provider.dart';
 import 'common/provider/chat/get_chat_messages_provider.dart';
@@ -57,6 +59,8 @@ void main() async {
         ChangeNotifierProvider(create: (context) => GetSingleChatProvider()),
         ChangeNotifierProvider(create: (context) => GetChatMessagesProvider()),
         ChangeNotifierProvider(create: (context) => GetAllUsersProvider()),
+        ChangeNotifierProvider(create: (context) => MakeChatReadProvider()),
+        ChangeNotifierProvider(create: (context) => MakeNotificationReadProvider()),
         ////////////////////// student ///////////////////////
         ChangeNotifierProvider(create: (context) => FiveScreenProvider()),
         ChangeNotifierProvider(

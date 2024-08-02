@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:clinic_test_app/common/provider/chat/make_chat_read_provider.dart';
 import 'package:pusher_client/pusher_client.dart';
 
 import '../../common/core/enum/connection_enum.dart';
@@ -7,6 +8,8 @@ import '../../common/cache/cache_helper.dart';
 import '../../common/core/utils/app_constants.dart';
 import '../../common/core/utils/laravel_echo.dart';
 
+import '../../common/model/chat/message_model.dart';
+import '../../common/provider/chat/get_chat_messages_provider.dart';
 import '../../common/provider/chat/get_many_chats_provider.dart';
 import '../provider/init_screens_provider.dart';
 import '../../common/provider/get_all_users_provider.dart';
@@ -29,6 +32,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedScreen = 2;
   late InitScreensProvider _userProvider;
+  late GetChatMessagesProvider _selectedChatProvider;
+  late GetManyChatsProvider _chatsProvider;
+  late MakeChatReadProvider _chatReadProvider;
 
   List<Widget> _screens = [
     const ProfileScreen(),
@@ -45,24 +51,62 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<InitScreensProvider>(context, listen: false)
-          .getInitScreens();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async {
+        await Provider.of<InitScreensProvider>(context, listen: false)
+            .getInitScreens();
 
-      Provider.of<GetManyChatsProvider>(context, listen: false).getManyChats();
-      Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
-      LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
+        await Provider.of<GetManyChatsProvider>(context, listen: false)
+            .getManyChats();
+        Provider.of<GetAllUsersProvider>(context, listen: false).getAllUser();
+        LaravelEcho.init(token: CacheHelper().getData(key: kTOKEN));
 
-      _screens.add(
-        ChatsListScreen(
-            chatUser: Provider.of<InitScreensProvider>(context, listen: false)
-                .user!
-                .toChatUser),
-      );
+        _screens.add(
+          ChatsListScreen(
+              chatUser: Provider.of<InitScreensProvider>(context, listen: false)
+                  .user!
+                  .toChatUser),
+        );
 
-      _userProvider = Provider.of<InitScreensProvider>(context, listen: false);
-      listenNotificationChannel(_userProvider.user!.id);
-    });
+        _chatReadProvider =
+            Provider.of<MakeChatReadProvider>(context, listen: false);
+
+        _userProvider =
+            Provider.of<InitScreensProvider>(context, listen: false);
+        listenNotificationChannel(_userProvider.user!.id);
+
+        _selectedChatProvider =
+            Provider.of<GetChatMessagesProvider>(context, listen: false);
+        _chatsProvider =
+            Provider.of<GetManyChatsProvider>(context, listen: false);
+
+        for (int i = 0; i < _chatsProvider.chats!.length; i++) {
+          LaravelEcho.instance
+              .private('chat.${_chatsProvider.chats![i].id}')
+              .listen('.message.sent', (e) {
+            if (e is PusherEvent) {
+              if (e.data != null) {
+                _handleNewMessage(jsonDecode(e.data!));
+              }
+            }
+          }).error((err) {
+            print(err);
+          });
+        }
+      },
+    );
+  }
+
+  void _handleNewMessage(Map<String, dynamic> data) {
+    if (_selectedChatProvider.chat != null &&
+        _selectedChatProvider.chat!.id == data['chat_id']) {
+      final chatMessage = MessageModel.fromJson(data);
+      _selectedChatProvider.addMessage(chatMessage);
+      _chatsProvider.makeItRead(data['chat_id']);
+      _chatReadProvider.makeChatRead(data['chat_id']);
+    }
+
+    _chatsProvider.updateLastMessage(data['chat_id'], data);
   }
 
   void listenNotificationChannel(int userId) {
@@ -82,7 +126,6 @@ class _MainScreenState extends State<MainScreen> {
   void _handleNewNotification(Map<String, dynamic> data) {
     _userProvider.addNotification(data);
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +155,9 @@ class _MainScreenState extends State<MainScreen> {
             icon: Stack(
               children: <Widget>[
                 const Icon(Icons.notifications),
-                if (Provider.of<InitScreensProvider>(context).connection ==
-                        ConnectionEnum.connected &&
+                if (
                     Provider.of<InitScreensProvider>(context)
-                        .notifications!
-                        .isNotEmpty)
+                        .unReadNotify!=0)
                   Positioned(
                     right: 0,
                     child: Container(
@@ -130,7 +171,7 @@ class _MainScreenState extends State<MainScreen> {
                         minHeight: 12,
                       ),
                       child: Text(
-                        '${Provider.of<InitScreensProvider>(context, listen: false).notifications!.length}',
+                        '${Provider.of<InitScreensProvider>(context, listen: false).unReadNotify}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 10,
@@ -153,28 +194,30 @@ class _MainScreenState extends State<MainScreen> {
             icon: Stack(
               children: <Widget>[
                 const Icon(Icons.email),
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: Text(
-                      '5',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
+                if (
+                    Provider.of<GetManyChatsProvider>(context).unRead != 0)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      textAlign: TextAlign.center,
+                      constraints: const BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                      child: Text(
+                        '${ Provider.of<GetManyChatsProvider>(context,listen: false).unRead}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                )
+                  )
               ],
             ),
             label: 'المحادثة',

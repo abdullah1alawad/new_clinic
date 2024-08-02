@@ -27,6 +27,33 @@ DateTime parseDateTime(String value) {
   return DateFormat("yyyy-MM-ddTHH:mm:ssZ").parseUTC(value).toLocal();
 }
 
+String sameDaySameWeek(String dateStr) {
+    // Parse the given date string into a DateTime object
+    DateTime givenDate = DateTime.parse(dateStr);
+
+    // Get the current date and time
+    DateTime currentDate = DateTime.now().toUtc();
+
+    // Define the start of the current week (Monday)
+    DateTime startOfWeek = currentDate.subtract(Duration(days: currentDate.weekday - 1));
+
+    // Check if the given date is on the same day as the current date
+    if (givenDate.year == currentDate.year &&
+        givenDate.month == currentDate.month &&
+        givenDate.day == currentDate.day) {
+      return DateFormat.Hm().format(givenDate);  // H:m format
+    }
+    // Check if the given date is within the same week as the current date
+    else if (givenDate.isAfter(startOfWeek) &&
+             givenDate.isBefore(startOfWeek.add(Duration(days: 7)))) {
+      return DateFormat.EEEE().format(givenDate);  // Day of the week
+    }
+    // Otherwise, format the date as YYYY-MM-DD
+    else {
+      return DateFormat.yMd().format(givenDate);  // Y:M:D format
+    }
+  }
+
 void navigator(Widget navigateTo, BuildContext context) {
   Navigator.push(
     context,

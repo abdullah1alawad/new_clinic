@@ -6,6 +6,9 @@ class DioHelper {
   static Dio dio = Dio(
     BaseOptions(
       baseUrl: kBASEURL,
+      connectTimeout: Duration(seconds: 10), // Connection timeout
+    receiveTimeout: Duration(seconds: 10), // Receive timeout
+    sendTimeout: Duration(seconds: 10),  
     ),
   );
 

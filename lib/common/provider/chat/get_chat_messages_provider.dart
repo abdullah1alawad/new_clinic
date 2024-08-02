@@ -52,7 +52,7 @@ class GetChatMessagesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void reset(ChatModel chat) {
+  void reset(ChatModel? chat) {
     messages = [];
     page = 1;
     this.chat = chat;

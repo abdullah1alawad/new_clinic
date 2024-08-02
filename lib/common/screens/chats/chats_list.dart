@@ -8,6 +8,7 @@ import '../../model/user_model.dart';
 import '../../provider/chat/create_chat_provider.dart';
 import '../../provider/chat/get_chat_messages_provider.dart';
 import '../../provider/chat/get_many_chats_provider.dart';
+import '../../provider/chat/make_chat_read_provider.dart';
 import '../../widgets/back_ground_container.dart';
 import '../../widgets/cards/chat_card.dart';
 import '../../widgets/custom_bottom_app_bar.dart';
@@ -85,7 +86,8 @@ class ChatsListScreen extends StatelessWidget {
                     child: ChatCard(
                       name: chat.otherUser.name,
                       lastMessage: chat.lastMessage!.message,
-                      date: utcToLocal(chat.lastMessage!.updatedAt),
+                      isNotRead: !chat.isRead,
+                      date: sameDaySameWeek(chat.lastMessage!.updatedAt),
                       backgroundImage: imageProvider,
                       onTap: () {
                         final chatMessadesProvider =
@@ -98,7 +100,36 @@ class ChatsListScreen extends StatelessWidget {
                           chatMessadesProvider.getChatMessages();
                         }
 
-                        navigator(ChatScreen(chatUser: chatUser), context);
+                        provider.makeItRead(chat.id);
+                        Provider.of<MakeChatReadProvider>(context,
+                                listen: false)
+                            .makeChatRead(chat.id);
+
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    ChatScreen(chatUser: chatUser),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin = Offset(-1.0, 0.0);
+                              const end = Offset.zero;
+                              const curve = Curves.ease;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
+                          ),
+                        ).then((onValue) {
+                          chatMessadesProvider.reset(null);
+                        });
                       },
                     ),
                   );

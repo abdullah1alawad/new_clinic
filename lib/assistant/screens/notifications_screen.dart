@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/provider/make_notification_read_provider.dart';
 import '../provider/init_screens_provider.dart';
 
 import '../../common/core/enum/connection_enum.dart';
@@ -26,6 +27,8 @@ class NotificationsScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
+              Provider.of<InitScreensProvider>(context, listen: false)
+                  .makeAllNotifyRead();
               ShowSuccessMessage.showMessage(
                 context,
                 "تم تعليم الكل ك مقروء",
@@ -68,7 +71,7 @@ class NotificationsScreen extends StatelessWidget {
                               as ImageProvider<Object>
                           : const AssetImage('assets/images/avatar.png')
                               as ImageProvider<Object>,
-                      date: utcToLocal(notification.createdAt),
+                      date: sameDaySameWeek(notification.createdAt),
                       message: notification.data.message,
                       isNotRead: notification.readAt == null,
                       onTap: () {
@@ -91,6 +94,10 @@ class NotificationsScreen extends StatelessWidget {
                             ),
                           ),
                         );
+                        Provider.of<MakeNotificationReadProvider>(context,
+                                listen: false)
+                            .makeNotificationRead(notification.id);
+                        provider.makeNotifyUnRead(notification.id);
                       },
                     ),
                   );

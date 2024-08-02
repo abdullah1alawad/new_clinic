@@ -105,7 +105,7 @@ class MarkCard extends StatelessWidget {
                         TableCell(
                           child: Center(
                             child: Text(
-                              '${appointments[index].mark}',
+                              '${appointments[index].mark ?? 0}',
                               style: const TextStyle(
                                 fontFamily: 'ElMessiri',
                                 fontSize: 18,
