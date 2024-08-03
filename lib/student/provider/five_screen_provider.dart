@@ -16,7 +16,7 @@ class FiveScreenProvider extends ChangeNotifier {
   List<AppointmentModel>? completedAppointments;
   List<NotificationModel>? notifications;
   int unReadNotify = 0;
-  List<MarkModel>? marks;
+  List<MarkModel> marks = [];
   ConnectionEnum? connection;
   String? errorMessage;
 
@@ -42,9 +42,10 @@ class FiveScreenProvider extends ChangeNotifier {
                   AppointmentModel.fromJson(completedAppointment))
               .toList();
 
-      marks = (response.data[kDATA][kMARKS] as List)
-          .map((mark) => MarkModel.fromjson(mark))
-          .toList();
+      // marks = (response.data[kDATA][kMARKS] as List)
+      //     .map((mark) => MarkModel.fromjson(mark))
+      //     .toList();
+      calcSubjectMark();
 
       notifications = (response.data[kDATA][kNOTIFICATION] as List)
           .map((notification) => NotificationModel.fromJson(notification))
@@ -78,6 +79,7 @@ class FiveScreenProvider extends ChangeNotifier {
 
   void addNotification(Map<String, dynamic> jsonData) {
     notifications!.insert(0, NotificationModel.fromJson(jsonData));
+    calcUnReadNotify();
     notifyListeners();
   }
 
@@ -109,6 +111,29 @@ class FiveScreenProvider extends ChangeNotifier {
 
     unReadNotify = 0;
     notifyListeners();
+  }
+
+  void calcSubjectMark() {
+    Map<String, List<AppointmentModel>> mp = {};
+    Map<String, int> sum = {};
+    for (int i = 0; i < completedAppointments!.length; i++) {
+      if (mp[completedAppointments![i].subjectName] != null) {
+        mp[completedAppointments![i].subjectName]!
+            .add(completedAppointments![i]);
+        sum[completedAppointments![i].subjectName] =
+            sum[completedAppointments![i].subjectName]! +
+                (completedAppointments![i].mark ?? 0);
+      } else {
+        mp[completedAppointments![i].subjectName] = [completedAppointments![i]];
+        sum[completedAppointments![i].subjectName] =
+            (completedAppointments![i].mark ?? 0);
+      }
+    }
+
+    mp.forEach((key, value) {
+      marks.add(
+          MarkModel(subjectName: key, mark: sum[key]!, appointments: value));
+    });
   }
 
   void fun() {

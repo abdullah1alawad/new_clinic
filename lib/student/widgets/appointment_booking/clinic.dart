@@ -34,16 +34,19 @@ class Clinic extends StatelessWidget {
             Container(
               height: isChosen == true ? height / 1.2 : height,
               width: isChosen == true ? width / 1.2 : width,
-              alignment: Alignment.center,
+              //alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.4),
                   borderRadius: BorderRadius.circular(height / 10)),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   double fontSize = constraints.maxWidth * 0.15;
-                  return Text(
-                    clinicName,
-                    style: TextStyle(fontSize: fontSize, color: Colors.white),
+                  return Center(
+                    child: Text(
+                      clinicName,
+                      style: Theme.of(context).textTheme.titleSmall,
+                      // style: TextStyle(fontSize: fontSize, color: Colors.white),
+                    ),
                   );
                 },
               ),

@@ -1,3 +1,5 @@
+import 'package:clinic_test_app/common/core/utils/app_services.dart';
+
 import '../../provider/appointment_booking/clinics_provider.dart';
 import '../../provider/appointment_booking/appointment_booking_screens_provider.dart';
 import '../../provider/five_screen_provider.dart';
@@ -50,8 +52,7 @@ class AppointmentsScreen extends StatelessWidget {
           // actions: [
           //   ElevatedButton(
           //     onPressed: () {
-          //       // Provider.of<ThemeProvider>(context, listen: false)
-          //       //     .toggleTheme();
+          //       showNotification(context, true);
           //       Provider.of<FiveScreenProvider>(context, listen: false).fun();
           //     },
           //     child: Icon(Icons.light_mode),

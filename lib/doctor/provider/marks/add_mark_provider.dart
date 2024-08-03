@@ -26,7 +26,8 @@ class AddMarkProvider extends ChangeNotifier {
 
     try {
       var response = await DioHelper.addMark(data);
-      subprocess = SubprocessModel.fromJson(response.data[kDATA][0]);
+      subprocess =
+          SubprocessModel.fromJson((response.data[kDATA] as List).last);
 
       name.text = "";
       mark.text = "";

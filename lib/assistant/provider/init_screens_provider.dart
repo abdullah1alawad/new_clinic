@@ -62,6 +62,7 @@ class InitScreensProvider extends ChangeNotifier {
 
   void addNotification(Map<String, dynamic> jsonData) {
     notifications!.insert(0, NotificationModel.fromJson(jsonData));
+    calcUnReadNotify();
     notifyListeners();
   }
 

@@ -73,9 +73,9 @@ const String mobile = '10.0.2.2';
 const String win = '127.0.0.1';
 const String realIP = '172.20.10.4';
 
-const String kIMAGEBASEURL = 'http://$win:8000/images/';
-const String kBASEURL = 'http://$win:8000/api/';
+// const String kIMAGEBASEURL = 'http://$win:8000/images/';
+// const String kBASEURL = 'http://$win:8000/api/';
 
-// const String kIMAGEBASEURL =
-//     'https://19e0-188-160-223-73.ngrok-free.app/images/';
-// const String kBASEURL = 'https://19e0-188-160-223-73.ngrok-free.app/api/';
+const String kIMAGEBASEURL =
+    'https://a61f-178-171-227-26.ngrok-free.app/images/';
+const String kBASEURL = 'https://a61f-178-171-227-26.ngrok-free.app/api/';

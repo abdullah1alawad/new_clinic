@@ -129,10 +129,12 @@ class AppointmentDetailsCard extends StatelessWidget {
                                         context, provider.assistants!);
                                   },
                                   child: Text(
-                                    provider.appointment!.assistentName.isNotEmpty
-                                        ? provider.appointment!.assistentName
-                                        : updateDecision.assistantName.isNotEmpty
-                                            ? updateDecision.assistantName
+                                    updateDecision.assistantName.isNotEmpty
+                                        ? updateDecision.assistantName
+                                        : provider.appointment!.assistentName
+                                                .isNotEmpty
+                                            ? provider
+                                                .appointment!.assistentName
                                             : "إنقر لإختيار المساعد!",
                                     style: const TextStyle(
                                       fontFamily: 'ElMessiri',
@@ -156,7 +158,8 @@ class AppointmentDetailsCard extends StatelessWidget {
                                             CustomContainer(
                                               data: PatientInfo(
                                                   patientInfo: provider
-                                                      .appointment!.patientInfo),
+                                                      .appointment!
+                                                      .patientInfo),
                                               icon: Icons.person,
                                               onPressButton: () {
                                                 Navigator.of(context).pop();
@@ -206,7 +209,8 @@ class AppointmentDetailsCard extends StatelessWidget {
                                           ? 'مقبولة'
                                           : provider.appointment!.status == 2
                                               ? 'قيد الانتظار'
-                                              : provider.appointment!.status == 3
+                                              : provider.appointment!.status ==
+                                                      3
                                                   ? 'جارية'
                                                   : 'منتهية',
                                   style: const TextStyle(

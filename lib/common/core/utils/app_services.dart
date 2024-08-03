@@ -1,3 +1,4 @@
+import 'package:clinic_test_app/common/widgets/cards/pop_up_notification_card.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,31 +29,32 @@ DateTime parseDateTime(String value) {
 }
 
 String sameDaySameWeek(String dateStr) {
-    // Parse the given date string into a DateTime object
-    DateTime givenDate = DateTime.parse(dateStr);
+  // Parse the given date string into a DateTime object
+  DateTime givenDate = DateTime.parse(dateStr);
 
-    // Get the current date and time
-    DateTime currentDate = DateTime.now().toUtc();
+  // Get the current date and time
+  DateTime currentDate = DateTime.now().toUtc();
 
-    // Define the start of the current week (Monday)
-    DateTime startOfWeek = currentDate.subtract(Duration(days: currentDate.weekday - 1));
+  // Define the start of the current week (Monday)
+  DateTime startOfWeek =
+      currentDate.subtract(Duration(days: currentDate.weekday - 1));
 
-    // Check if the given date is on the same day as the current date
-    if (givenDate.year == currentDate.year &&
-        givenDate.month == currentDate.month &&
-        givenDate.day == currentDate.day) {
-      return DateFormat.Hm().format(givenDate);  // H:m format
-    }
-    // Check if the given date is within the same week as the current date
-    else if (givenDate.isAfter(startOfWeek) &&
-             givenDate.isBefore(startOfWeek.add(Duration(days: 7)))) {
-      return DateFormat.EEEE().format(givenDate);  // Day of the week
-    }
-    // Otherwise, format the date as YYYY-MM-DD
-    else {
-      return DateFormat.yMd().format(givenDate);  // Y:M:D format
-    }
+  // Check if the given date is on the same day as the current date
+  if (givenDate.year == currentDate.year &&
+      givenDate.month == currentDate.month &&
+      givenDate.day == currentDate.day) {
+    return DateFormat.Hm().format(givenDate); // H:m format
   }
+  // Check if the given date is within the same week as the current date
+  else if (givenDate.isAfter(startOfWeek) &&
+      givenDate.isBefore(startOfWeek.add(Duration(days: 7)))) {
+    return DateFormat.EEEE().format(givenDate); // Day of the week
+  }
+  // Otherwise, format the date as YYYY-MM-DD
+  else {
+    return DateFormat.yMd().format(givenDate); // Y:M:D format
+  }
+}
 
 void navigator(Widget navigateTo, BuildContext context) {
   Navigator.push(
@@ -75,4 +77,24 @@ void navigator(Widget navigateTo, BuildContext context) {
       },
     ),
   );
+}
+
+void showNotification(BuildContext context, bool type) {
+  OverlayState? overlayState = Overlay.of(context);
+  OverlayEntry overlayEntry = OverlayEntry(
+    builder: (context) => Positioned(
+      top: MediaQuery.of(context).padding.top,
+      left: 0,
+      right: 0,
+      child: PopUpNotificationCard(type: type),
+    ),
+  );
+
+  // Insert the overlay entry
+  overlayState?.insert(overlayEntry);
+
+  // Remove the overlay entry after 3 seconds
+  Future.delayed(Duration(seconds: 3), () {
+    overlayEntry.remove();
+  });
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:clinic_test_app/common/core/enum/connection_enum.dart';
+import 'package:clinic_test_app/common/core/utils/app_services.dart';
 import 'package:pusher_client/pusher_client.dart';
 
 import '../../common/cache/cache_helper.dart';
@@ -100,13 +101,15 @@ class _MainScreenState extends State<MainScreen> {
   void _handleNewMessage(Map<String, dynamic> data) {
     if (_selectedChatProvider.chat != null &&
         _selectedChatProvider.chat!.id == data['chat_id']) {
-      final chatMessage = MessageModel.fromJson(data['message']);
+      final chatMessage = MessageModel.fromJson(data);
       _selectedChatProvider.addMessage(chatMessage);
       _chatsProvider.makeItRead(data['chat_id']);
       _chatReadProvider.makeChatRead(data['chat_id']);
+    } else {
+      showNotification(context, false);
     }
 
-     _chatsProvider.updateLastMessage(data['chat_id'], data);
+    _chatsProvider.updateLastMessage(data['chat_id'], data);
   }
 
   void listenNotificationChannel(int userId) {
@@ -125,6 +128,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void _handleNewNotification(Map<String, dynamic> data) {
     _userProvider.addNotification(data);
+    showNotification(context, true);
   }
 
   @override
@@ -155,9 +159,7 @@ class _MainScreenState extends State<MainScreen> {
             icon: Stack(
               children: <Widget>[
                 Icon(Icons.notifications),
-                if (
-                    Provider.of<InitScreensProvider>(context)
-                        .unReadNotify !=0)
+                if (Provider.of<InitScreensProvider>(context).unReadNotify != 0)
                   Positioned(
                     right: 0,
                     child: Container(
@@ -194,29 +196,29 @@ class _MainScreenState extends State<MainScreen> {
             icon: Stack(
               children: <Widget>[
                 Icon(Icons.email),
-                if(Provider.of<GetManyChatsProvider>(context).unRead!=0)
-                Positioned(
-                  right: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: Text(
-                      '${Provider.of<GetManyChatsProvider>(context,listen: false).unRead}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
+                if (Provider.of<GetManyChatsProvider>(context).unRead != 0)
+                  Positioned(
+                    right: 0,
+                    child: Container(
+                      padding: EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      textAlign: TextAlign.center,
+                      constraints: BoxConstraints(
+                        minWidth: 12,
+                        minHeight: 12,
+                      ),
+                      child: Text(
+                        '${Provider.of<GetManyChatsProvider>(context, listen: false).unRead}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                )
+                  )
               ],
             ),
             label: 'المحادثة',

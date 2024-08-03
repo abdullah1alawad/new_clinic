@@ -26,7 +26,7 @@ class MyPieChartState extends State {
           children: <Widget>[
             Indicator(
               color: Colors.blue,
-              text: 'First',
+              text: 'قلع 2',
               isSquare: true,
             ),
             SizedBox(
@@ -34,7 +34,7 @@ class MyPieChartState extends State {
             ),
             Indicator(
               color: Colors.yellowAccent,
-              text: 'Second',
+              text: 'لبيه 4',
               isSquare: true,
             ),
             SizedBox(
@@ -42,7 +42,7 @@ class MyPieChartState extends State {
             ),
             Indicator(
               color: Colors.purple,
-              text: 'Third',
+              text: 'ترميمية 3',
               isSquare: true,
             ),
             SizedBox(
@@ -50,7 +50,7 @@ class MyPieChartState extends State {
             ),
             Indicator(
               color: Colors.green,
-              text: 'Fourth',
+              text: 'طب الفم 1',
               isSquare: true,
             ),
             SizedBox(

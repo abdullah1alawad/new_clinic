@@ -47,10 +47,10 @@ class DioHelper {
   }
   static Future<Response> updateDecision(
       Map<String, dynamic> data, String token) async {
-    return await dio.post(
+    return await dio.put(
       EndPoint.updateDecision,
       options: Options(headers: {'Authorization': 'Bearer $token'}),
-      data: FormData.fromMap(data),
+      data:data,
     );
   }
 

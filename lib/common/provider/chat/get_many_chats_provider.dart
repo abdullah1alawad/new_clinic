@@ -45,7 +45,7 @@ class GetManyChatsProvider extends ChangeNotifier {
       }
     }
 
-    print(data['chat']);
+    //print(data['chat']);
     if (chatIndex != -1) {
       chats![chatIndex].lastMessage =
           MessageModel.fromJson(data['chat']['last_message']);

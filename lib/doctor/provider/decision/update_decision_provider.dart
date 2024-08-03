@@ -23,6 +23,7 @@ class UpdateDecisionProvider extends ChangeNotifier {
       kASSISTANTID: assistantId,
       kDECISION: choice,
     };
+    print(data);
 
     try {
       var response = await DioHelper.updateDecision(
@@ -34,6 +35,7 @@ class UpdateDecisionProvider extends ChangeNotifier {
       notifyListeners();
     } on DioException catch (e) {
       connection = ConnectionEnum.failed;
+      print(e.response!.data);
       errorMessage = e.response!.data[kMESSAGE];
       notifyListeners();
     }

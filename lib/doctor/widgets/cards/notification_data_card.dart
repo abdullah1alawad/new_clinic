@@ -124,11 +124,12 @@ class NotificationDataCard extends StatelessWidget {
                                         context, provider.assistants!);
                                   },
                                   child: Text(
-                                    provider.appointment!.assistentName.isNotEmpty
-                                        ? provider.appointment!.assistentName
-                                        : decisionProvider
-                                                .assistantName.isNotEmpty
-                                            ? decisionProvider.assistantName
+                                    decisionProvider.assistantName.isNotEmpty
+                                        ? decisionProvider.assistantName
+                                        : provider.appointment!.assistentName
+                                                .isNotEmpty
+                                            ? provider
+                                                .appointment!.assistentName
                                             : "إنقر لإختيار المساعد!",
                                     style: const TextStyle(
                                       fontFamily: 'ElMessiri',
